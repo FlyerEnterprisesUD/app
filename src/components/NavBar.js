@@ -20,11 +20,11 @@ const NavigationBar = (toggleSideMenu) => {
   };
 
   const RightButton = () => {
-    const fe = require('../images/femenu.png');
+    const fe = require('../images/fe.png');
     return (
       <Image
         source={fe}
-        style={styles.logo} />
+        style={styles.logo}/>
     );
   };
 
