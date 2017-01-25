@@ -55,7 +55,7 @@ class Chill extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <List containerStyle={{marginBottom: 20}}>
+        <List>
 
           <ListItem
             onPress={this.navigateToAbout.bind(this)}

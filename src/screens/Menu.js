@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class Menu extends Component {
   constructor(props) {
@@ -15,18 +16,18 @@ class Menu extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <List containerStyle={{marginBottom: 20}}>
+        <ScrollView>
         {
           this.props.menu.products.map((l, i) => (
             <ListItem
               key={i}
               title={l.name}
               subtitle={l.group}
-              //onPress={this.navigateTo(l)}
+              onPress={this.navigateTo.bind(this, l)}
             />
           ))
         }
-        </List>
+        </ScrollView>
       </View>
     );
   }
@@ -36,7 +37,7 @@ let styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginTop: 45
+    marginTop: 65
   }
 });
 
