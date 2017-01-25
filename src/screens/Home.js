@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Navigator } from 'react-native';
 
 class Home extends Component {
-render() {
+  changeRoute() {
+    this.props.navigator.push({ id: 'Chill' });
+  }
+
+  render() {
     return(
       <View style={ styles.container }>
-        <Text>Home</Text>
+        <Text onPress={this.changeRoute.bind(this)}>Home</Text>
       </View>
     );
   }

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Platform, Navigator, StyleSheet, TouchableHighlight } from 'react-native';
+import { Platform, Navigator, StyleSheet, TouchableHighlight, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NavBarTitle from './NavBarTitle';
 
-// Create the navigation bar
 const NavigationBar = (toggleSideMenu) => {
   const LeftButton = () => {
     return (
@@ -21,7 +20,12 @@ const NavigationBar = (toggleSideMenu) => {
   };
 
   const RightButton = () => {
-    return null;
+    const fe = require('../images/femenu.png');
+    return (
+      <Image
+        source={fe}
+        style={styles.logo} />
+    );
   };
 
   const Title = (route) => {
@@ -31,7 +35,6 @@ const NavigationBar = (toggleSideMenu) => {
   };
 
   return (
-    // Mapping the navigation bar with the components
     <Navigator.NavigationBar
       routeMapper={{
         LeftButton,
@@ -46,7 +49,7 @@ const NavigationBar = (toggleSideMenu) => {
 let styles = StyleSheet.create({
   navBar: {
     height: 65,
-    backgroundColor: 'grey',
+    backgroundColor: '#CC0F40',
     ...Platform.select({
       android: {
         height: 55
@@ -61,6 +64,10 @@ let styles = StyleSheet.create({
         marginTop: 15
       }
     })
+  },
+  logo: {
+    width: 45,
+    height: 45
   }
 });
 
