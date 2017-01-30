@@ -34,7 +34,7 @@ let menu = {
       },
         {
           'name': 'Berry Blast',
-            'group': '',
+            'group': 'Berry Blast',
             'ingredients': [
                 'Strawberry',
                 'Raspberry',
@@ -44,7 +44,7 @@ let menu = {
         },
         {
           'name': 'Strawberry Banana',
-            'group': '',
+            'group': 'Berry Blast',
             'ingredients': [
                 'Strawberry',
                 'Banana',
