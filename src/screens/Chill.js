@@ -31,8 +31,27 @@ let menu = {
           'Pineapple',
           'Almond Milk'
         ]
-      }
-    ]
+      },
+        {
+          'name': 'Berry Blast',
+            'group': '',
+            'ingredients': [
+                'Strawberry',
+                'Raspberry',
+                'Blueberry'
+
+            ]
+        },
+        {
+          'name': 'Strawberry Banana',
+            'group': '',
+            'ingredients': [
+                'Strawberry',
+                'Banana',
+                'Almond Milk'
+            ]
+        }
+  ]
 };
 
 let about = {
