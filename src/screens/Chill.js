@@ -32,77 +32,77 @@ let menu = {
           'Almond Milk'
         ]
       },
-        {
-          'name': 'Berry Blast',
-            'group': 'Berry Blast',
-            'ingredients': [
-                'Strawberry',
-                'Raspberry',
-                'Blueberry'
+      {
+        'name': 'Berry Blast',
+          'group': 'Berry Blast',
+          'ingredients': [
+              'Strawberry',
+              'Raspberry',
+              'Blueberry'
 
-            ]
-        },
-        {
-          'name': 'Strawberry Banana',
-            'group': 'Berry Blast',
-            'ingredients': [
-                'Strawberry',
-                'Banana',
-                'Almond Milk'
-            ]
-        },
-        {
-          'name': 'Front Porch',
-            'group': 'Immunity Boost',
-            'ingredients': [
-                'Pineapple',
-                'Apple Juice',
-                'Kale'
-            ]
-        },
-        {
-          'name': 'CT Crunch',
-            'group': 'Immunity Boost',
-            'ingredients': [
-                'Cinnamon',
-                'Honey',
-                'Banana',
-                'Granola',
-                'Greek Yogurt'
-            ]
-        },
-        {
-          'name': 'Main Squeeze',
-            'group': 'Immunity Boost',
-            'ingredients': [
-                'Mango',
-                'Pineapple',
-                'Orange Juice',
-                'Spinach',
-                'Banana'
-            ]
-        },
-        {
-          'name': 'Rudy',
-            'group': 'Immunity Boost',
-            'ingredients': [
-                'Blueberry',
-                'Banana',
-                'Spinach',
-                'Orange Juice'
-            ]
-        },
-        {
-          'name': 'Island Flyer',
-            'group': 'Immunity Boost',
-            'ingredients': [
-                'Pineapple',
-                'Apple Juice',
-                'Kale',
-                'Blueberry',
-                'Raspberry'
-            ]
-        }
+          ]
+      },
+      {
+        'name': 'Strawberry Banana',
+          'group': 'Berry Blast',
+          'ingredients': [
+              'Strawberry',
+              'Banana',
+              'Almond Milk'
+          ]
+      },
+      {
+        'name': 'Front Porch',
+          'group': 'Immunity Boost',
+          'ingredients': [
+              'Pineapple',
+              'Apple Juice',
+              'Kale'
+          ]
+      },
+      {
+        'name': 'CT Crunch',
+          'group': 'Immunity Boost',
+          'ingredients': [
+              'Cinnamon',
+              'Honey',
+              'Banana',
+              'Granola',
+              'Greek Yogurt'
+          ]
+      },
+      {
+        'name': 'Main Squeeze',
+          'group': 'Immunity Boost',
+          'ingredients': [
+              'Mango',
+              'Pineapple',
+              'Orange Juice',
+              'Spinach',
+              'Banana'
+          ]
+      },
+      {
+        'name': 'Rudy',
+          'group': 'Immunity Boost',
+          'ingredients': [
+              'Blueberry',
+              'Banana',
+              'Spinach',
+              'Orange Juice'
+          ]
+      },
+      {
+        'name': 'Island Flyer',
+          'group': 'Immunity Boost',
+          'ingredients': [
+              'Pineapple',
+              'Apple Juice',
+              'Kale',
+              'Blueberry',
+              'Raspberry'
+          ]
+      }
   ]
 };
 

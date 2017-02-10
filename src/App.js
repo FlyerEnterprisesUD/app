@@ -14,6 +14,7 @@ import Galley from './screens/Galley';
 import Menu from './screens/Menu';
 import Product from './screens/Product';
 import About from './screens/About';
+import Promotion from './screens/Promotion';
 
 class App extends Component {
   constructor() {
@@ -112,6 +113,8 @@ class App extends Component {
         return(<Product navigator={ navigator } toggleSideMenu={ toggleSideMenu } product={ route.product } {...route.passProps} />);
       case 'About':
         return(<About navigator={ navigator } toggleSideMenu={ toggleSideMenu } about={ route.about } {...route.passProps} />);
+      case 'Promotion':
+        return(<Promotion navigator={ navigator } toggleSideMenu={ toggleSideMenu } promo={ route.promo } {...route.passProps} />);
     }
   }
 
@@ -131,10 +134,16 @@ class App extends Component {
         <List containerStyle={{marginBottom: 20}}>
 
           <ListItem
+            key='0'
+            title={ 'Welcome, ' + this.props.user }
+            hideChevron
+          />
+
+          <ListItem
             roundAvatar
             onPress={this.navigateToHome.bind(this)}
             avatar={fe}
-            key='0'
+            key='1'
             title={'Home'}
           />
 
@@ -142,15 +151,15 @@ class App extends Component {
             roundAvatar
             onPress={this.navigateToChill.bind(this)}
             avatar={chill}
-            key='1'
-            title={'The Chill'}
+            key='2'
+            title={'The CHILL'}
           />
 
           <ListItem
             roundAvatar
             onPress={this.navigateToBlend.bind(this)}
             avatar={blend}
-            key='2'
+            key='3'
             title={'The Blend'}
           />
 
@@ -158,7 +167,7 @@ class App extends Component {
             roundAvatar
             onPress={this.navigateToBlendExpress.bind(this)}
             avatar={blendexpress}
-            key='3'
+            key='4'
             title={'The Blend Express'}
           />
 
@@ -166,7 +175,7 @@ class App extends Component {
             roundAvatar
             onPress={this.navigateToGalley.bind(this)}
             avatar={galley}
-            key='4'
+            key='5'
             title={'The Galley'}
           />
 
@@ -174,7 +183,7 @@ class App extends Component {
             roundAvatar
             onPress={this.navigateToArtStreetCafe.bind(this)}
             avatar={artstreetcafe}
-            key='5'
+            key='6'
             title={'Art Street Cafe'}
           />
 
@@ -182,22 +191,22 @@ class App extends Component {
             roundAvatar
             onPress={this.navigateToJuryBox.bind(this)}
             avatar={jurybox}
-            key='6'
-            title={'Jury Box'}
+            key='7'
+            title={'The Jury Box'}
           />
 
           <ListItem
             roundAvatar
             avatar={stuslanding}
             onPress={this.navigateToStusLanding.bind(this)}
-            key='7'
+            key='8'
             title={'Stuart\'s Landing'}
           />
 
           <ListItem
             roundAvatar
             avatar={settings}
-            key='8'
+            key='9'
             title={'Settings'}
           />
 
