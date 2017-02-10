@@ -7,7 +7,8 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
-      user: {}
+      user: {},
+      error: ''
     };
     this.login = this.login.bind(this);
   }
@@ -16,7 +17,13 @@ class Login extends Component {
     let username = this.state.username;
     let password = this.state.password;
 
-    this.props.navigator.replace({id: 'App', user: username});
+    if(username == 'FlyerEntDev' && password == '123456') {
+      this.props.navigator.replace({id: 'App', user: username});
+    } else {
+      this.setState({error: 'Username or Password Incorrect'});
+    }
+
+
   }
 
   render() {
@@ -49,6 +56,8 @@ class Login extends Component {
         </TouchableOpacity>
 
         <Text style={ styles.text }>Forgot Password?</Text>
+
+        <Text style={ styles.text }>{ this.state.error }</Text>
 
 
       </View>
