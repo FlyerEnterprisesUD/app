@@ -3,6 +3,7 @@ import { AppRegistry, Navigator } from 'react-native';
 
 import App from './src/App';
 import Login from './src/Login';
+import Create from './src/Create';
 
 class app extends Component {
   navigatorRenderScene(route, navigator) {
@@ -11,8 +12,10 @@ class app extends Component {
     switch(route.id) {
       case 'Login':
         return(<Login navigator={ navigator } />);
+      case 'Create':
+        return(<Create navigator={ navigator } />);
       case 'App':
-        return(<App user={ route.user } />);
+        return(<App user={ route.user } nav={ navigator } />);
     }
   }
 
@@ -21,7 +24,7 @@ class app extends Component {
     return(
       <Navigator
         ref="main-navigator"
-        initialRoute = {{ id: 'Login' }}
+        initialRoute = {{ id: 'Login'}}
         renderScene = { this.navigatorRenderScene } />
     );
   }

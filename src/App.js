@@ -13,8 +13,8 @@ import BlendExpress from './screens/BlendExpress';
 import Galley from './screens/Galley';
 import Menu from './screens/Menu';
 import Product from './screens/Product';
-import About from './screens/About';
 import Promotion from './screens/Promotion';
+import Settings from './screens/Settings';
 
 class App extends Component {
   constructor() {
@@ -87,6 +87,13 @@ class App extends Component {
     });
   }
 
+  navigateToSettings() {
+    this.refs.navigator.push({id:'Settings', nav: this.props.nav, user: this.props.user });
+    this.setState({
+      isOpen: false
+    });
+  }
+
   navigatorRenderScene(route, navigator) {
     _navigator = navigator;
     const { toggleSideMenu } = false;
@@ -111,10 +118,10 @@ class App extends Component {
         return(<Menu navigator={ navigator } toggleSideMenu={ toggleSideMenu } menu={ route.menu } {...route.passProps} />);
       case 'Product':
         return(<Product navigator={ navigator } toggleSideMenu={ toggleSideMenu } product={ route.product } {...route.passProps} />);
-      case 'About':
-        return(<About navigator={ navigator } toggleSideMenu={ toggleSideMenu } about={ route.about } {...route.passProps} />);
       case 'Promotion':
         return(<Promotion navigator={ navigator } toggleSideMenu={ toggleSideMenu } promo={ route.promo } {...route.passProps} />);
+      case 'Settings':
+        return(<Settings navigator={ navigator } nav={ route.nav } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
     }
   }
 
@@ -135,7 +142,7 @@ class App extends Component {
 
           <ListItem
             key='0'
-            title={ 'Welcome, ' + this.props.user }
+            title={ 'Welcome, ' + this.props.user.username + ' (' + this.props.user.role + ')'}
             hideChevron
           />
 
@@ -206,6 +213,7 @@ class App extends Component {
           <ListItem
             roundAvatar
             avatar={settings}
+            onPress={this.navigateToSettings.bind(this)}
             key='9'
             title={'Settings'}
           />

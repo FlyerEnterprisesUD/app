@@ -7,15 +7,39 @@ class Product extends Component {
     return(
       <View style={styles.container}>
         <ScrollView>
-        {
-          this.props.product.ingredients.map((l, i) => (
-            <ListItem
-              key={i}
-              title={l}
-              hideChevron
-            />
-          ))
-        }
+          <ListItem
+            title="Sizes"
+            hideChevron
+          />
+
+          {
+            this.props.product.sizes.map((l, i) => (
+              <ListItem
+                key={i}
+                title={l}
+                hideChevron
+              />
+            ))
+          }
+
+          <ListItem
+            title=""
+            hideChevron
+          />
+          <ListItem
+            title="Ingredients"
+            hideChevron
+          />
+
+          {
+            this.props.product.ingredients.map((l, i) => (
+              <ListItem
+                key={i}
+                title={l}
+                hideChevron
+              />
+            ))
+          }
         </ScrollView>
       </View>
     );
