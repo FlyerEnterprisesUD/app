@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
 class Chill extends Component {
@@ -74,32 +74,23 @@ class Chill extends Component {
 
     return(
       <View style={styles.container}>
-        <List>
+      <Text>The Chill</Text>
+      <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
+      <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
+      <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+      <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+      <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
 
-          <ListItem
-            onPress={this.navigateToMenu.bind(this)}
-            key='0'
-            title={'Menu'}
-          />
+      <TouchableOpacity onPress={ this.login }>
+        <Text style={ styles.button2 }>Menu</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={ this.login }>
+        <Text style={ styles.button }>Promotions</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={ this.login }>
+        <Text style={ styles.button }>Loyalty</Text>
+      </TouchableOpacity>
 
-          <ListItem
-            key='1'
-            title={'Promotions'}
-          />
-
-          <ListItem
-            key='2'
-            title={'Loyalty'}
-          />
-
-        </List>
-
-        <Text>The Chill</Text>
-        <Text>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text>Hours:</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
       </View>
     );
   }
@@ -109,8 +100,35 @@ let styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginTop: 45
+    marginTop: 45,
+  },
+  button: {
+    width: Dimensions.get('window').width - 60,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#87BFCE',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    borderRadius: 4,
+    alignItems: 'center'
+  },
+  button2: {
+    width: Dimensions.get('window').width - 60,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 200,
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#87BFCE',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    borderRadius: 4,
+    alignItems: 'center'
   }
+
 });
 
 export default Chill;

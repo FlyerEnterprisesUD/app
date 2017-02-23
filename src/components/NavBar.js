@@ -58,7 +58,7 @@ let styles = StyleSheet.create({
       }
     })
   },
-<<<<<<< HEAD
+
   backIcon: {
     marginLeft: 10,
     marginTop: 10,
@@ -69,8 +69,7 @@ let styles = StyleSheet.create({
       }
     })
   },
-=======
->>>>>>> origin/master
+
   logo: {
     width: 45,
     height: 45,
