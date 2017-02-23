@@ -4,10 +4,6 @@ import { List, ListItem } from 'react-native-elements';
 
 
 class StusLanding extends Component {
-  navigateToAbout() {
-    this.props.navigator.push({ id: 'About', about: about });
-  }
-
   navigateToMenu() {
     this.props.navigator.push({ id: 'Menu', menu: menu });
   }
@@ -18,24 +14,18 @@ class StusLanding extends Component {
         <List containerStyle={{marginBottom: 20}}>
 
           <ListItem
-            onPress={this.navigateToAbout.bind(this)}
-            key='0'
-            title={'About'}
-          />
-
-          <ListItem
             onPress={this.navigateToMenu.bind(this)}
-            key='1'
+            key='0'
             title={'Menu'}
           />
 
           <ListItem
-            key='2'
+            key='1'
             title={'Promotions'}
           />
 
           <ListItem
-            key='3'
+            key='2'
             title={'Loyalty'}
           />
 
