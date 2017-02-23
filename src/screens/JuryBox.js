@@ -16,7 +16,7 @@ class JuryBox extends Component {
 
   componentWillMount() {
     this.getMenu();
-    this.getAbout();
+    //this.getAbout();
   }
 
   async getMenu() {
