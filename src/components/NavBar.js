@@ -58,10 +58,6 @@ let styles = StyleSheet.create({
       }
     })
   },
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
   backIcon: {
     marginLeft: 10,
     marginTop: 10,
@@ -72,10 +68,6 @@ let styles = StyleSheet.create({
       }
     })
   },
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
   logo: {
     width: 40,
     height: 40,

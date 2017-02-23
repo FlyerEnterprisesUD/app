@@ -61,10 +61,6 @@ class Chill extends Component {
     }
   }
 
-  navigateToAbout() {
-    this.props.navigator.push({ id: 'About', about: this.state.about });
-  }
-
   navigateToMenu() {
     this.props.navigator.push({ id: 'Menu', menu: this.state.menu });
   }
@@ -74,22 +70,31 @@ class Chill extends Component {
 
     return(
       <View style={styles.container}>
+
+      <View>
+      <Text>PICTURE GOES HERE!</Text>
+      </View>
+
+      <View>
       <Text>The Chill</Text>
       <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
       <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
       <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
       <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
       <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+      </View>
 
-      <TouchableOpacity onPress={ this.login }>
-        <Text style={ styles.button2 }>Menu</Text>
+      <View style={{marginBottom:10}}>
+      <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+        <Text style={ styles.button }>Menu</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={ this.login }>
+      <TouchableOpacity>
         <Text style={ styles.button }>Promotions</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={ this.login }>
+      <TouchableOpacity>
         <Text style={ styles.button }>Loyalty</Text>
       </TouchableOpacity>
+      </View>
 
       </View>
     );
@@ -99,28 +104,15 @@ class Chill extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
     backgroundColor: 'white',
-    marginTop: 45,
+    marginTop: 65
   },
   button: {
-    width: Dimensions.get('window').width - 60,
+    width: Dimensions.get('window').width - 40,
     marginLeft: 20,
-    marginRight: 20,
+    marginRight: 70,
     marginTop: 10,
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: '#87BFCE',
-    color: '#FFFFFF',
-    textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center'
-  },
-  button2: {
-    width: Dimensions.get('window').width - 60,
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 200,
-    marginBottom: 10,
     padding: 10,
     backgroundColor: '#87BFCE',
     color: '#FFFFFF',
@@ -128,7 +120,6 @@ let styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center'
   }
-
 });
 
 export default Chill;
