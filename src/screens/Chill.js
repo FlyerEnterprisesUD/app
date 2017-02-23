@@ -84,8 +84,12 @@ class Chill extends Component {
       <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
       </View>
 
+<<<<<<< HEAD
       <View style={{marginBottom:10}}>
       <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+=======
+      <TouchableOpacity onPress={ this.login }>
+>>>>>>> origin/master
         <Text style={ styles.button }>Menu</Text>
       </TouchableOpacity>
       <TouchableOpacity>
@@ -113,13 +117,23 @@ let styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 70,
     marginTop: 10,
+<<<<<<< HEAD
+=======
+    marginBottom: 10,
+>>>>>>> origin/master
     padding: 10,
     backgroundColor: '#87BFCE',
     color: '#FFFFFF',
     textAlign: 'center',
     borderRadius: 4,
     alignItems: 'center'
+<<<<<<< HEAD
   }
+=======
+  },
+
+
+>>>>>>> origin/master
 });
 
 export default Chill;

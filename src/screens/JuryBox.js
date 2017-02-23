@@ -1,49 +1,68 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
-let menu = {
-    'products': [
-      {
-        'name': 'Sunny & 55',
-        'group': 'Berry Blast',
-        'ingredients': [
-          'Mango',
-          'Strawberry',
-          'Orange Juice',
-          'Greek Yogurt'
-        ]
-      },
-      {
-        'name': 'Cruising',
-        'group': 'Berry Blast',
-        'ingredients': [
-          'Pineapple',
-          'Raspberry',
-          'Apple Juice'
-        ]
-      },
-      {
-        'name': 'MVP',
-        'group': 'Berry Blast',
-        'ingredients': [
-          'Mango',
-          'Pineapple',
-          'Almond Milk'
-        ]
-      }
-    ]
-};
-
-let about = {
-  'location': 'Recplex',
-  'hours': [
-    'Sunday - Thursday 11am - 11pm',
-    'Friday - Saturday 11am - 9pm'
-  ]
-};
-
 class JuryBox extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      menu: {},
+      about: {}
+    }
+    this.getMenu = this.getMenu.bind(this);
+    this.getAbout = this.getAbout.bind(this);
+  }
+
+  componentWillMount() {
+    this.getMenu();
+    this.getAbout();
+  }
+
+  async getMenu() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/jurybox-menu';
+    //var url = 'http://localhost:5000/jurybox-menu';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ menu: responseJson.menu });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getAbout() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/jurybox-about';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ about: responseJson.about });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  //OLD CODE STARTS HERE
   navigateToAbout() {
     this.props.navigator.push({ id: 'About', about: about });
   }
@@ -53,33 +72,27 @@ class JuryBox extends Component {
   }
 
   render() {
+    console.log(this.state.about.hours);
+
     return(
       <View style={styles.container}>
-        <List containerStyle={{marginBottom: 20}}>
+      <Text>The Jury Box</Text>
+      <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
+      <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
+      <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+      <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+      <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
 
-          <ListItem
-            onPress={this.navigateToAbout.bind(this)}
-            key='0'
-            title={'About'}
-          />
+      <TouchableOpacity onPress={ this.login }>
+        <Text style={ styles.button }>Menu</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={ this.login }>
+        <Text style={ styles.button }>Promotions</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={ this.login }>
+        <Text style={ styles.button }>Loyalty</Text>
+      </TouchableOpacity>
 
-          <ListItem
-            onPress={this.navigateToMenu.bind(this)}
-            key='1'
-            title={'Menu'}
-          />
-
-          <ListItem
-            key='2'
-            title={'Promotions'}
-          />
-
-          <ListItem
-            key='3'
-            title={'Loyalty'}
-          />
-
-        </List>
       </View>
     );
   }
@@ -89,8 +102,23 @@ let styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginTop: 45
-  }
+    marginTop: 45,
+  },
+  button: {
+    width: Dimensions.get('window').width - 60,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#87BFCE',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    borderRadius: 4,
+    alignItems: 'center'
+  },
+
+
 });
 
 export default JuryBox;
