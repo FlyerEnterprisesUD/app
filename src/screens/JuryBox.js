@@ -15,7 +15,7 @@ class JuryBox extends Component {
   }
 
   componentWillMount() {
-    this.getMenu();
+    //this.getMenu();
     //this.getAbout();
   }
 
@@ -62,13 +62,8 @@ class JuryBox extends Component {
     }
   }
 
-  //OLD CODE STARTS HERE
-  navigateToAbout() {
-    this.props.navigator.push({ id: 'About', about: about });
-  }
-
   navigateToMenu() {
-    this.props.navigator.push({ id: 'Menu', menu: menu });
+    this.props.navigator.push({ id: 'Menu', menu: this.state.menu });
   }
 
   render() {
@@ -83,13 +78,13 @@ class JuryBox extends Component {
       <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
       <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
 
-      <TouchableOpacity onPress={ this.login }>
+      <TouchableOpacity onPress={ this.navigateToMenu }>
         <Text style={ styles.button }>Menu</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={ this.login }>
+      <TouchableOpacity>
         <Text style={ styles.button }>Promotions</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={ this.login }>
+      <TouchableOpacity>
         <Text style={ styles.button }>Loyalty</Text>
       </TouchableOpacity>
 
