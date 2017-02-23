@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dime
 import { List, ListItem } from 'react-native-elements';
 
 class JuryBox extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -15,8 +14,8 @@ class JuryBox extends Component {
   }
 
   componentWillMount() {
-    //this.getMenu();
-    //this.getAbout();
+    this.getMenu();
+    this.getAbout();
   }
 
   async getMenu() {
@@ -78,7 +77,7 @@ class JuryBox extends Component {
       <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
       <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
 
-      <TouchableOpacity onPress={ this.navigateToMenu }>
+      <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
         <Text style={ styles.button }>Menu</Text>
       </TouchableOpacity>
       <TouchableOpacity>
