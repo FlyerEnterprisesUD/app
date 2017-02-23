@@ -27,7 +27,7 @@ const NavigationBar = (toggleSideMenu) => {
         style={styles.logo}/>
     );
   };
-
+//hello
   const Title = (route) => {
     return (
       <NavBarTitle style={styles.title} title={route.id} {...route.passProps} />
