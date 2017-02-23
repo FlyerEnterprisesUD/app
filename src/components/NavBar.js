@@ -7,14 +7,14 @@ const NavigationBar = (toggleSideMenu) => {
   const LeftButton = () => {
     return (
       <TouchableHighlight
-        style={{marginTop: 12, marginLeft: 9}}
+        style={{marginTop: 7, marginLeft: 9}}
         //iPhone should have topMargin of 7
         onPress={toggleSideMenu}
         underlayColor='transparent'>
         <Icon
           color='white'
           name='menu'
-          size={38}
+          size={28}
           //iPhone should be size 28
         />
       </TouchableHighlight>
@@ -58,7 +58,10 @@ let styles = StyleSheet.create({
       }
     })
   },
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   backIcon: {
     marginLeft: 10,
     marginTop: 10,
@@ -69,10 +72,14 @@ let styles = StyleSheet.create({
       }
     })
   },
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   logo: {
-    width: 45,
-    height: 45,
+    width: 40,
+    height: 40,
+    marginRight: 5,
     ...Platform.select({
       android: {
         width: 48,
