@@ -82,7 +82,7 @@ class Chill extends Component {
       <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
 
       <TouchableOpacity onPress={ this.login }>
-        <Text style={ styles.button2 }>Menu</Text>
+        <Text style={ styles.button }>Menu</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={ this.login }>
         <Text style={ styles.button }>Promotions</Text>
@@ -115,19 +115,7 @@ let styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center'
   },
-  button2: {
-    width: Dimensions.get('window').width - 60,
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 200,
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: '#87BFCE',
-    color: '#FFFFFF',
-    textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center'
-  }
+
 
 });
 
