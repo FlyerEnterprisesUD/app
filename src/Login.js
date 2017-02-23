@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class Login extends Component {
   constructor(props) {
@@ -9,7 +10,8 @@ class Login extends Component {
       password: '',
       token: '',
       user: {},
-      error: ''
+      error: '',
+      visible: false
     };
     this.login = this.login.bind(this);
     this.navigateToCreate = this.navigateToCreate.bind(this);
@@ -19,6 +21,7 @@ class Login extends Component {
   }
 
   componentWillMount() {
+    this.setState({ visible: false });
     this.checkToken();
   }
 
@@ -76,6 +79,7 @@ class Login extends Component {
   }
 
   async login() {
+    this.setState({ visible: true });
     let username = this.state.username;
     let password = this.state.password;
     var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/login';
@@ -97,6 +101,7 @@ class Login extends Component {
       let responseJson = await response.json();
 
       if(responseJson.response.success == false) {
+        this.setState({ visible: false });
         this.setState({ error: responseJson.response.message });
         return responseJson;
       } else {
@@ -118,7 +123,9 @@ class Login extends Component {
 
   render() {
     return(
+
       <View style={ styles.container }>
+        <Spinner visible={this.state.visible} />
 
         <View>
         <Text style={ styles.title }>Flyer Enterprises</Text>

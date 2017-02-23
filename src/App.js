@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Navigator } from 'react-native'
+import { View, StyleSheet, Image, Navigator, ScrollView } from 'react-native'
 import { List, ListItem, SideMenu } from 'react-native-elements';
 import navigationBar from './components/NavBar';
 
@@ -15,6 +15,8 @@ import Menu from './screens/Menu';
 import Product from './screens/Product';
 import Promotion from './screens/Promotion';
 import Settings from './screens/Settings';
+import ChangePassword from './screens/ChangePassword';
+import AccountSettings from './screens/AccountSettings';
 
 class App extends Component {
   constructor() {
@@ -122,6 +124,10 @@ class App extends Component {
         return(<Promotion navigator={ navigator } toggleSideMenu={ toggleSideMenu } promo={ route.promo } {...route.passProps} />);
       case 'Settings':
         return(<Settings navigator={ navigator } nav={ route.nav } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
+      case 'Change Password':
+        return(<ChangePassword navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
+      case 'Account Settings':
+        return(<AccountSettings navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
     }
   }
 
@@ -138,11 +144,12 @@ class App extends Component {
 
     const MenuComponent = (
       <View style={{flex: 1, backgroundColor: '#ededed'}}>
-        <List containerStyle={{marginBottom: 20}}>
+        <ScrollView style={{marginBottom: 20, backgroundColor: '#FFFFFF', marginTop: 20}}>
 
+          <List containerStyle={{marginTop: 0}}>
           <ListItem
             key='0'
-            title={ 'Welcome, ' + this.props.user.username + ' (' + this.props.user.role + ')'}
+            title={ 'Welcome, ' + this.props.user.username}
             hideChevron
           />
 
@@ -153,12 +160,14 @@ class App extends Component {
             key='1'
             title={'Home'}
           />
+          </List>
 
+          <List containerStyle={{marginTop: 0}}>
           <ListItem
             roundAvatar
             onPress={this.navigateToChill.bind(this)}
             avatar={chill}
-            key='2'
+            key='0'
             title={'The CHILL'}
           />
 
@@ -166,7 +175,7 @@ class App extends Component {
             roundAvatar
             onPress={this.navigateToBlend.bind(this)}
             avatar={blend}
-            key='3'
+            key='1'
             title={'The Blend'}
           />
 
@@ -174,7 +183,7 @@ class App extends Component {
             roundAvatar
             onPress={this.navigateToBlendExpress.bind(this)}
             avatar={blendexpress}
-            key='4'
+            key='2'
             title={'The Blend Express'}
           />
 
@@ -182,7 +191,7 @@ class App extends Component {
             roundAvatar
             onPress={this.navigateToGalley.bind(this)}
             avatar={galley}
-            key='5'
+            key='3'
             title={'The Galley'}
           />
 
@@ -190,7 +199,7 @@ class App extends Component {
             roundAvatar
             onPress={this.navigateToArtStreetCafe.bind(this)}
             avatar={artstreetcafe}
-            key='6'
+            key='4'
             title={'Art Street Cafe'}
           />
 
@@ -198,7 +207,7 @@ class App extends Component {
             roundAvatar
             onPress={this.navigateToJuryBox.bind(this)}
             avatar={jurybox}
-            key='7'
+            key='5'
             title={'The Jury Box'}
           />
 
@@ -206,19 +215,22 @@ class App extends Component {
             roundAvatar
             avatar={stuslanding}
             onPress={this.navigateToStusLanding.bind(this)}
-            key='8'
+            key='6'
             title={'Stuart\'s Landing'}
           />
+          </List>
 
+          <List containerStyle={{marginTop: 0}}>
           <ListItem
             roundAvatar
             avatar={settings}
             onPress={this.navigateToSettings.bind(this)}
-            key='9'
+            key='0'
             title={'Settings'}
           />
+          </List>
 
-        </List>
+        </ScrollView>
       </View>
     );
 

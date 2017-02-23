@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { Text } from 'react-native-elements';
 
 class NavBarTitle extends Component {
@@ -20,7 +20,12 @@ let styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 16,
-    marginTop: 10
+    marginTop: 10,
+    ...Platform.select({
+      android: {
+        marginTop: 15
+      }
+    })
   }
 });
 

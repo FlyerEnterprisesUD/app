@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class Create extends Component {
   constructor(props) {
@@ -8,13 +9,15 @@ class Create extends Component {
       username: '',
       password: '',
       email: '',
-      error: ''
+      error: '',
+      visible: false
     };
     this.create = this.create.bind(this);
   }
 
-  // Login method
+  // Create method
   async create() {
+    this.setState({ visible: true });
     this.setState({ error: '' });
     // Gets info from the state
     let username = this.state.username.trim();
@@ -88,6 +91,7 @@ class Create extends Component {
   render() {
     return(
       <View style={ styles.container }>
+      <Spinner visible={this.state.visible} />
 
         <View>
         <Text style={ styles.title }>Sign Up</Text>

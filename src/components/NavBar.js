@@ -56,15 +56,6 @@ let styles = StyleSheet.create({
       }
     })
   },
-  backIcon: {
-    marginLeft: 10,
-    marginTop: 10,
-    ...Platform.select({
-      android: {
-        marginTop: 15
-      }
-    })
-  },
   logo: {
     width: 45,
     height: 45

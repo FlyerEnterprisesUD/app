@@ -2,54 +2,67 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Navigator } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
-let menu = {
-    'products': [
-      {
-        'name': 'Sunny & 55',
-        'group': 'Berry Blast',
-        'ingredients': [
-          'Mango',
-          'Strawberry',
-          'Orange Juice',
-          'Greek Yogurt'
-        ]
-      },
-      {
-        'name': 'Cruising',
-        'group': 'Berry Blast',
-        'ingredients': [
-          'Pineapple',
-          'Raspberry',
-          'Apple Juice'
-        ]
-      },
-      {
-        'name': 'MVP',
-        'group': 'Berry Blast',
-        'ingredients': [
-          'Mango',
-          'Pineapple',
-          'Almond Milk'
-        ]
-      }
-    ]
-};
-
-let about = {
-  'location': 'Recplex',
-  'hours': [
-    'Sunday - Thursday 11am - 11pm',
-    'Friday - Saturday 11am - 9pm'
-  ]
-};
-
 class ArtStreetCafe extends Component {
-  navigateToAbout() {
-    this.props.navigator.push({ id: 'About', about: about });
+  constructor(props) {
+    super(props);
+    this.state = {
+      menu: {},
+      about: {}
+    }
+    this.getMenu = this.getMenu.bind(this);
+    this.getAbout = this.getAbout.bind(this);
+  }
+
+  componentWillMount() {
+    this.getMenu();
+    //this.getAbout();
+  }
+
+  async getMenu() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/artstreet-menu';
+    //var url = 'http://localhost:5000/artstreet-menu';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ menu: responseJson.menu });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getAbout() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/chill-about';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ about: responseJson.about });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   navigateToMenu() {
-    this.props.navigator.push({ id: 'Menu', menu: menu });
+    this.props.navigator.push({ id: 'Menu', menu: this.state.menu });
   }
 
   render() {
@@ -58,24 +71,18 @@ class ArtStreetCafe extends Component {
         <List containerStyle={{marginBottom: 20}}>
 
           <ListItem
-            onPress={this.navigateToAbout.bind(this)}
-            key='0'
-            title={'About'}
-          />
-
-          <ListItem
             onPress={this.navigateToMenu.bind(this)}
-            key='1'
+            key='0'
             title={'Menu'}
           />
 
           <ListItem
-            key='2'
+            key='1'
             title={'Promotions'}
           />
 
           <ListItem
-            key='3'
+            key='2'
             title={'Loyalty'}
           />
 

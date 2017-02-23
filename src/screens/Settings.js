@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, AsyncStorage, ScrollView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
 class Settings extends Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
+    this.navigateToChangePassword = this.navigateToChangePassword.bind(this);
+    this.navigateToAccountSettings = this.navigateToAccountSettings.bind(this);
   }
 
   logout() {
@@ -13,16 +15,38 @@ class Settings extends Component {
     this.props.nav.replace({id: 'Login'});
   }
 
+  navigateToChangePassword() {
+    this.props.navigator.push({id: 'Change Password', user: this.props.user});
+  }
+
+  navigateToAccountSettings() {
+    this.props.navigator.push({id: 'Account Settings', user: this.props.user});
+  }
+
   render() {
     console.log(this.props);
     return(
       <View style={ styles.container }>
-        <Text>{this.props.user.username}</Text>
-        <Text>{this.props.user.email}</Text>
+
+        <Text style={{marginTop: 10}}>Profile</Text>
+        <List containerStyle={{marginTop:1}}>
+          <ListItem
+            onPress={this.navigateToAccountSettings}
+            key='0'
+            title={'Account Settings'}
+          />
+
+          <ListItem
+            onPress={this.navigateToChangePassword}
+            key='1'
+            title={'Change Password'}
+          />
+        </List>
 
         <TouchableOpacity onPress={ this.logout }>
           <Text style={ styles.button }>Logout</Text>
         </TouchableOpacity>
+
       </View>
     );
   }
@@ -43,7 +67,8 @@ let styles = StyleSheet.create({
     color: '#FFFFFF',
     textAlign: 'center',
     borderRadius: 4,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 20
   }
 });
 

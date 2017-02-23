@@ -8,26 +8,14 @@ class Product extends Component {
       <View style={styles.container}>
         <ScrollView>
           <ListItem
-            title="Sizes"
+            key={0}
+            title={'Price: ' + this.props.product.price}
             hideChevron
           />
 
-          {
-            this.props.product.sizes.map((l, i) => (
-              <ListItem
-                key={i}
-                title={l}
-                hideChevron
-              />
-            ))
-          }
-
           <ListItem
-            title=""
-            hideChevron
-          />
-          <ListItem
-            title="Ingredients"
+            key={1}
+            title={''}
             hideChevron
           />
 

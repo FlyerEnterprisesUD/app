@@ -20,6 +20,7 @@ class Chill extends Component {
 
   async getMenu() {
     var url = 'https://flyerenterprisesmobileapp.herokuapp.com/chill-menu';
+    //var url = 'http://localhost:5000/chill-menu';
 
     try {
       let response = await fetch(url, {
@@ -70,7 +71,7 @@ class Chill extends Component {
 
   render() {
     console.log(this.state.about.hours);
-    
+
     return(
       <View style={styles.container}>
         <List>

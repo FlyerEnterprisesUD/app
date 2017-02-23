@@ -54,7 +54,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      promotions: []
+      promotions: [],
+      promos: []
     }
     this.getPromotions = this.getPromotions.bind(this);
   }
@@ -89,7 +90,6 @@ class Home extends Component {
   }
 
   render() {
-
     return(
       <View style={ styles.container }>
         <DivisionBubbles navigator={ this.props.navigator }/>
