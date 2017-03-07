@@ -1,85 +1,80 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
-let menu = {
-    'products': [
-      {
-        'name': 'Sunny & 55',
-        'group': 'Berry Blast',
-        'ingredients': [
-          'Mango',
-          'Strawberry',
-          'Orange Juice',
-          'Greek Yogurt'
-        ]
-      },
-      {
-        'name': 'Cruising',
-        'group': 'Berry Blast',
-        'ingredients': [
-          'Pineapple',
-          'Raspberry',
-          'Apple Juice'
-        ]
-      },
-      {
-        'name': 'MVP',
-        'group': 'Berry Blast',
-        'ingredients': [
-          'Mango',
-          'Pineapple',
-          'Almond Milk'
-        ]
-      }
-    ]
-};
-
-let about = {
-  'location': 'Recplex',
-  'hours': [
-    'Sunday - Thursday 11am - 11pm',
-    'Friday - Saturday 11am - 9pm'
-  ]
-};
-
 class Galley extends Component {
-  navigateToAbout() {
-    this.props.navigator.push({ id: 'About', about: about });
+  constructor(props) {
+    super(props);
+    this.state = {
+      menu: {},
+      about: {}
+    }
+    this.getInfo = this.getInfo.bind(this);
+  }
+
+  componentWillMount() {
+    this.getInfo();
+  }
+
+  async getInfo() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/galley';
+    //var url = 'http://localhost:5000/galley';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ menu: responseJson.menu });
+      this.setState({ about: responseJson.about });
+
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   navigateToMenu() {
-    this.props.navigator.push({ id: 'Menu', menu: menu });
+    this.props.navigator.push({ id: 'Menu', menu: this.state.menu });
   }
 
   render() {
+    console.log(this.state.about.hours);
+
     return(
       <View style={styles.container}>
-        <List containerStyle={{marginBottom: 20}}>
 
-          <ListItem
-            onPress={this.navigateToAbout.bind(this)}
-            key='0'
-            title={'About'}
-          />
+      <View>
+      <Text>PICTURE GOES HERE!</Text>
+      </View>
 
-          <ListItem
-            onPress={this.navigateToMenu.bind(this)}
-            key='1'
-            title={'Menu'}
-          />
+      <View>
+      <Text>The Chill</Text>
+      <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
+      <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
+      <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+      <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+      <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+      </View>
 
-          <ListItem
-            key='2'
-            title={'Promotions'}
-          />
+      <View style={{marginBottom:10}}>
+      <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+        <Text style={ styles.button }>Menu</Text>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Text style={ styles.button }>Promotions</Text>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Text style={ styles.button }>Loyalty</Text>
+      </TouchableOpacity>
+      </View>
 
-          <ListItem
-            key='3'
-            title={'Loyalty'}
-          />
-
-        </List>
       </View>
     );
   }
@@ -88,8 +83,22 @@ class Galley extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
     backgroundColor: 'white',
-    marginTop: 45
+    marginTop: 65
+  },
+  button: {
+    width: Dimensions.get('window').width - 40,
+    marginLeft: 20,
+    marginRight: 70,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#87BFCE',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    borderRadius: 4,
+    alignItems: 'center'
   }
 });
 
