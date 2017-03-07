@@ -4,8 +4,38 @@ import { List, ListItem } from 'react-native-elements';
 
 
 class StusLanding extends Component {
-  navigateToMenu() {
-    this.props.navigator.push({ id: 'Menu', menu: menu });
+  constructor(props) {
+    super(props);
+    this.state = {
+      about: {}
+    }
+    this.getInfo = this.getInfo.bind(this);
+  }
+
+  componentWillMount() {
+    this.getInfo();
+  }
+
+  async getInfo() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/stuslanding';
+    //var url = 'http://localhost:5000/stuslanding';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ about: responseJson.about });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   render() {
@@ -14,7 +44,6 @@ class StusLanding extends Component {
         <List containerStyle={{marginBottom: 20}}>
 
           <ListItem
-            onPress={this.navigateToMenu.bind(this)}
             key='0'
             title={'Menu'}
           />

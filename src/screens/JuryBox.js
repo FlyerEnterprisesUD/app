@@ -9,18 +9,16 @@ class JuryBox extends Component {
       menu: {},
       about: {}
     }
-    this.getMenu = this.getMenu.bind(this);
-    this.getAbout = this.getAbout.bind(this);
+    this.getInfo = this.getInfo.bind(this);
   }
 
   componentWillMount() {
-    this.getMenu();
-    //this.getAbout();
+    this.getInfo();
   }
 
-  async getMenu() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/jurybox-menu';
-    //var url = 'http://localhost:5000/jurybox-menu';
+  async getInfo() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/jurybox';
+    //var url = 'http://localhost:5000/jurybox';
 
     try {
       let response = await fetch(url, {
@@ -33,26 +31,6 @@ class JuryBox extends Component {
 
       let responseJson = await response.json();
       this.setState({ menu: responseJson.menu });
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async getAbout() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/jurybox-about';
-
-    try {
-      let response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-
-      let responseJson = await response.json();
       this.setState({ about: responseJson.about });
 
       return responseJson;
