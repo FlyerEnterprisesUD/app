@@ -8,8 +8,8 @@ class AccountSettings extends Component {
     this.state = {
       username: this.props.user.username,
       email: this.props.user.email,
-      name: this.props.name,
-      year: this.props.year
+      name: this.props.user.name,
+      year: this.props.user.year
     };
     this.update = this.update.bind(this);
   }
@@ -17,6 +17,8 @@ class AccountSettings extends Component {
   async update() {
     var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/update';
     //var url = 'http://localhost:5000/user/update';
+    
+    this.props.user.year = this.state.year;
 
     try {
       let response = await fetch(url, {
