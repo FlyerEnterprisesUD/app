@@ -8,6 +8,7 @@ class Create extends Component {
     this.state = {
       username: '',
       password: '',
+      passwordAgain: '',
       email: '',
       error: '',
       visible: false
@@ -54,6 +55,13 @@ class Create extends Component {
     if(!email.includes("@udayton.edu")){
       this.setState({ error: 'Please enter your University of Dayton email' });
       this.refs.email.focus();
+      this.setState({ visible: false });
+      return null;
+    }
+
+    if(this.state.password != this.state.passwordAgain) {
+      this.setState({ error: 'Passwords must match', password: '', passwordAgain: '' });
+      this.refs.password.focus();
       this.setState({ visible: false });
       return null;
     }
@@ -122,6 +130,17 @@ class Create extends Component {
           autoCorrect={false}
           value={ this.state.password }
           onChangeText={(text) => this.setState({password: text})}
+          style={ styles.input }
+          keyboardType='default'
+          secureTextEntry  />
+
+        <TextInput
+          ref="passwordAgain"
+          placeholder="Password Again"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={ this.state.passwordAgain }
+          onChangeText={(text) => this.setState({passwordAgain: text})}
           style={ styles.input }
           keyboardType='default'
           secureTextEntry  />
