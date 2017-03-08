@@ -59,8 +59,8 @@ class Create extends Component {
     }
 
     // Connects to API
-    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/create';
-    var url = 'http://localhost:5000/user/create';
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/create';
+    //var url = 'http://localhost:5000/user/create';
 
     try {
       let response = await fetch(url, {

@@ -15,8 +15,8 @@ class AccountSettings extends Component {
   }
 
   async update() {
-    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/update';
-    var url = 'http://localhost:5000/user/update';
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/update';
+    //var url = 'http://localhost:5000/user/update';
 
     try {
       let response = await fetch(url, {
