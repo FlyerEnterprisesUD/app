@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
 class BlendExpress extends Component {
@@ -44,37 +44,88 @@ class BlendExpress extends Component {
   }
 
   render() {
-    return(
-      <View style={styles.container}>
-        <List containerStyle={{marginBottom: 20}}>
+    if(this.props.user.username != 'Guest') {
+      return(
+        <View style={styles.container}>
 
-          <ListItem
-            onPress={this.navigateToMenu.bind(this)}
-            key='0'
-            title={'Menu'}
-          />
+        <View>
+        <Text>PICTURE GOES HERE!</Text>
+        </View>
 
-          <ListItem
-            key='1'
-            title={'Promotions'}
-          />
+        <View>
+        <Text>The Blend Express</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
+        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        </View>
 
-          <ListItem
-            key='2'
-            title={'Loyalty'}
-          />
+        <View style={{marginBottom:10}}>
+        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+          <Text style={ styles.button }>Menu</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={ styles.button }>Promotions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={ styles.button }>Loyalty</Text>
+        </TouchableOpacity>
+        </View>
 
-        </List>
-      </View>
-    );
+        </View>
+      );
+    } else {
+      return(
+        <View style={styles.container}>
+
+        <View>
+        <Text>PICTURE GOES HERE!</Text>
+        </View>
+
+        <View>
+        <Text>The Blend Express</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
+        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        </View>
+
+        <View style={{marginBottom:10}}>
+        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+          <Text style={ styles.button }>Menu</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={ styles.button }>Promotions</Text>
+        </TouchableOpacity>
+        </View>
+
+        </View>
+      );
+    }
   }
 }
 
 let styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
     backgroundColor: 'white',
-    marginTop: 45
+    marginTop: 65
+  },
+  button: {
+    width: Dimensions.get('window').width - 40,
+    marginLeft: 20,
+    marginRight: 70,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#00AEEF',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    borderRadius: 4,
+    alignItems: 'center'
   }
 });
 

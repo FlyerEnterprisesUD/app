@@ -15,9 +15,11 @@ class Login extends Component {
     };
     this.login = this.login.bind(this);
     this.navigateToCreate = this.navigateToCreate.bind(this);
+    this.navigateToEmail = this.navigateToEmail.bind(this);
     this.persistToken = this.persistToken.bind(this);
     this.checkToken = this.checkToken.bind(this);
     this.verifyToken = this.verifyToken.bind(this);
+    this.guest = this.guest.bind(this);
   }
 
   componentWillMount() {
@@ -117,8 +119,20 @@ class Login extends Component {
     }
   }
 
+  guest() {
+    var user = {
+      username: 'Guest',
+      email: ''
+    };
+    this.props.navigator.replace({id: 'App', user: user});
+  }
+
   navigateToCreate() {
     this.props.navigator.push({id: 'Create'});
+  }
+
+  navigateToEmail() {
+    this.props.navigator.push({id: 'Email'});
   }
 
   render() {
@@ -151,14 +165,21 @@ class Login extends Component {
           keyboardType='default'
           secureTextEntry  />
 
-          <Text style={ styles.error }>{ this.state.error }</Text>
+        <Text style={ styles.error }>{ this.state.error }</Text>
 
         <TouchableOpacity onPress={ this.login }>
           <Text style={ styles.button }>Login</Text>
         </TouchableOpacity>
 
-        <Text style={ styles.text }>Forgot Password?</Text>
+        <View style={ styles.text }>
+          <TouchableOpacity onPress={ this.navigateToEmail }>
+            <Text>Forgot Password?</Text>
+          </TouchableOpacity>
 
+          <TouchableOpacity onPress={ this.guest }>
+            <Text>Guest?</Text>
+          </TouchableOpacity>
+        </View>
 
         </View>
 
@@ -191,7 +212,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   text: {
-    marginLeft: 30
+    marginLeft: 30,
+    marginRight: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   error: {
     marginLeft: 30,

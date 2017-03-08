@@ -34,7 +34,8 @@ class AccountSettings extends Component {
           value={ this.state.email }
           onChangeText={(text) => this.setState({email: text})}
           style={ styles.input }
-          keyboardType='default' />
+          keyboardType='default'
+          editable={false} />
 
         <TouchableOpacity>
           <Text style={ styles.button }>Update Profile</Text>

@@ -2,26 +2,19 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, TextInput } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
-class ChangePassword extends Component {
+class Email extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      oldPass: '',
-      newPass: '',
-      newPassAgain: '',
+      email: '',
       error: ''
     };
-    this.changePassword = this.changePassword.bind(this);
+    this.resetpassword = this.resetpassword.bind(this);
   }
 
-  async changePassword() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/changepassword';
-    //var url = 'http://localhost:5000/user/changepassword';
-
-    if(this.state.newPassAgain != this.state.newPass) {
-      this.setState({ error: "New Passwords do not match" });
-      return null;
-    }
+  async resetpassword() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/resetpassword';
+    //var url = 'http://localhost:5000/user/resetpassword';
 
     try {
       let response = await fetch(url, {
@@ -31,9 +24,7 @@ class ChangePassword extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: this.props.user.username,
-          oldPassword: this.state.oldPass,
-          newPassword: this.state.newPass
+          email: this.state.email,
         })
       });
 
@@ -43,8 +34,7 @@ class ChangePassword extends Component {
         this.setState({ error: responseJson.response.message });
         return responseJson;
       } else {
-        this.setState({ user: responseJson.response.user });
-        this.props.navigator.replace({id: 'Home'});
+        this.props.navigator.replace({id: 'Login'});
       }
 
     } catch (err) {
@@ -58,39 +48,19 @@ class ChangePassword extends Component {
 
         <View style={{marginTop: 20}}>
         <TextInput
-          placeholder="Old Password"
+          placeholder="Email"
           autoCapitalize="none"
           autoCorrect={false}
-          value={ this.state.oldPass }
-          onChangeText={(text) => this.setState({oldPass: text})}
+          value={ this.state.email }
+          onChangeText={(text) => this.setState({email: text})}
           style={ styles.input }
-          keyboardType='default'
-          secureTextEntry  />
+          keyboardType='default' />
 
-        <TextInput
-          placeholder="New Password"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={ this.state.newPass }
-          onChangeText={(text) => this.setState({newPass: text})}
-          style={ styles.input }
-          keyboardType='default'
-          secureTextEntry  />
-
-        <TextInput
-          placeholder="New Password Again"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={ this.state.newPassAgain }
-          onChangeText={(text) => this.setState({newPassAgain: text})}
-          style={ styles.input }
-          keyboardType='default'
-          secureTextEntry  />
 
         <Text style={ styles.error }>{ this.state.error }</Text>
 
-        <TouchableOpacity onPress={ this.changePassword }>
-          <Text style={ styles.button }>Change Password</Text>
+        <TouchableOpacity onPress={ this.resetpassword }>
+          <Text style={ styles.button }>Reset Password</Text>
         </TouchableOpacity>
         </View>
 
@@ -134,4 +104,4 @@ let styles = StyleSheet.create({
   }
 });
 
-module.exports = ChangePassword;
+module.exports = Email;

@@ -24,31 +24,43 @@ class Settings extends Component {
   }
 
   render() {
-    console.log(this.props);
-    return(
-      <View style={ styles.container }>
+    if(this.props.user.username != "Guest"){
+      return(
+        <View style={ styles.container }>
 
-        <Text style={{marginTop: 10}}>Profile</Text>
-        <List containerStyle={{marginTop:1}}>
-          <ListItem
-            onPress={this.navigateToAccountSettings}
-            key='0'
-            title={'Account Settings'}
-          />
+          <Text style={{marginTop: 10}}>Profile</Text>
+          <List containerStyle={{marginTop:1}}>
+            <ListItem
+              onPress={this.navigateToAccountSettings}
+              key='0'
+              title={'Account Settings'}
+            />
 
-          <ListItem
-            onPress={this.navigateToChangePassword}
-            key='1'
-            title={'Change Password'}
-          />
-        </List>
+            <ListItem
+              onPress={this.navigateToChangePassword}
+              key='1'
+              title={'Change Password'}
+            />
+          </List>
 
-        <TouchableOpacity onPress={ this.logout }>
-          <Text style={ styles.button }>Logout</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={ this.logout }>
+            <Text style={ styles.button }>Logout</Text>
+          </TouchableOpacity>
 
-      </View>
-    );
+        </View>
+      );
+    } else {
+      return(
+        <View style={ styles.container }>
+
+          <TouchableOpacity onPress={ this.logout }>
+            <Text style={ styles.button }>Logout</Text>
+          </TouchableOpacity>
+
+        </View>
+      );
+    }
+
   }
 }
 
