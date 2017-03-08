@@ -9,7 +9,7 @@ class Create extends Component {
       username: '',
       password: '',
       email: '',
-      error: 'Email confirmation doesnt work right now. let me know you created an account and ill manually confirm your account',
+      error: '',
       visible: false
     };
     this.create = this.create.bind(this);
@@ -59,8 +59,8 @@ class Create extends Component {
     }
 
     // Connects to API
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/create';
-    //var url = 'http://localhost:5000/user/create';
+    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/create';
+    var url = 'http://localhost:5000/user/create';
 
     try {
       let response = await fetch(url, {
@@ -83,6 +83,7 @@ class Create extends Component {
         this.setState({ error: responseJson.response.message });
         this.refs.username.setNativeProps({text: ''});
         this.refs.password.setNativeProps({text: ''});
+        this.setState({ visible: false });
         this.refs.username.focus();
       } else {
         this.props.navigator.replace({id: 'Login'});

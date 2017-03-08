@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, TextInput, Picker } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
 class AccountSettings extends Component {
@@ -8,8 +8,41 @@ class AccountSettings extends Component {
     this.state = {
       username: this.props.user.username,
       email: this.props.user.email,
-      changed: false
+      name: this.props.name,
+      year: this.props.year
     };
+    this.update = this.update.bind(this);
+  }
+
+  async update() {
+    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/update';
+    var url = 'http://localhost:5000/user/update';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.props.user.username,
+          name: this.state.name,
+          year: this.state.year
+        })
+      });
+
+      let responseJson = await response.json();
+
+      if(responseJson.response.success == false) {
+        return responseJson;
+      } else {
+        this.props.navigator.replace({id: 'Home', user: this.props.user});
+      }
+
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   render() {
@@ -18,7 +51,7 @@ class AccountSettings extends Component {
 
         <View style={{marginTop: 20}}>
         <TextInput
-          placeholder="Old Password"
+          placeholder="Username"
           autoCapitalize="none"
           autoCorrect={false}
           value={ this.state.username }
@@ -28,7 +61,7 @@ class AccountSettings extends Component {
           editable={false} />
 
         <TextInput
-          placeholder="New Password"
+          placeholder="Email"
           autoCapitalize="none"
           autoCorrect={false}
           value={ this.state.email }
@@ -37,7 +70,29 @@ class AccountSettings extends Component {
           keyboardType='default'
           editable={false} />
 
-        <TouchableOpacity>
+        <TextInput
+          placeholder="Name"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={ this.state.name }
+          onChangeText={(text) => this.setState({name: text})}
+          style={ styles.input }
+          keyboardType='default' />
+
+        <Picker
+          selectedValue={this.state.year}
+          onValueChange={(text) => this.setState({year: text})}>
+          <Picker.Item label="Freshman" value="Freshman" />
+          <Picker.Item label="Sophomore" value="Sophomore" />
+          <Picker.Item label="Junior" value="Junior" />
+          <Picker.Item label="Senior" value="Senior" />
+          <Picker.Item label="Graduate Student" value="Graduate Student" />
+          <Picker.Item label="Faculty" value="Faculty" />
+        </Picker>
+
+
+
+        <TouchableOpacity onPress={this.update}>
           <Text style={ styles.button }>Update Profile</Text>
         </TouchableOpacity>
         </View>

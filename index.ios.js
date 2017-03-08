@@ -4,6 +4,7 @@ import { AppRegistry, Navigator } from 'react-native';
 import App from './src/App';
 import Login from './src/Login';
 import Create from './src/Create';
+import Email from './src/Email';
 
 class app extends Component {
   navigatorRenderScene(route, navigator) {
@@ -14,6 +15,8 @@ class app extends Component {
         return(<Login navigator={ navigator } />);
       case 'Create':
         return(<Create navigator={ navigator } />);
+      case 'Email':
+        return(<Email navigator={ navigator } />);
       case 'App':
         return(<App user={ route.user } nav={ navigator } />);
     }
