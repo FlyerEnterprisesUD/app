@@ -9,7 +9,7 @@ class Create extends Component {
       username: '',
       password: '',
       email: '',
-      error: '',
+      error: 'Email confirmation doesnt work right now. let me know you created an account and ill manually confirm your account',
       visible: false
     };
     this.create = this.create.bind(this);
@@ -18,7 +18,7 @@ class Create extends Component {
   // Create method
   async create() {
     this.setState({ visible: true });
-    this.setState({ error: 'Email confirmation doesnt work right now. let me know you created an account and ill manually confirm your account' });
+    this.setState({ error: '' });
     // Gets info from the state
     let username = this.state.username.trim();
     let password = this.state.password.trim();
