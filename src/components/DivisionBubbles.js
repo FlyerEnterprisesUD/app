@@ -4,31 +4,31 @@ import { StyleSheet, ScrollView, View, Image, TouchableOpacity, Text, Navigator 
 class DivisionBubbles extends Component {
 
   navigateToChill() {
-    this.props.navigator.push({id:'The Chill'});
+    this.props.navigator.push({id:'The Chill', user: this.props.user });
   }
 
   navigateToStusLanding() {
-    this.props.navigator.push({id:'Stuart\'s Landing'});
+    this.props.navigator.push({id:'Stuart\'s Landing', user: this.props.user });
   }
 
   navigateToArtStreetCafe() {
-    this.props.navigator.push({id:'Art Street Cafe'});
+    this.props.navigator.push({id:'Art Street Cafe', user: this.props.user });
   }
 
   navigateToBlend() {
-    this.props.navigator.push({id:'The Blend'});
+    this.props.navigator.push({id:'The Blend', user: this.props.user });
   }
 
   navigateToBlendExpress() {
-    this.props.navigator.push({id:'The Blend Express'});
+    this.props.navigator.push({id:'The Blend Express', user: this.props.user });
   }
 
   navigateToGalley() {
-    this.props.navigator.push({id:'The Galley'});
+    this.props.navigator.push({id:'The Galley', user: this.props.user });
   }
 
   navigateToJuryBox() {
-    this.props.navigator.push({id:'Jury Box'});
+    this.props.navigator.push({id:'Jury Box', user: this.props.user });
   }
 
   render() {

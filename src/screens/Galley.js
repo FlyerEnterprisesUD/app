@@ -45,38 +45,66 @@ class Galley extends Component {
   }
 
   render() {
-    console.log(this.state.about.hours);
+    if(this.props.user.username != 'Guest') {
+      return(
+        <View style={styles.container}>
 
-    return(
-      <View style={styles.container}>
+        <View>
+        <Text>PICTURE GOES HERE!</Text>
+        </View>
 
-      <View>
-      <Text>PICTURE GOES HERE!</Text>
-      </View>
+        <View>
+        <Text>The Galley</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
+        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        </View>
 
-      <View>
-      <Text>The Chill</Text>
-      <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-      <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-      <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-      <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-      <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-      </View>
+        <View style={{marginBottom:10}}>
+        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+          <Text style={ styles.button }>Menu</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={ styles.button }>Promotions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={ styles.button }>Loyalty</Text>
+        </TouchableOpacity>
+        </View>
 
-      <View style={{marginBottom:10}}>
-      <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-        <Text style={ styles.button }>Menu</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={ styles.button }>Promotions</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={ styles.button }>Loyalty</Text>
-      </TouchableOpacity>
-      </View>
+        </View>
+      );
+    } else {
+      return(
+        <View style={styles.container}>
 
-      </View>
-    );
+        <View>
+        <Text>PICTURE GOES HERE!</Text>
+        </View>
+
+        <View>
+        <Text>The Galley</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
+        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        </View>
+
+        <View style={{marginBottom:10}}>
+        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+          <Text style={ styles.button }>Menu</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={ styles.button }>Promotions</Text>
+        </TouchableOpacity>
+        </View>
+
+        </View>
+      );
+    }
   }
 }
 
@@ -94,7 +122,7 @@ let styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     padding: 10,
-    backgroundColor: '#87BFCE',
+    backgroundColor: '#231F20',
     color: '#FFFFFF',
     textAlign: 'center',
     borderRadius: 4,

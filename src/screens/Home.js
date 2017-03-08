@@ -69,7 +69,8 @@ class Home extends Component {
   }
 
   async getPromotions() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/promotions-general';
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/promotions';
+    //var url = 'http://localhost:5000/promotions';
 
     try {
       let response = await fetch(url, {
@@ -92,7 +93,7 @@ class Home extends Component {
   render() {
     return(
       <View style={ styles.container }>
-        <DivisionBubbles navigator={ this.props.navigator }/>
+        <DivisionBubbles navigator={ this.props.navigator } user={ this.props.user } />
 
         <Carousel animate={true} delay={5000} indicatorAtBottom={true} indicatorOffset={0}>
           {

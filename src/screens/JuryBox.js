@@ -44,53 +44,89 @@ class JuryBox extends Component {
   }
 
   render() {
-    console.log(this.state.about.hours);
+    if(this.props.user.username != 'Guest') {
+      return(
+        <View style={styles.container}>
 
-    return(
-      <View style={styles.container}>
-      <Text>The Jury Box</Text>
-      <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-      <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-      <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-      <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-      <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        <View>
+        <Text>PICTURE GOES HERE!</Text>
+        </View>
 
-      <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-        <Text style={ styles.button }>Menu</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={ styles.button }>Promotions</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={ styles.button }>Loyalty</Text>
-      </TouchableOpacity>
+        <View>
+        <Text>The Jury Box</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
+        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        </View>
 
-      </View>
-    );
+        <View style={{marginBottom:10}}>
+        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+          <Text style={ styles.button }>Menu</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={ styles.button }>Promotions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={ styles.button }>Loyalty</Text>
+        </TouchableOpacity>
+        </View>
+
+        </View>
+      );
+    } else {
+      return(
+        <View style={styles.container}>
+
+        <View>
+        <Text>PICTURE GOES HERE!</Text>
+        </View>
+
+        <View>
+        <Text>The Jury Box</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
+        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
+        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        </View>
+
+        <View style={{marginBottom:10}}>
+        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+          <Text style={ styles.button }>Menu</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={ styles.button }>Promotions</Text>
+        </TouchableOpacity>
+        </View>
+
+        </View>
+      );
+    }
   }
 }
 
 let styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
     backgroundColor: 'white',
-    marginTop: 45,
+    marginTop: 65
   },
   button: {
-    width: Dimensions.get('window').width - 60,
+    width: Dimensions.get('window').width - 40,
     marginLeft: 20,
-    marginRight: 20,
+    marginRight: 70,
     marginTop: 10,
     marginBottom: 10,
     padding: 10,
-    backgroundColor: '#87BFCE',
+    backgroundColor: '#691325',
     color: '#FFFFFF',
     textAlign: 'center',
     borderRadius: 4,
     alignItems: 'center'
-  },
-
-
+  }
 });
 
 export default JuryBox;

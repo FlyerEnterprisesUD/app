@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Navigator, ScrollView } from 'react-native'
+import { View, StyleSheet, Image, Navigator, ScrollView } from 'react-native';
 import { List, ListItem, SideMenu } from 'react-native-elements';
 import navigationBar from './components/NavBar';
 
@@ -18,6 +18,8 @@ import Settings from './screens/Settings';
 import ChangePassword from './screens/ChangePassword';
 import AccountSettings from './screens/AccountSettings';
 
+import QRCodeScreen from './screens/QRCodeScreen';
+
 class App extends Component {
   constructor() {
     super();
@@ -34,56 +36,56 @@ class App extends Component {
   }
 
   navigateToHome() {
-    this.refs.navigator.push({id:'Home'});
+    this.refs.navigator.push({id:'Home', user: this.props.user });
     this.setState({
       isOpen: false
     });
   }
 
   navigateToChill() {
-    this.refs.navigator.push({id:'The Chill'});
+    this.refs.navigator.push({id:'The Chill', user: this.props.user });
     this.setState({
       isOpen: false
     });
   }
 
   navigateToStusLanding() {
-    this.refs.navigator.push({id:'Stuart\'s Landing'});
+    this.refs.navigator.push({id:'Stuart\'s Landing', user: this.props.user });
     this.setState({
       isOpen: false
     });
   }
 
   navigateToArtStreetCafe() {
-    this.refs.navigator.push({id:'Art Street Cafe'});
+    this.refs.navigator.push({id:'Art Street Cafe', user: this.props.user });
     this.setState({
       isOpen: false
     });
   }
 
   navigateToJuryBox() {
-    this.refs.navigator.push({id:'Jury Box'});
+    this.refs.navigator.push({id:'Jury Box', user: this.props.user });
     this.setState({
       isOpen: false
     });
   }
 
   navigateToBlend() {
-    this.refs.navigator.push({id:'The Blend'});
+    this.refs.navigator.push({id:'The Blend', user: this.props.user });
     this.setState({
       isOpen: false
     });
   }
 
   navigateToBlendExpress() {
-    this.refs.navigator.push({id:'The Blend Express'});
+    this.refs.navigator.push({id:'The Blend Express', user: this.props.user });
     this.setState({
       isOpen: false
     });
   }
 
   navigateToGalley() {
-    this.refs.navigator.push({id:'The Galley'});
+    this.refs.navigator.push({id:'The Galley', user: this.props.user });
     this.setState({
       isOpen: false
     });
@@ -101,21 +103,21 @@ class App extends Component {
     const { toggleSideMenu } = false;
     switch(route.id) {
       case 'Home':
-        return(<Home navigator={ navigator } toggleSideMenu={ toggleSideMenu } {...route.passProps} />);
+        return(<Home navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'The Chill':
-        return(<Chill navigator={ navigator } toggleSideMenu={ toggleSideMenu } {...route.passProps} />);
+        return(<Chill navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } result={ route.result } {...route.passProps} />);
       case 'Stuart\'s Landing':
-        return(<StusLanding navigator={ navigator } toggleSideMenu={ toggleSideMenu } {...route.passProps} />);
+        return(<StusLanding navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'Art Street Cafe':
-        return(<ArtStreetCafe navigator={ navigator } toggleSideMenu={ toggleSideMenu } {...route.passProps} />);
+        return(<ArtStreetCafe navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'Jury Box':
-        return(<JuryBox navigator={ navigator } toggleSideMenu={ toggleSideMenu } {...route.passProps} />);
+        return(<JuryBox navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'The Blend':
-        return(<Blend navigator={ navigator } toggleSideMenu={ toggleSideMenu } {...route.passProps} />);
+        return(<Blend navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'The Blend Express':
-        return(<BlendExpress navigator={ navigator } toggleSideMenu={ toggleSideMenu } {...route.passProps} />);
+        return(<BlendExpress navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'The Galley':
-        return(<Galley navigator={ navigator } toggleSideMenu={ toggleSideMenu } {...route.passProps} />);
+        return(<Galley navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'Menu':
         return(<Menu navigator={ navigator } toggleSideMenu={ toggleSideMenu } menu={ route.menu } {...route.passProps} />);
       case 'Product':
@@ -128,6 +130,8 @@ class App extends Component {
         return(<ChangePassword navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'Account Settings':
         return(<AccountSettings navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
+      case 'QR Code':
+        return(<QRCodeScreen navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
     }
   }
 
@@ -142,7 +146,7 @@ class App extends Component {
     const stuslanding = require('./images/stuslanding.jpg');
     const settings = require('./images/settings.jpg');
 
-    const MenuComponent = (
+    const UserMenuComponent = (
       <View style={{flex: 1, backgroundColor: '#ededed'}}>
         <ScrollView style={{marginBottom: 20, backgroundColor: '#FFFFFF', marginTop: 20}}>
 
@@ -221,13 +225,13 @@ class App extends Component {
           </List>
 
           <List containerStyle={{marginTop: 0}}>
-          <ListItem
-            roundAvatar
-            avatar={settings}
-            onPress={this.navigateToSettings.bind(this)}
-            key='0'
-            title={'Settings'}
-          />
+            <ListItem
+              roundAvatar
+              avatar={settings}
+              onPress={this.navigateToSettings.bind(this)}
+              key='0'
+              title={'Settings'}
+            />
           </List>
 
         </ScrollView>
@@ -236,22 +240,38 @@ class App extends Component {
 
     const { toggleSideMenu } = this.props;
 
-    return(
-      <SideMenu
-        ref="sidemenu"
-        isOpen={ this.state.isOpen }
-        menu={ MenuComponent }
-        navigate={this.navigate}>
+    if(this.props.user.username != 'Guest'){
+      return(
+        <SideMenu
+          ref="sidemenu"
+          isOpen={ this.state.isOpen }
+          menu={ UserMenuComponent }
+          navigate={this.navigate}>
 
-        <Navigator
-          ref="navigator"
-          navigationBar={navigationBar(this.toggleSideMenu)}
-          initialRoute = {{ id: 'Home' }}
-          renderScene = { this.navigatorRenderScene } />
+          <Navigator
+            ref="navigator"
+            navigationBar={navigationBar(this.toggleSideMenu)}
+            initialRoute = {{ id: 'Home', user: this.props.user }}
+            renderScene = { this.navigatorRenderScene } />
+        </SideMenu>
+      );
+    } else {
+      return(
+        <SideMenu
+          ref="sidemenu"
+          isOpen={ this.state.isOpen }
+          menu={ UserMenuComponent }
+          navigate={this.navigate}>
 
-      </SideMenu>
+          <Navigator
+            ref="navigator"
+            navigationBar={navigationBar(this.toggleSideMenu)}
+            initialRoute = {{ id: 'Home', user: this.props.user }}
+            renderScene = { this.navigatorRenderScene } />
+        </SideMenu>
+      );
+    }
 
-    )
   }
 
 }

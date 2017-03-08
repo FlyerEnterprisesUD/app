@@ -18,7 +18,7 @@ class Create extends Component {
   // Create method
   async create() {
     this.setState({ visible: true });
-    this.setState({ error: '' });
+    this.setState({ error: 'Email confirmation doesnt work right now. let me know you created an account and ill manually confirm your account' });
     // Gets info from the state
     let username = this.state.username.trim();
     let password = this.state.password.trim();
@@ -29,12 +29,15 @@ class Create extends Component {
       this.setState({ error: 'All fields are required' });
       if(username == ''){
         this.refs.username.focus();
+        this.setState({ visible: false });
         return null;
       } else if(password == '') {
         this.refs.password.focus();
+        this.setState({ visible: false });
         return null;
       } else {
         this.refs.email.focus();
+        this.setState({ visible: false });
         return null;
       }
     }
@@ -43,6 +46,7 @@ class Create extends Component {
     if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(email)){
       this.setState({ error: 'Must be valid email' });
       this.refs.email.focus();
+      this.setState({ visible: false });
       return null;
     }
 
@@ -50,6 +54,7 @@ class Create extends Component {
     if(!email.includes("@udayton.edu")){
       this.setState({ error: 'Please enter your University of Dayton email' });
       this.refs.email.focus();
+      this.setState({ visible: false });
       return null;
     }
 
