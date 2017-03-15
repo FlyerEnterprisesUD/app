@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator, Image } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
 class Chill extends Component {
@@ -44,8 +44,8 @@ class Chill extends Component {
     this.props.navigator.push({ id: 'Menu', menu: this.state.menu });
   }
 
-  navigateToLoyalty() {
-    this.props.navigator.push({ id: 'QR Code', user: this.props.user });
+  navigateToRewards() {
+    this.props.navigator.push({ id: 'Cards', user: this.props.user, token: this.props.token, division: 'The CHILL' });
   }
 
   render() {
@@ -54,16 +54,19 @@ class Chill extends Component {
         <View style={styles.container}>
 
         <View>
-        <Text>{this.props.result}</Text>
+        <Image
+          style={{width: Dimensions.get('window').width, height: 200}}
+          source={{uri: 'http://i0.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/IMG_2555-1.jpg?zoom=2&resize=1180%2C300'}}
+        />
+        <Text style={{marginTop: 10, textAlign:'center'}}>The CHILL</Text>
         </View>
 
         <View>
-        <Text>The CHILL</Text>
         <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
         <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
         <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        <Text style={{marginLeft: 10}}>Sunday - Thursday 11am - 11pm</Text>
+        <Text style={{marginLeft: 10}}>Friday - Saturday 11am - 9pm</Text>
         </View>
 
         <View style={{marginBottom:10}}>
@@ -73,8 +76,8 @@ class Chill extends Component {
         <TouchableOpacity>
           <Text style={ styles.button }>Promotions</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={ this.navigateToLoyalty.bind(this) }>
-          <Text style={ styles.button }>Loyalty</Text>
+        <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
+          <Text style={ styles.button }>Rewards</Text>
         </TouchableOpacity>
         </View>
 
@@ -85,16 +88,19 @@ class Chill extends Component {
         <View style={styles.container}>
 
         <View>
-        <Text>PICTURE GOES HERE!</Text>
+        <Image
+          style={{width: Dimensions.get('window').width, height: 200}}
+          source={{uri: 'http://i0.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/IMG_2555-1.jpg?zoom=2&resize=1180%2C300'}}
+        />
+        <Text style={{marginTop: 10, textAlign:'center'}}>The CHILL</Text>
         </View>
 
         <View>
-        <Text>The CHILL</Text>
         <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
         <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
         <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        <Text style={{marginLeft: 10}}>Sunday - Thursday 11am - 11pm</Text>
+        <Text style={{marginLeft: 10}}>Friday - Saturday 11am - 9pm</Text>
         </View>
 
         <View style={{marginBottom:10}}>

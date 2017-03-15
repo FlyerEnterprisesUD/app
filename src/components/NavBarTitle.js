@@ -8,6 +8,55 @@ class NavBarTitle extends Component {
   }
 
   render() {
+    if(this.props.title == 'The Chill') {
+      return(
+        <View>
+          <Text style={ styles.text }>The CHILL</Text>
+        </View>
+      );
+    }
+    if(this.props.title == 'Stuart\'s Landing') {
+      return(
+        <View>
+          <Text style={ styles.text }>Stuarts Landing</Text>
+        </View>
+      );
+    }
+    if(this.props.title == 'Art Street Cafe') {
+      return(
+        <View>
+          <Text style={ styles.text }>ArtStreet Cafe</Text>
+        </View>
+      );
+    }
+    if(this.props.title == 'Jury Box') {
+      return(
+        <View>
+          <Text style={ styles.text }>The Jury Box</Text>
+        </View>
+      );
+    }
+    if(this.props.title == 'The Blend') {
+      return(
+        <View>
+          <Text style={ styles.text }>The Blend</Text>
+        </View>
+      );
+    }
+    if(this.props.title == 'The Blend Express') {
+      return(
+        <View>
+          <Text style={ styles.text }>The Blend Express</Text>
+        </View>
+      );
+    }
+    if(this.props.title == 'The Galley') {
+      return(
+        <View>
+          <Text style={ styles.text }>The Galley</Text>
+        </View>
+      );
+    }
     return(
       <View>
         <Text style={ styles.text }>{this.props.title}</Text>

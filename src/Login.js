@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Image } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 class Login extends Component {
@@ -69,7 +69,7 @@ class Login extends Component {
           return responseJson;
         } else {
           this.setState({ user: responseJson.response.user });
-          this.props.navigator.replace({id: 'App', user: this.state.user});
+          this.props.navigator.replace({id: 'App', user: this.state.user, token: this.state.token});
         }
 
       } catch (err) {
@@ -110,7 +110,7 @@ class Login extends Component {
         this.setState({ user: responseJson.response.user });
         this.setState({ token: responseJson.response.token });
         this.persistToken();
-        this.props.navigator.replace({id: 'App', user: this.state.user});
+        this.props.navigator.replace({id: 'App', user: this.state.user, token: this.state.token});
       }
 
 
@@ -135,13 +135,18 @@ class Login extends Component {
   }
 
   render() {
+    const fe = require('./images/single_color_red.png');
+
     return(
 
       <View style={ styles.container }>
         <Spinner visible={this.state.visible} />
 
-        <View>
-        <Text style={ styles.title }>Flyer Enterprises</Text>
+        <View style={{alignItems: 'center'}}>
+          <Image
+            style={{width: 257,height: 220}}
+            source={fe}
+          />
         </View>
 
         <View>

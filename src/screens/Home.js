@@ -93,7 +93,7 @@ class Home extends Component {
   render() {
     return(
       <View style={ styles.container }>
-        <DivisionBubbles navigator={ this.props.navigator } user={ this.props.user } />
+        <DivisionBubbles navigator={ this.props.navigator } user={ this.props.user } token={ this.props.token } />
 
         <Carousel animate={true} delay={5000} indicatorAtBottom={true} indicatorOffset={0}>
           {

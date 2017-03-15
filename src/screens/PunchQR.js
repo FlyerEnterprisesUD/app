@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Navigator, VibrationIOS, TouchableOpacity, Tex
 
 import Camera from 'react-native-camera';
 
-var QRCodeScreen = React.createClass({
+var PunchQR = React.createClass({
 
   propTypes: {
     cancelButtonVisible: React.PropTypes.bool,
@@ -48,23 +48,23 @@ var QRCodeScreen = React.createClass({
   },
 
   async punch(result) {
-    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/test';
-    //var url = 'http://localhost:5000/user/test';
-
     try {
       let response = await fetch(result, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          token: this.props.token,
+          userId: this.props.user.id,
+          cardId: this.props.card.cardId
+        })
       });
 
       let responseJson = await response.json();
 
-      if(responseJson.response.success == true)
-        this.props.navigator.replace({id: 'The Chill', user: this.props.user});
-
+      return responseJson;
     } catch (err) {
       console.error(err);
     }
@@ -136,4 +136,4 @@ var styles = StyleSheet.create({
   },
 });
 
-export default QRCodeScreen;
+export default PunchQR;

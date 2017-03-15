@@ -52,20 +52,14 @@ class StusLanding extends Component {
         <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
         <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
         <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+        <Text style={{marginLeft: 10}}></Text>
+        <Text style={{marginLeft: 10}}></Text>
         </View>
 
         <View style={{marginBottom:10}}>
-        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-          <Text style={ styles.button }>Menu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={ styles.button }>Promotions</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={ styles.button }>Loyalty</Text>
-        </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={ styles.button }>Promotions</Text>
+          </TouchableOpacity>
         </View>
 
         </View>
@@ -88,9 +82,6 @@ class StusLanding extends Component {
         </View>
 
         <View style={{marginBottom:10}}>
-        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-          <Text style={ styles.button }>Menu</Text>
-        </TouchableOpacity>
         <TouchableOpacity>
           <Text style={ styles.button }>Promotions</Text>
         </TouchableOpacity>

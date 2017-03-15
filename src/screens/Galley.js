@@ -44,6 +44,10 @@ class Galley extends Component {
     this.props.navigator.push({ id: 'Menu', menu: this.state.menu });
   }
 
+  navigateToRewards() {
+    this.props.navigator.push({ id: 'Cards', user: this.props.user, token: this.props.token, division: 'The Galley' });
+  }
+
   render() {
     if(this.props.user.username != 'Guest') {
       return(
@@ -69,8 +73,8 @@ class Galley extends Component {
         <TouchableOpacity>
           <Text style={ styles.button }>Promotions</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={ styles.button }>Loyalty</Text>
+        <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
+          <Text style={ styles.button }>Rewards</Text>
         </TouchableOpacity>
         </View>
 

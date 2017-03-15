@@ -4,31 +4,31 @@ import { StyleSheet, ScrollView, View, Image, TouchableOpacity, Text, Navigator 
 class DivisionBubbles extends Component {
 
   navigateToChill() {
-    this.props.navigator.push({id:'The Chill', user: this.props.user });
+    this.props.navigator.push({id:'The Chill', user: this.props.user, token: this.props.token });
   }
 
   navigateToStusLanding() {
-    this.props.navigator.push({id:'Stuart\'s Landing', user: this.props.user });
+    this.props.navigator.push({id:'Stuart\'s Landing', user: this.props.user, token: this.props.token });
   }
 
   navigateToArtStreetCafe() {
-    this.props.navigator.push({id:'Art Street Cafe', user: this.props.user });
+    this.props.navigator.push({id:'Art Street Cafe', user: this.props.user, token: this.props.token });
   }
 
   navigateToBlend() {
-    this.props.navigator.push({id:'The Blend', user: this.props.user });
+    this.props.navigator.push({id:'The Blend', user: this.props.user, token: this.props.token });
   }
 
   navigateToBlendExpress() {
-    this.props.navigator.push({id:'The Blend Express', user: this.props.user });
+    this.props.navigator.push({id:'The Blend Express', user: this.props.user, token: this.props.token });
   }
 
   navigateToGalley() {
-    this.props.navigator.push({id:'The Galley', user: this.props.user });
+    this.props.navigator.push({id:'The Galley', user: this.props.user, token: this.props.token });
   }
 
   navigateToJuryBox() {
-    this.props.navigator.push({id:'Jury Box', user: this.props.user });
+    this.props.navigator.push({id:'Jury Box', user: this.props.user, token: this.props.token });
   }
 
   render() {

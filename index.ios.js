@@ -18,7 +18,7 @@ class app extends Component {
       case 'Email':
         return(<Email navigator={ navigator } />);
       case 'App':
-        return(<App user={ route.user } nav={ navigator } />);
+        return(<App user={ route.user } token={ route.token } nav={ navigator } />);
     }
   }
 
