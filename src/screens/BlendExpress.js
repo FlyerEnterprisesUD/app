@@ -47,6 +47,10 @@ class BlendExpress extends Component {
     this.props.navigator.push({ id: 'Cards', user: this.props.user, token: this.props.token, division: 'The Blend Express' });
   }
 
+  navigateToPromotions() {
+    this.props.navigator.push({ id: 'Promotions', user: this.props.user, token: this.props.token, division: 'The Blend Express' });
+  }
+
   render() {
     if(this.props.user.username != 'Guest') {
       return(
@@ -69,7 +73,7 @@ class BlendExpress extends Component {
         <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
           <Text style={ styles.button }>Menu</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
           <Text style={ styles.button }>Promotions</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
@@ -100,7 +104,7 @@ class BlendExpress extends Component {
         <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
           <Text style={ styles.button }>Menu</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
           <Text style={ styles.button }>Promotions</Text>
         </TouchableOpacity>
         </View>

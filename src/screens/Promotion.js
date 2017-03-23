@@ -9,9 +9,9 @@ class Promotion extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <Text>Title: {this.props.promo.title}</Text>
-        <Text>Location: {this.props.promo.location}</Text>
-        <Text>Body: {this.props.promo.body}</Text>
+        <Text>Title: {this.props.promotion.title}</Text>
+        <Text>Division: {this.props.promotion.division}</Text>
+        <Text>Body: {this.props.promotion.body}</Text>
       </View>
     );
   }

@@ -57,6 +57,7 @@ class Rewards extends Component {
                 <View style={styles.text}>
                   <Text>{l.card.name}</Text>
                   <Text>{l.division}</Text>
+                  <Text>{l.total}</Text>
                 </View>
               </View>
             </TouchableOpacity>

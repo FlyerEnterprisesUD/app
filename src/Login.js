@@ -121,7 +121,8 @@ class Login extends Component {
 
   guest() {
     var user = {
-      username: 'Guest'
+      username: 'Guest',
+      name: 'Guest'
     };
     this.props.navigator.replace({id: 'App', user: user});
   }

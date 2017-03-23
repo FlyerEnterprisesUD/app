@@ -47,6 +47,10 @@ class JuryBox extends Component {
     this.props.navigator.push({ id: 'Cards', user: this.props.user, token: this.props.token, division: 'The Jury Box' });
   }
 
+  navigateToPromotions() {
+    this.props.navigator.push({ id: 'Promotions', user: this.props.user, token: this.props.token, division: 'The Jury Box' });
+  }
+
   render() {
     if(this.props.user.username != 'Guest') {
       return(
@@ -72,7 +76,7 @@ class JuryBox extends Component {
         <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
           <Text style={ styles.button }>Menu</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
           <Text style={ styles.button }>Promotions</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
@@ -106,7 +110,7 @@ class JuryBox extends Component {
         <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
           <Text style={ styles.button }>Menu</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
           <Text style={ styles.button }>Promotions</Text>
         </TouchableOpacity>
         </View>

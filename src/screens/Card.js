@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, ScrollView, RefreshControl } from 'react-native';
 
 class Card extends Component {
   constructor(props) {
@@ -7,7 +7,8 @@ class Card extends Component {
     this.state = {
       card: {},
       points: 0,
-      favorite: 0
+      favorite: 0,
+      refreshing: false
     };
     this.getCard = this.getCard.bind(this);
   }
@@ -82,21 +83,37 @@ class Card extends Component {
   }
 
   navigateToQR() {
-    var newPoints = this.state.points + 1;
-    this.setState({points: newPoints});
     this.props.navigator.push({ id: 'PunchQR', user: this.props.user, token: this.props.token, card: this.state.card });
   }
 
   redeem() {
-    this.setState({points: 0});
     this.props.navigator.push({ id: 'PunchQR', user: this.props.user, token: this.props.token, card: this.state.card });
   }
 
+  onRefresh() {
+    this.setState({refreshing: true});
+    this.getCard().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
   render() {
+    var StusVIP = "";
+    if(this.props.card.division == 'Stuarts Landing' && this.state.points == 20){
+      StusVIP = "| You are a Stu's VIP!";
+    }
+
     return(
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh.bind(this)}
+          />
+        }>
         <View>
-          <Text>{this.props.card.name}</Text>
+          <Text>{this.props.card.name} {StusVIP}</Text>
           <Text>{this.state.points} / {this.props.card.total}</Text>
           <TouchableOpacity onPress={ this.favorite.bind(this) }>
             <Text style={ styles.button }>Favorite: {this.state.favorite}</Text>
@@ -111,7 +128,7 @@ class Card extends Component {
             <Text style={ styles.button }>Redeem</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

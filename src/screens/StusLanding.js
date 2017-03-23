@@ -38,6 +38,14 @@ class StusLanding extends Component {
     }
   }
 
+  navigateToPromotions() {
+    this.props.navigator.push({ id: 'Promotions', user: this.props.user, token: this.props.token, division: 'Stuarts Landing' });
+  }
+
+  navigateToRewards() {
+    this.props.navigator.push({ id: 'Cards', user: this.props.user, token: this.props.token, division: 'Stuarts Landing' });
+  }
+
   render() {
     if(this.props.user.username != 'Guest') {
       return(
@@ -57,9 +65,12 @@ class StusLanding extends Component {
         </View>
 
         <View style={{marginBottom:10}}>
-          <TouchableOpacity>
-            <Text style={ styles.button }>Promotions</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
+          <Text style={ styles.button }>Promotions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
+          <Text style={ styles.button }>Rewards</Text>
+        </TouchableOpacity>
         </View>
 
         </View>
@@ -82,7 +93,7 @@ class StusLanding extends Component {
         </View>
 
         <View style={{marginBottom:10}}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
           <Text style={ styles.button }>Promotions</Text>
         </TouchableOpacity>
         </View>

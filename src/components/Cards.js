@@ -20,6 +20,7 @@ class Cards extends Component {
               <View style={styles.text}>
                 <Text>{l.name}</Text>
                 <Text>{l.division}</Text>
+                <Text>{l.total}</Text>
               </View>
             </View>
           </TouchableOpacity>

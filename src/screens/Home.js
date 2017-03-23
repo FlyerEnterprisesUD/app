@@ -3,53 +3,6 @@ import { View, Text, StyleSheet, Navigator, Image, Dimensions, TouchableHighligh
 import DivisionBubbles from '../components/DivisionBubbles';
 import Carousel from 'react-native-carousel';
 
-let  promotions =  [
-    {
-      "image": "http://i1.wp.com/flyerenterprises.com/wp-content/uploads/2016/01/IMG_2516.jpg?zoom=2&resize=1180%2C300",
-      "title": "Comment",
-      "location": "All",
-      "body": "THis is a full story"
-    },
-    {
-      "image": "http://i1.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/Copy-of-IMG_2429.jpg?zoom=2&resize=1180%2C300",
-      "title": "Comment 2",
-      "location": "All",
-      "body": "THis is a full story"
-    },
-    {
-      "image": "http://i0.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/Copy-of-IMG_2389.jpg?zoom=2&resize=1180%2C300",
-      "title": "Comment 3",
-      "location": "All",
-      "body": "THis is a full story"
-    },
-    {
-      "image": "http://i0.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/IMG_2555-1.jpg?zoom=2&resize=1180%2C300",
-      "title": "Comment 4",
-      "location": "All",
-      "body": "THis is a full story"
-    },
-    {
-      "image": "http://i2.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/IMG_2504.jpg?zoom=2&resize=1180%2C300",
-      "title": "Comment 5",
-      "location": "All",
-      "body": "THis is a full story"
-    },
-    {
-      "image": "http://i1.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/IMG_2611.jpg?zoom=2&resize=1180%2C300",
-      "title": "Comment 6",
-      "location": "All",
-      "body": "THis is a full story"
-    },
-    {
-      "image": "http://i2.wp.com/flyerenterprises.com/wp-content/uploads/2016/01/IMG_2450.jpg?zoom=2&resize=1180%2C300",
-      "title": "Comment 7",
-      "location": "All",
-      "body": "THis is a full story"
-    }
-  ]
-
-
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -60,12 +13,13 @@ class Home extends Component {
     this.getPromotions = this.getPromotions.bind(this);
   }
 
-  navigateTo(promo) {
-    this.props.navigator.push({id: 'Promotion', promo: promo});
+  navigateToPromotions(division) {
+    this.props.navigator.push({ id: 'Promotions', user: this.props.user, token: this.props.token, division: division });
   }
 
   componentWillMount() {
     this.getPromotions();
+    console.log(this.props.user);
   }
 
   async getPromotions() {
@@ -91,25 +45,83 @@ class Home extends Component {
   }
 
   render() {
+
+    var BlendHome = require('../images/BlendHome.jpg');
+    var BlendExpressHome = require('../images/BlendExpressHome.jpg');
+    var ChillHome = require('../images/TheChill.jpg');
+    var GalleyHome = require('../images/GalleyHome.jpg');
+    var StusHome = require('../images/StusHome.jpg');
+    var ArtStreetCafeHome = require('../images/StusHome.jpg');
+    var JuryBoxHome = require('../images/StusHome.jpg');
+
     return(
       <View style={ styles.container }>
         <DivisionBubbles navigator={ this.props.navigator } user={ this.props.user } token={ this.props.token } />
 
         <Carousel animate={true} delay={5000} indicatorAtBottom={true} indicatorOffset={0}>
-          {
-            promotions.map((l, i) => (
-              <View key={i}>
-                <Image style={styles.image} source={{uri: l.image}}>
-                <TouchableHighlight onPress={this.navigateTo.bind(this, l)}>
-                  <View>
-                    <Text style={styles.text}>{l.title}</Text>
-                  </View>
-                  </TouchableHighlight>
-                </Image>
+          <View key={0}>
+            <Image style={styles.image} source={BlendHome}>
+            <TouchableHighlight onPress={this.navigateToPromotions.bind(this, 'The Blend')}>
+              <View>
+                <Text style={styles.text}>The Blend</Text>
               </View>
-            ))
-          }
-
+              </TouchableHighlight>
+            </Image>
+          </View>
+          <View key={1}>
+            <Image style={styles.image} source={ChillHome}>
+            <TouchableHighlight onPress={this.navigateToPromotions.bind(this, 'The CHILL')}>
+              <View>
+                <Text style={styles.text}>The CHILL</Text>
+              </View>
+              </TouchableHighlight>
+            </Image>
+          </View>
+          <View key={2}>
+            <Image style={styles.image} source={GalleyHome}>
+            <TouchableHighlight onPress={this.navigateToPromotions.bind(this, 'The Galley')}>
+              <View>
+                <Text style={styles.text}>The Galley</Text>
+              </View>
+              </TouchableHighlight>
+            </Image>
+          </View>
+          <View key={3}>
+            <Image style={styles.image} source={BlendExpressHome}>
+            <TouchableHighlight onPress={this.navigateToPromotions.bind(this, 'The Blend Express')}>
+              <View>
+                <Text style={styles.text}>The Blend Express</Text>
+              </View>
+              </TouchableHighlight>
+            </Image>
+          </View>
+          <View key={4}>
+            <Image style={styles.image} source={StusHome}>
+            <TouchableHighlight onPress={this.navigateToPromotions.bind(this, 'Stuarts Landing')}>
+              <View>
+                <Text style={styles.text}>Stuarts Landing</Text>
+              </View>
+              </TouchableHighlight>
+            </Image>
+          </View>
+          <View key={5}>
+            <Image style={styles.image} source={JuryBoxHome}>
+            <TouchableHighlight onPress={this.navigateToPromotions.bind(this, 'The Jury Box')}>
+              <View>
+                <Text style={styles.text}>The Jury Box</Text>
+              </View>
+              </TouchableHighlight>
+            </Image>
+          </View>
+          <View key={6}>
+            <Image style={styles.image} source={ArtStreetCafeHome}>
+            <TouchableHighlight onPress={this.navigateToPromotions.bind(this, 'ArtStreet Cafe')}>
+              <View>
+                <Text style={styles.text}>ArtStreet Cafe</Text>
+              </View>
+              </TouchableHighlight>
+            </Image>
+          </View>
         </Carousel>
 
       </View>

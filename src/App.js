@@ -21,6 +21,10 @@ import Cards from './screens/Cards';
 import ChangePassword from './screens/ChangePassword';
 import AccountSettings from './screens/AccountSettings';
 import PunchQR from './screens/PunchQR';
+import Approve from './screens/Approve';
+import Submit from './screens/Submit';
+import EditSubmit from './screens/EditSubmit';
+import Promotions from './screens/Promotions';
 
 class App extends Component {
   constructor() {
@@ -107,6 +111,20 @@ class App extends Component {
     });
   }
 
+  navigateToApprove() {
+    this.refs.navigator.push({id:'Approve', user: this.props.user, token: this.props.token });
+    this.setState({
+      isOpen: false
+    });
+  }
+
+  navigateToSubmit() {
+    this.refs.navigator.push({id:'Submit', user: this.props.user, token: this.props.token });
+    this.setState({
+      isOpen: false
+    });
+  }
+
   navigatorRenderScene(route, navigator) {
     _navigator = navigator;
     const { toggleSideMenu } = false;
@@ -132,7 +150,7 @@ class App extends Component {
       case 'Product':
         return(<Product navigator={ navigator } toggleSideMenu={ toggleSideMenu } product={ route.product } {...route.passProps} />);
       case 'Promotion':
-        return(<Promotion navigator={ navigator } toggleSideMenu={ toggleSideMenu } promo={ route.promo } {...route.passProps} />);
+        return(<Promotion navigator={ navigator } toggleSideMenu={ toggleSideMenu } promotion={ route.promotion } {...route.passProps} />);
       case 'Settings':
         return(<Settings navigator={ navigator } nav={ route.nav } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'Change Password':
@@ -147,6 +165,14 @@ class App extends Component {
         return(<Card navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } card={ route.card } token={ route.token } {...route.passProps} />);
       case 'Cards':
         return(<Cards navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } cards={ route.cards } division={ route.division} {...route.passProps} />);
+      case 'Approve':
+        return(<Approve navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+      case 'Promotions':
+        return(<Promotions navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } division={ route.division } {...route.passProps} />);
+      case 'Submit':
+        return(<Submit navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+      case 'EditSubmit':
+        return(<EditSubmit navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } promotion={ route.promotion } {...route.passProps} />);
     }
   }
 
@@ -161,6 +187,13 @@ class App extends Component {
     const stuslanding = require('./images/stuslanding.jpg');
     const settings = require('./images/settings.jpg');
 
+    var user = '';
+    if(this.props.user.name != null) {
+      user = this.props.user.name;
+    } else {
+      user = this.props.user.username;
+    }
+
     const UserMenuComponent = (
       <View style={{flex: 1, backgroundColor: '#ededed'}}>
         <ScrollView style={{marginBottom: 20, backgroundColor: '#FFFFFF', marginTop: 20}}>
@@ -168,7 +201,7 @@ class App extends Component {
           <List containerStyle={{marginTop: 0}}>
           <ListItem
             key='0'
-            title={ 'Welcome, ' + this.props.user.username}
+            title={ 'Welcome, ' + user}
             hideChevron
           />
 
@@ -268,7 +301,7 @@ class App extends Component {
           <List containerStyle={{marginTop: 0}}>
           <ListItem
             key='0'
-            title={ 'Welcome, ' + this.props.user.username}
+            title={ 'Welcome, ' + user}
             hideChevron
           />
 
@@ -360,7 +393,7 @@ class App extends Component {
           <List containerStyle={{marginTop: 0}}>
           <ListItem
             key='0'
-            title={ 'Welcome, ' + this.props.user.username}
+            title={ 'Welcome, ' + user}
             hideChevron
           />
 
@@ -443,6 +476,7 @@ class App extends Component {
             <ListItem
               roundAvatar
               avatar={settings}
+              onPress={this.navigateToSubmit.bind(this)}
               key='0'
               title={'Submit'}
             />
@@ -467,7 +501,7 @@ class App extends Component {
           <List containerStyle={{marginTop: 0}}>
           <ListItem
             key='0'
-            title={ 'Welcome, ' + this.props.user.username}
+            title={ 'Welcome, ' + user}
             hideChevron
           />
 
@@ -550,6 +584,7 @@ class App extends Component {
             <ListItem
               roundAvatar
               avatar={settings}
+              onPress={this.navigateToSubmit.bind(this)}
               key='0'
               title={'Submit'}
             />
@@ -557,6 +592,7 @@ class App extends Component {
             <ListItem
               roundAvatar
               avatar={settings}
+              onPress={this.navigateToApprove.bind(this)}
               key='1'
               title={'Approve'}
             />

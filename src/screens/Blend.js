@@ -47,74 +47,70 @@ class Blend extends Component {
     this.props.navigator.push({ id: 'Cards', user: this.props.user, token: this.props.token, division: 'The Blend' });
   }
 
+  navigateToPromotions() {
+    this.props.navigator.push({ id: 'Promotions', user: this.props.user, token: this.props.token, division: 'The Blend' });
+  }
+
   render() {
     if(this.props.user.username != 'Guest') {
       return(
         <View style={styles.container}>
+          <View>
+            <Image
+              style={{width: Dimensions.get('window').width, height: 200}}
+              source={{uri: 'http://i1.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/Copy-of-IMG_2429.jpg?zoom=2&resize=1180%2C300'}}
+            />
+          </View>
 
-        <View>
-        <Image
-          style={{width: Dimensions.get('window').width, height: 200}}
-          source={{uri: 'http://i1.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/Copy-of-IMG_2429.jpg?zoom=2&resize=1180%2C300'}}
-        />
-        <Text style={{marginTop: 10, textAlign:'center'}}>The Blend</Text>
-        </View>
+          <View>
+            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+            <Text style={{textAlign: 'center', marginBottom: 5}}> { this.state.about.location }</Text>
+            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+            <Text style={{textAlign: 'center'}}>Monday - Thursday 8am - 12am</Text>
+            <Text style={{textAlign: 'center'}}>Friday 8am - 3:30pm</Text>
+            <Text style={{textAlign: 'center'}}>Sunday 5pm - 12am</Text>
+          </View>
 
-        <View>
-
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>Monday - Thursday 8am - 12am</Text>
-        <Text style={{marginLeft: 10}}>Friday 8am - 3:30pm</Text>
-        <Text style={{marginLeft: 10}}>Sunday 5pm - 12am</Text>
-        </View>
-
-        <View style={{marginBottom:10}}>
-        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-          <Text style={ styles.button }>Menu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={ styles.button }>Promotions</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
-          <Text style={ styles.button }>Rewards</Text>
-        </TouchableOpacity>
-        </View>
-
+          <View style={{marginBottom:10}}>
+            <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+              <Text style={ styles.button }>Menu</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
+              <Text style={ styles.button }>Promotions</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
+              <Text style={ styles.button }>Rewards</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       );
     } else {
       return(
         <View style={styles.container}>
+          <View>
+            <Image
+              style={{width: Dimensions.get('window').width, height: 200}}
+              source={{uri: 'http://i1.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/Copy-of-IMG_2429.jpg?zoom=2&resize=1180%2C300'}}
+            />
+          </View>
 
-        <View>
-        <Image
-          style={{width: Dimensions.get('window').width, height: 200}}
-          source={{uri: 'http://i1.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/Copy-of-IMG_2429.jpg?zoom=2&resize=1180%2C300'}}
-        />
-        <Text style={{marginTop: 10, textAlign:'center'}}>The Blend</Text>
-        </View>
+          <View>
+            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+            <Text style={{textAlign: 'center', marginBottom: 5}}> { this.state.about.location }</Text>
+            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+            <Text style={{textAlign: 'center'}}>Monday - Thursday 8am - 12am</Text>
+            <Text style={{textAlign: 'center'}}>Friday 8am - 3:30pm</Text>
+            <Text style={{textAlign: 'center'}}>Sunday 5pm - 12am</Text>
+          </View>
 
-        <View>
-        <Text>The Blend</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>Monday - Thursday 8am - 12am</Text>
-        <Text style={{marginLeft: 10}}>Friday 8am - 3:30pm</Text>
-        <Text style={{marginLeft: 10}}>Sunday 5pm - 12am</Text>
-        </View>
-
-        <View style={{marginBottom:10}}>
-        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-          <Text style={ styles.button }>Menu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={ styles.button }>Promotions</Text>
-        </TouchableOpacity>
-        </View>
-
+          <View style={{marginBottom:10}}>
+            <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+              <Text style={ styles.button }>Menu</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
+              <Text style={ styles.button }>Promotions</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       );
     }

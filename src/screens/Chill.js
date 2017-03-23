@@ -48,70 +48,74 @@ class Chill extends Component {
     this.props.navigator.push({ id: 'Cards', user: this.props.user, token: this.props.token, division: 'The CHILL' });
   }
 
+  navigateToPromotions() {
+    this.props.navigator.push({ id: 'Promotions', user: this.props.user, token: this.props.token, division: 'The CHILL' });
+  }
+
   render() {
+    var home = require('../images/MainChill.jpg');
+
     if(this.props.user.username != 'Guest') {
       return(
         <View style={styles.container}>
+          <View>
+            <Image
+              style={{width: Dimensions.get('window').width, height: 200}}
+              source={home}
+            />
+          </View>
 
-        <View>
-        <Image
-          style={{width: Dimensions.get('window').width, height: 200}}
-          source={{uri: 'http://i0.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/IMG_2555-1.jpg?zoom=2&resize=1180%2C300'}}
-        />
-        <Text style={{marginTop: 10, textAlign:'center'}}>The CHILL</Text>
-        </View>
+          <View>
+            <View>
+            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+            <Text style={{textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
+            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+            <Text style={{textAlign: 'center'}}>Sunday - Thursday 11am - 11pm</Text>
+            <Text style={{textAlign: 'center'}}>Friday - Saturday 11am - 9pm</Text>
+            </View>
+          </View>
 
-        <View>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>Sunday - Thursday 11am - 11pm</Text>
-        <Text style={{marginLeft: 10}}>Friday - Saturday 11am - 9pm</Text>
-        </View>
-
-        <View style={{marginBottom:10}}>
-        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-          <Text style={ styles.button }>Menu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={ styles.button }>Promotions</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
-          <Text style={ styles.button }>Rewards</Text>
-        </TouchableOpacity>
-        </View>
-
+          <View style={{marginBottom:10}}>
+            <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+              <Text style={ styles.button }>Menu</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
+              <Text style={ styles.button }>Promotions</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
+              <Text style={ styles.button }>Rewards</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       );
     } else {
       return(
         <View style={styles.container}>
+          <View>
+            <Image
+              style={{width: Dimensions.get('window').width, height: 200}}
+              source={{uri: 'http://i0.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/IMG_2555-1.jpg?zoom=2&resize=1180%2C300'}}
+            />
+          </View>
 
-        <View>
-        <Image
-          style={{width: Dimensions.get('window').width, height: 200}}
-          source={{uri: 'http://i0.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/IMG_2555-1.jpg?zoom=2&resize=1180%2C300'}}
-        />
-        <Text style={{marginTop: 10, textAlign:'center'}}>The CHILL</Text>
-        </View>
+          <View>
+            <View>
+            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+            <Text style={{textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
+            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+            <Text style={{textAlign: 'center'}}>Sunday - Thursday 11am - 11pm</Text>
+            <Text style={{textAlign: 'center'}}>Friday - Saturday 11am - 9pm</Text>
+            </View>
+          </View>
 
-        <View>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>Sunday - Thursday 11am - 11pm</Text>
-        <Text style={{marginLeft: 10}}>Friday - Saturday 11am - 9pm</Text>
-        </View>
-
-        <View style={{marginBottom:10}}>
-        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-          <Text style={ styles.button }>Menu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={ styles.button }>Promotions</Text>
-        </TouchableOpacity>
-        </View>
-
+          <View style={{marginBottom:10}}>
+            <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+              <Text style={ styles.button }>Menu</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
+              <Text style={ styles.button }>Promotions</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       );
     }
@@ -130,7 +134,7 @@ let styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 70,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 5,
     padding: 10,
     backgroundColor: '#87BFCE',
     color: '#FFFFFF',

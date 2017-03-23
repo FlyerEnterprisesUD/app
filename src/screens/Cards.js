@@ -7,13 +7,12 @@ class Cards extends Component {
     super(props);
     this.state = {
       cards: [],
-    }
+    };
     this.getCards = this.getCards.bind(this);
   }
 
   componentWillMount() {
     this.getCards();
-    console.log(this.props.division);
   }
 
   async getCards() {
