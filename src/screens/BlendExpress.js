@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator, Image } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
 class BlendExpress extends Component {
@@ -52,21 +52,27 @@ class BlendExpress extends Component {
   }
 
   render() {
+    var home = require('../images/BlendExpressMain.png');
+
     if(this.props.user.username != 'Guest') {
       return(
         <View style={styles.container}>
 
         <View>
-        <Text>PICTURE GOES HERE!</Text>
+          <Image
+            style={{width: Dimensions.get('window').width, height: 200}}
+            source={home}
+          />
         </View>
 
         <View>
-        <Text>The Blend Express</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+          <View>
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+          <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Monday - Thursday 7:45am - 8pm</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Friday 8am - 3:30pm</Text>
+          </View>
         </View>
 
         <View style={{marginBottom:10}}>
@@ -88,16 +94,20 @@ class BlendExpress extends Component {
         <View style={styles.container}>
 
         <View>
-        <Text>PICTURE GOES HERE!</Text>
+          <Image
+            style={{width: Dimensions.get('window').width, height: 200}}
+            source={home}
+          />
         </View>
 
         <View>
-        <Text>The Blend Express</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+          <View>
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+          <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Monday - Thursday 7:45am - 8pm</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Friday 8am - 3:30pm</Text>
+          </View>
         </View>
 
         <View style={{marginBottom:10}}>
@@ -127,7 +137,7 @@ let styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 70,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 5,
     padding: 10,
     backgroundColor: '#00AEEF',
     color: '#FFFFFF',

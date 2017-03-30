@@ -9,9 +9,9 @@ class Promotion extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <Text>Title: {this.props.promotion.title}</Text>
-        <Text>Division: {this.props.promotion.division}</Text>
-        <Text>Body: {this.props.promotion.body}</Text>
+        <Text style={{fontSize: 18, marginBottom: 15}}>{this.props.promotion.title}</Text>
+        <Text style={{fontSize: 18, marginBottom: 15}}>Where: {this.props.promotion.division}</Text>
+        <Text style={{fontSize: 18}}>{this.props.promotion.body}</Text>
       </View>
     );
   }
@@ -21,7 +21,9 @@ let styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginTop: 65
+    marginTop: 65,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 

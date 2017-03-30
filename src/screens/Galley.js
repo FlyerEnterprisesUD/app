@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator, Image } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
 class Galley extends Component {
@@ -53,34 +53,41 @@ class Galley extends Component {
   }
 
   render() {
+    var home = require('../images/GalleyMain.jpg');
+
     if(this.props.user.username != 'Guest') {
       return(
         <View style={styles.container}>
+          <View>
+            <Image
+              style={{width: Dimensions.get('window').width, height: 200}}
+              source={home}
+            />
+          </View>
 
-        <View>
-        <Text>PICTURE GOES HERE!</Text>
-        </View>
+          <View>
+            <View>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+            <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Monday – Thursday 8:30am – 11pm</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Friday 8:30am – 12am</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Saturday 11am – 12pm</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Sunday 11am – 11pm</Text>
+            </View>
+          </View>
 
-        <View>
-        <Text>The Galley</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-        </View>
-
-        <View style={{marginBottom:10}}>
-        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-          <Text style={ styles.button }>Menu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
-          <Text style={ styles.button }>Promotions</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
-          <Text style={ styles.button }>Rewards</Text>
-        </TouchableOpacity>
-        </View>
+          <View style={{marginBottom:10}}>
+            <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+              <Text style={ styles.button }>Menu</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
+              <Text style={ styles.button }>Promotions</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
+              <Text style={ styles.button }>Rewards</Text>
+            </TouchableOpacity>
+          </View>
 
         </View>
       );
@@ -89,16 +96,22 @@ class Galley extends Component {
         <View style={styles.container}>
 
         <View>
-        <Text>PICTURE GOES HERE!</Text>
+          <Image
+            style={{width: Dimensions.get('window').width, height: 200}}
+            source={home}
+          />
         </View>
 
         <View>
-        <Text>The Galley</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+          <View>
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+          <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Monday – Thursday 8:30am – 11pm</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Friday 8:30am – 12am</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Saturday 11am – 12pm</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Sunday 11am – 11pm</Text>
+          </View>
         </View>
 
         <View style={{marginBottom:10}}>
@@ -128,7 +141,7 @@ let styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 70,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 5,
     padding: 10,
     backgroundColor: '#231F20',
     color: '#FFFFFF',

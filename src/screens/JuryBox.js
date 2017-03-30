@@ -61,15 +61,14 @@ class JuryBox extends Component {
           style={{width: Dimensions.get('window').width, height: 200}}
           source={{uri: 'http://i2.wp.com/flyerenterprises.com/wp-content/uploads/2016/01/IMG_2450.jpg?zoom=2&resize=1180%2C300'}}
         />
-        <Text style={{marginTop: 10, textAlign:'center'}}>The Jury Box</Text>
         </View>
 
         <View>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>Monday - Thursday 8am - 7pm</Text>
-        <Text style={{marginLeft: 10}}>Friday 8am - 3pm</Text>
+        <Text style={{fontSize: 18, textAlign: 'center', fontWeight: 'bold', color: 'red'}}>Location:</Text>
+        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10, marginBottom: 5}}> { this.state.about.location }</Text>
+        <Text style={{fontSize: 18, textAlign: 'center', fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10}}>Monday - Thursday 8am - 7pm</Text>
+        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10}}>Friday 8am - 3pm</Text>
         </View>
 
         <View style={{marginBottom:10}}>
@@ -95,15 +94,14 @@ class JuryBox extends Component {
           style={{width: Dimensions.get('window').width, height: 200}}
           source={{uri: 'http://i2.wp.com/flyerenterprises.com/wp-content/uploads/2016/01/IMG_2450.jpg?zoom=2&resize=1180%2C300'}}
         />
-        <Text style={{marginTop: 10, textAlign:'center'}}>The Jury Box</Text>
         </View>
 
         <View>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>Monday - Thursday 8am - 7pm</Text>
-        <Text style={{marginLeft: 10}}>Friday 8am - 3pm</Text>
+        <Text style={{fontSize: 18, textAlign: 'center', fontWeight: 'bold', color: 'red'}}>Location:</Text>
+        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10, marginBottom: 5}}> { this.state.about.location }</Text>
+        <Text style={{fontSize: 18, textAlign: 'center', fontWeight: 'bold', color: 'red'}}>Hours:</Text>
+        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10}}>Monday - Thursday 8am - 7pm</Text>
+        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10}}>Friday 8am - 3pm</Text>
         </View>
 
         <View style={{marginBottom:10}}>
@@ -133,7 +131,7 @@ let styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 70,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 5,
     padding: 10,
     backgroundColor: '#691325',
     color: '#FFFFFF',

@@ -186,9 +186,10 @@ class App extends Component {
     const jurybox = require('./images/jurybox.jpg');
     const stuslanding = require('./images/stuslanding.jpg');
     const settings = require('./images/settings.jpg');
+    const rewards = require('./images/trophy_red.png');
 
     var user = '';
-    if(this.props.user.name != null) {
+    if(this.props.user.name && this.props.user.name.trim() != "") {
       user = this.props.user.name;
     } else {
       user = this.props.user.username;
@@ -216,7 +217,7 @@ class App extends Component {
           <ListItem
             roundAvatar
             onPress={this.navigateToRewards.bind(this)}
-            avatar={fe}
+            avatar={rewards}
             key='2'
             title={'My Rewards'}
           />
@@ -408,7 +409,7 @@ class App extends Component {
           <ListItem
             roundAvatar
             onPress={this.navigateToRewards.bind(this)}
-            avatar={fe}
+            avatar={rewards}
             key='2'
             title={'My Rewards'}
           />
@@ -516,7 +517,7 @@ class App extends Component {
           <ListItem
             roundAvatar
             onPress={this.navigateToRewards.bind(this)}
-            avatar={fe}
+            avatar={rewards}
             key='2'
             title={'My Rewards'}
           />

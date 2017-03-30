@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, Navigator, TouchableOpacity, Image, Dimensions, ScrollView, RefreshControl } from 'react-native';
+import { AnimatedGaugeProgress } from 'react-native-simple-gauge';
 
 class Card extends Component {
   constructor(props) {
@@ -98,37 +99,67 @@ class Card extends Component {
   }
 
   render() {
+    var fav;
+    if(this.state.favorite == 1) {
+      fav = require('../images/star.jpg');
+    } else {
+      fav = require('../images/unfilled_star.png');
+    }
+
     var StusVIP = "";
     if(this.props.card.division == 'Stuarts Landing' && this.state.points == 20){
       StusVIP = "| You are a Stu's VIP!";
     }
 
     return(
-      <ScrollView
-        style={styles.container}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this.onRefresh.bind(this)}
-          />
-        }>
-        <View>
-          <Text>{this.props.card.name} {StusVIP}</Text>
-          <Text>{this.state.points} / {this.props.card.total}</Text>
-          <TouchableOpacity onPress={ this.favorite.bind(this) }>
-            <Text style={ styles.button }>Favorite: {this.state.favorite}</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.container}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh.bind(this)}
+            />
+          }>
 
-        <View style={styles.buttons}>
-          <TouchableOpacity onPress={ this.navigateToQR.bind(this) }>
-            <Text style={ styles.button }>Punch</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={ this.redeem.bind(this) }>
-            <Text style={ styles.button }>Redeem</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+            <View style={{alignItems: 'flex-end'}}>
+              <TouchableOpacity onPress={ this.favorite.bind(this) }>
+                <Image
+                  style={{width: 40, height: 40}}
+                  source={fav} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{marginTop: 20}}>
+              <Text style={{textAlign: 'center', marginBottom: 10}}>{this.props.card.name} Card {StusVIP}</Text>
+
+              <AnimatedGaugeProgress
+                size={260}
+                width={50}
+                fill={(this.state.points/this.props.card.total) * 100}
+                style={{alignItems: 'center'}}
+                rotation={90}
+                cropDegree={150}
+                tintColor="#CC0F40"
+                backgroundColor="#ff9999"
+                strokeCap="circle" />
+
+              <Text style={{textAlign: 'center'}}> You have {this.state.points} points out of {this.props.card.total}!</Text>
+            </View>
+
+            <View>
+              <View style={styles.buttons}>
+                <TouchableOpacity onPress={ this.navigateToQR.bind(this) }>
+                  <Text style={ styles.button }>Punch</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={ this.redeem.bind(this) }>
+                  <Text style={ styles.button }>Redeem</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -142,18 +173,19 @@ let styles = StyleSheet.create({
   button: {
     width: Dimensions.get('window').width / 2 - 40,
     padding: 10,
-    backgroundColor: '#87BFCE',
+    backgroundColor: '#CC0F40',
     color: '#FFFFFF',
     textAlign: 'center',
     borderRadius: 4,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginRight: 5,
+    marginTop: 15
   },
   buttons: {
     marginLeft: 30,
-    marginRight: 30,
+    marginRight: 25,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 200
+    justifyContent: 'space-between'
   }
 });
 

@@ -63,12 +63,12 @@ class Blend extends Component {
           </View>
 
           <View>
-            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
-            <Text style={{textAlign: 'center', marginBottom: 5}}> { this.state.about.location }</Text>
-            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
-            <Text style={{textAlign: 'center'}}>Monday - Thursday 8am - 12am</Text>
-            <Text style={{textAlign: 'center'}}>Friday 8am - 3:30pm</Text>
-            <Text style={{textAlign: 'center'}}>Sunday 5pm - 12am</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+            <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}> { this.state.about.location }</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Monday - Thursday 8am - 12am</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Friday 8am - 3:30pm</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Sunday 5pm - 12am</Text>
           </View>
 
           <View style={{marginBottom:10}}>
@@ -95,12 +95,12 @@ class Blend extends Component {
           </View>
 
           <View>
-            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
-            <Text style={{textAlign: 'center', marginBottom: 5}}> { this.state.about.location }</Text>
-            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
-            <Text style={{textAlign: 'center'}}>Monday - Thursday 8am - 12am</Text>
-            <Text style={{textAlign: 'center'}}>Friday 8am - 3:30pm</Text>
-            <Text style={{textAlign: 'center'}}>Sunday 5pm - 12am</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+            <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}> { this.state.about.location }</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Monday - Thursday 8am - 12am</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Friday 8am - 3:30pm</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Sunday 5pm - 12am</Text>
           </View>
 
           <View style={{marginBottom:10}}>
@@ -129,7 +129,7 @@ let styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 70,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 5,
     padding: 10,
     backgroundColor: '#00AEEF',
     color: '#FFFFFF',

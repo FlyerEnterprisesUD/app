@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator, Image } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
 
@@ -47,21 +47,29 @@ class StusLanding extends Component {
   }
 
   render() {
+    var home = require('../images/StusMain.jpg');
+
     if(this.props.user.username != 'Guest') {
       return(
         <View style={styles.container}>
 
         <View>
-        <Text>PICTURE GOES HERE!</Text>
+          <Image
+            style={{width: Dimensions.get('window').width, height: 200}}
+            source={home}
+          />
         </View>
 
         <View>
-        <Text>Stuarts Landing</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}></Text>
-        <Text style={{marginLeft: 10}}></Text>
+          <View>
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+          <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Monday – Thursday 8am – 1am</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Friday 8am – 2am</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Saturday 10am – 2am</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Sunday 10 am – 1am</Text>
+          </View>
         </View>
 
         <View style={{marginBottom:10}}>
@@ -80,16 +88,22 @@ class StusLanding extends Component {
         <View style={styles.container}>
 
         <View>
-        <Text>PICTURE GOES HERE!</Text>
+          <Image
+            style={{width: Dimensions.get('window').width, height: 200}}
+            source={home}
+          />
         </View>
 
         <View>
-        <Text>Stuarts Landing</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{marginLeft: 10}}> { this.state.about.location }</Text>
-        <Text style={{fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
-        <Text style={{marginLeft: 10}}>{ this.state.about.hours }</Text>
+          <View>
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+          <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Monday – Thursday 8am – 1am</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Friday 8am – 2am</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Saturday 10am – 2am</Text>
+          <Text style={{fontSize: 18, textAlign: 'center'}}>Sunday 10 am – 1am</Text>
+          </View>
         </View>
 
         <View style={{marginBottom:10}}>

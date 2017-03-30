@@ -25,7 +25,7 @@ class Submit extends Component {
     var user = '';
     var time = '';
 
-    if(this.props.user.name != null || this.props.user.name.trim() != "") {
+    if(this.props.user.name && this.props.user.name.trim() != "") {
       user = this.props.user.name;
     } else {
       user = this.props.user.username;

@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>application-identifier</key>
-	<string>M93UNE5N6D.onifeinwogrnopjrneg</string>
+	<string>M93UNE5N6D.com.flyerenterprises.app</string>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>M93UNE5N6D.onifeinwogrnopjrneg</string>
+		<string>M93UNE5N6D.com.flyerenterprises.app</string>
 	</array>
 </dict>
 </plist>

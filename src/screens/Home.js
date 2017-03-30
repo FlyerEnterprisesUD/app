@@ -19,7 +19,6 @@ class Home extends Component {
 
   componentWillMount() {
     this.getPromotions();
-    console.log(this.props.user);
   }
 
   async getPromotions() {

@@ -67,11 +67,11 @@ class Chill extends Component {
 
           <View>
             <View>
-            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
-            <Text style={{textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
-            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
-            <Text style={{textAlign: 'center'}}>Sunday - Thursday 11am - 11pm</Text>
-            <Text style={{textAlign: 'center'}}>Friday - Saturday 11am - 9pm</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+            <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Sunday - Thursday 11am - 11pm</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Friday - Saturday 11am - 9pm</Text>
             </View>
           </View>
 
@@ -100,11 +100,11 @@ class Chill extends Component {
 
           <View>
             <View>
-            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
-            <Text style={{textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
-            <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
-            <Text style={{textAlign: 'center'}}>Sunday - Thursday 11am - 11pm</Text>
-            <Text style={{textAlign: 'center'}}>Friday - Saturday 11am - 9pm</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
+            <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Sunday - Thursday 11am - 11pm</Text>
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Friday - Saturday 11am - 9pm</Text>
             </View>
           </View>
 
