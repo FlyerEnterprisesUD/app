@@ -57,6 +57,13 @@ class NavBarTitle extends Component {
         </View>
       );
     }
+    if(this.props.title == 'Moving and Storage') {
+      return(
+        <View>
+          <Text style={ styles.text }>Moving and Storage</Text>
+        </View>
+      );
+    }
     return(
       <View>
         <Text style={ styles.text }>{this.props.title}</Text>

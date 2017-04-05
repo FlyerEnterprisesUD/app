@@ -43,6 +43,7 @@ class Home extends Component {
     }
   }
 
+
   render() {
 
     var BlendHome = require('../images/BlendHome.jpg');
@@ -52,6 +53,8 @@ class Home extends Component {
     var StusHome = require('../images/StusHome.jpg');
     var ArtStreetCafeHome = require('../images/StusHome.jpg');
     var JuryBoxHome = require('../images/StusHome.jpg');
+
+
 
     return(
       <View style={ styles.container }>
