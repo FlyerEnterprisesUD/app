@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Card } from 'react-native-elements';
+var DeviceInfo = require('react-native-device-info');
 
 class Create extends Component {
   constructor(props) {
@@ -20,10 +22,12 @@ class Create extends Component {
   async create() {
     this.setState({ visible: true });
     this.setState({ error: '' });
+
     // Gets info from the state
     let username = this.state.username.trim();
     let password = this.state.password.trim();
     let email = this.state.email.trim();
+    let deviceId = DeviceInfo.getUniqueID();
 
     // Checks if any are empty
     if(username == '' || password == '' || email == '') {
@@ -80,7 +84,8 @@ class Create extends Component {
         body: JSON.stringify({
           username: username,
           password: password,
-          email: email
+          email: email,
+          deviceId: deviceId
         })
       });
 
@@ -104,68 +109,82 @@ class Create extends Component {
 
   render() {
     return(
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={ styles.container }>
-      <Spinner visible={this.state.visible} />
-
+        <Spinner visible={this.state.visible} />
         <View>
-        <Text style={ styles.title }>Sign Up</Text>
+          <Card>
+            <View style={styles.inputContainer}>
+              <TextInput
+                ref="username"
+                placeholder="Username"
+                style={{height: 20}}
+                autoCapitalize="none"
+                autoCorrect={false}
+                value={ this.state.username }
+                onChangeText={(text) => this.setState({username: text})}
+                keyboardType='default'
+                onSubmitEditing={(event) => {
+                  this.refs.password.focus();
+                }} />
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                ref="password"
+                placeholder="Password"
+                style={{height: 20, marginTop: 10}}
+                autoCapitalize="none"
+                autoCorrect={false}
+                value={ this.state.password }
+                onChangeText={(text) => this.setState({password: text})}
+                keyboardType='default'
+                secureTextEntry
+                onSubmitEditing={(event) => {
+                  this.refs.passwordAgain.focus();
+                }} />
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                ref="passwordAgain"
+                placeholder="Password Again"
+                style={{height: 20, marginTop: 10}}
+                autoCapitalize="none"
+                autoCorrect={false}
+                value={ this.state.passwordAgain }
+                onChangeText={(text) => this.setState({passwordAgain: text})}
+                keyboardType='default'
+                secureTextEntry
+                onSubmitEditing={(event) => {
+                  this.refs.email.focus();
+                }} />
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                ref="email"
+                placeholder="Dayton Email"
+                style={{height: 20, marginTop: 10}}
+                autoCapitalize="none"
+                autoCorrect={false}
+                value={ this.state.email }
+                onChangeText={(text) => this.setState({email: text})}
+                keyboardType='email-address'
+                onSubmitEditing={(event) => {
+                  this.create();
+                }} />
+            </View>
+            <Text style={ styles.error }>{ this.state.error }</Text>
+          </Card>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={ this.create }>
+              <Text style={styles.button}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-
         <View>
-
-        <TextInput
-          ref="username"
-          placeholder="Username"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={ this.state.username }
-          onChangeText={(text) => this.setState({username: text})}
-          style={ styles.input }
-          keyboardType='default' />
-
-        <TextInput
-          ref="password"
-          placeholder="Password"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={ this.state.password }
-          onChangeText={(text) => this.setState({password: text})}
-          style={ styles.input }
-          keyboardType='default'
-          secureTextEntry  />
-
-        <TextInput
-          ref="passwordAgain"
-          placeholder="Password Again"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={ this.state.passwordAgain }
-          onChangeText={(text) => this.setState({passwordAgain: text})}
-          style={ styles.input }
-          keyboardType='default'
-          secureTextEntry  />
-
-        <TextInput
-          ref="email"
-          placeholder="Dayton Email"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={ this.state.email }
-          onChangeText={(text) => this.setState({email: text})}
-          style={ styles.input }
-          keyboardType='default' />
-
-        <Text style={ styles.error }>{ this.state.error }</Text>
+          <Text style={ styles.message }>*Email confirmation may take a couple minutes to come to you</Text>
         </View>
-
-        <View >
-          <TouchableOpacity onPress={ this.create }>
-            <Text style={ styles.button }>Create Account</Text>
-          </TouchableOpacity>
-        </View>
-
-
       </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -174,35 +193,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#3478bc'
   },
-  input: {
-    height: 35,
-    marginBottom: 15,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: '#DCDCDC',
-    borderRadius: 4,
+  inputContainer: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#D3D3D3'
+  },
+  buttonContainer: {
+    marginTop: 10,
     alignItems: 'center'
   },
+  button: {
+    color: '#FFFFFF',
+    padding: 15,
+    backgroundColor: 'rgba(103, 171, 239, 0.5)',
+    width: Dimensions.get('window').width - 30,
+    textAlign: 'center'
+  },
   error: {
-    marginLeft: 30,
+    marginTop: 5,
     color: '#cc0000'
   },
-  button: {
-    width: Dimensions.get('window').width,
-    padding: 15,
-    backgroundColor: '#014589',
+  message: {
     color: '#FFFFFF',
-    textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center',
-  },
-  title: {
-    textAlign: 'center',
-    marginTop: 100
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 10,
+    fontSize: 10
   }
 });
 

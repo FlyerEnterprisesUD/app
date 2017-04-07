@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, TextInput, Picker } from 'react-native';
+import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, TextInput, Picker, ScrollView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
+import DatePicker from 'react-native-datepicker';
+import moment from 'moment-timezone';
 
 class AccountSettings extends Component {
   constructor(props) {
@@ -9,7 +11,12 @@ class AccountSettings extends Component {
       username: this.props.user.username,
       email: this.props.user.email,
       name: this.props.user.name,
-      year: this.props.user.year
+      year: this.props.user.year,
+      birthday: moment().format("YYYY-MM-DD"),
+      location: this.props.location,
+      gender: this.props.gender,
+      major: this.props.major,
+      hometown: this.props.hometown
     };
     this.update = this.update.bind(this);
   }
@@ -17,7 +24,7 @@ class AccountSettings extends Component {
   async update() {
     var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/update';
     //var url = 'http://localhost:5000/user/update';
-    
+
     this.props.user.year = this.state.year;
 
     try {
@@ -30,7 +37,12 @@ class AccountSettings extends Component {
         body: JSON.stringify({
           username: this.props.user.username,
           name: this.state.name,
-          year: this.state.year
+          year: this.state.year,
+          birthday: this.state.birthday,
+          location: this.state.location,
+          gender: this.state.gender,
+          major: this.state.major,
+          hometown: this.state.hometown
         })
       });
 
@@ -49,7 +61,7 @@ class AccountSettings extends Component {
 
   render() {
     return(
-      <View style={ styles.container }>
+      <ScrollView style={ styles.container }>
 
         <View style={{marginTop: 20}}>
         <TextInput
@@ -84,13 +96,74 @@ class AccountSettings extends Component {
         <Picker
           selectedValue={this.state.year}
           onValueChange={(text) => this.setState({year: text})}>
-          <Picker.Item label="Freshman" value="Freshman" />
+          <Picker.Item label="First Year" value="First Year" />
           <Picker.Item label="Sophomore" value="Sophomore" />
           <Picker.Item label="Junior" value="Junior" />
           <Picker.Item label="Senior" value="Senior" />
           <Picker.Item label="Graduate Student" value="Graduate Student" />
           <Picker.Item label="Faculty" value="Faculty" />
         </Picker>
+
+        <DatePicker
+          style={{width: 200}}
+          date={this.state.birthday}
+          mode="date"
+          placeholder="select date"
+          format="YYYY-MM-DD"
+          minDate={moment().subtract('90', 'years').format("YYYY-MM-DD")}
+          maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              position: 'absolute',
+              left: 0,
+              top: 4,
+              marginLeft: 0
+            },
+            dateInput: {
+              marginLeft: 36
+            }
+            // ... You can check the source to find the other keys.
+          }}
+          onDateChange={(date) => {this.setState({birthday: date})}}
+          />
+
+        <TextInput
+          placeholder="Location on Campus"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={ this.state.location }
+          onChangeText={(text) => this.setState({location: text})}
+          style={ styles.input }
+          keyboardType='default' />
+
+        <TextInput
+          placeholder="Gender"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={ this.state.gender }
+          onChangeText={(text) => this.setState({gender: text})}
+          style={ styles.input }
+          keyboardType='default' />
+
+        <TextInput
+          placeholder="Major"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={ this.state.mojor }
+          onChangeText={(text) => this.setState({major: text})}
+          style={ styles.input }
+          keyboardType='default' />
+
+        <TextInput
+          placeholder="Hometown"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={ this.state.hometown }
+          onChangeText={(text) => this.setState({hometown: text})}
+          style={ styles.input }
+          keyboardType='default' />
 
 
 
@@ -99,8 +172,9 @@ class AccountSettings extends Component {
         </TouchableOpacity>
         </View>
 
+        <View style={{marginBottom: 200}} />
 
-      </View>
+      </ScrollView>
     );
   }
 }

@@ -12,7 +12,8 @@ class EditSubmit extends Component {
       submitter: this.props.promotion.submitter,
       body: this.props.promotion.body,
       time: moment(this.props.promotion.time).format("YYYY-MM-DD HH:mm"),
-      ready: this.props.promotion.ready
+      ready: this.props.promotion.ready,
+      end: moment(this.props.promotion.end).format("YYYY-MM-DD HH:mm")
     };
     this.approve = this.approve.bind(this);
     this.deny = this.deny.bind(this);
@@ -42,7 +43,8 @@ class EditSubmit extends Component {
           title: this.state.title,
           division: this.state.division,
           body: this.state.body,
-          time: moment(this.state.time).format("YYYY-MM-DD HH:mm")
+          time: moment(this.state.time).format("YYYY-MM-DD HH:mm"),
+          end: moment(this.state.end).format("YYYY-MM-DD HH:mm")
         })
       });
 
@@ -156,6 +158,33 @@ class EditSubmit extends Component {
             }}
             onDateChange={(date) => {this.setState({time: date})}}
             />
+
+
+            <DatePicker
+              style={{width: 200}}
+              date={this.state.end}
+              mode="datetime"
+              placeholder="select date"
+              format="YYYY-MM-DD HH:mm"
+              minDate={moment().format("YYYY-MM-DD")}
+              maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0
+                },
+                dateInput: {
+                  marginLeft: 36
+                }
+                // ... You can check the source to find the other keys.
+              }}
+              onDateChange={(date) => {this.setState({end: date})}}
+              />
+
 
         <View style={styles.buttons}>
         <TouchableOpacity onPress={this.approve}>

@@ -42,7 +42,7 @@ class App extends Component {
   }
 
   navigateToHome() {
-    this.refs.navigator.push({id:'Home', user: this.props.user, token: this.props.token });
+    this.refs.navigator.replace({id:'Home', user: this.props.user, token: this.props.token });
     this.setState({
       isOpen: false
     });
@@ -146,7 +146,7 @@ class App extends Component {
       case 'The Galley':
         return(<Galley navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
       case 'Menu':
-        return(<Menu navigator={ navigator } toggleSideMenu={ toggleSideMenu } menu={ route.menu } {...route.passProps} />);
+        return(<Menu navigator={ navigator } toggleSideMenu={ toggleSideMenu } menu={ route.menu } division={route.division} {...route.passProps} />);
       case 'Product':
         return(<Product navigator={ navigator } toggleSideMenu={ toggleSideMenu } product={ route.product } {...route.passProps} />);
       case 'Promotion':
@@ -196,8 +196,8 @@ class App extends Component {
     }
 
     const UserMenuComponent = (
-      <View style={{flex: 1, backgroundColor: '#ededed'}}>
-        <ScrollView style={{marginBottom: 20, backgroundColor: '#FFFFFF', marginTop: 20}}>
+      <View style={{flex: 1, backgroundColor: '#CC0F40'}}>
+        <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: 20}}>
 
           <List containerStyle={{marginTop: 0}}>
           <ListItem
@@ -296,8 +296,8 @@ class App extends Component {
     );
 
     const GuestMenuComponent = (
-      <View style={{flex: 1, backgroundColor: '#ededed'}}>
-        <ScrollView style={{marginBottom: 20, backgroundColor: '#FFFFFF', marginTop: 20}}>
+      <View style={{flex: 1, backgroundColor: '#CC0F40'}}>
+        <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: 20}}>
 
           <List containerStyle={{marginTop: 0}}>
           <ListItem
@@ -388,8 +388,8 @@ class App extends Component {
     );
 
     const SubmitterMenuComponent = (
-      <View style={{flex: 1, backgroundColor: '#ededed'}}>
-        <ScrollView style={{marginBottom: 20, backgroundColor: '#FFFFFF', marginTop: 20}}>
+      <View style={{flex: 1, backgroundColor: '#CC0F40'}}>
+        <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: 20}}>
 
           <List containerStyle={{marginTop: 0}}>
           <ListItem
@@ -496,10 +496,10 @@ class App extends Component {
     );
 
     const ApproverMenuComponent = (
-      <View style={{flex: 1, backgroundColor: '#ededed'}}>
-        <ScrollView style={{marginBottom: 20, backgroundColor: '#FFFFFF', marginTop: 20}}>
+      <View style={{flex: 1, backgroundColor: '#CC0F40'}}>
+        <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: 20}}>
 
-          <List containerStyle={{marginTop: 0}}>
+          <List containerStyle={{marginTop: 0, marginBottom: 0}}>
           <ListItem
             key='0'
             title={ 'Welcome, ' + user}

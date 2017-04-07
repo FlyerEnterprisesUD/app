@@ -40,7 +40,7 @@ class ArtStreetCafe extends Component {
   }
 
   navigateToMenu() {
-    this.props.navigator.push({ id: 'Menu', menu: this.state.menu });
+    this.props.navigator.push({ id: 'Menu', menu: this.state.menu, division: 'ArtStree Cafe' });
   }
 
   navigateToRewards() {
@@ -117,7 +117,7 @@ class ArtStreetCafe extends Component {
         <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
           <Text style={ styles.button }>Menu</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
           <Text style={ styles.button }>Promotions</Text>
         </TouchableOpacity>
         </View>

@@ -13,7 +13,8 @@ class Submit extends Component {
       body: '',
       date: moment().format("YYYY-MM-DD HH:mm"),
       now: true,
-      time: ''
+      time: '',
+      end: moment().add('1', 'week').format("YYYY-MM-DD HH:mm")
     };
     this.submit = this.submit.bind(this);
   }
@@ -24,6 +25,7 @@ class Submit extends Component {
 
     var user = '';
     var time = '';
+    var end = '';
 
     if(this.props.user.name && this.props.user.name.trim() != "") {
       user = this.props.user.name;
@@ -34,8 +36,10 @@ class Submit extends Component {
     if(this.state.now == true) {
       time = 'now';
     } else {
-      time = moment(this.state.date).add(4, "hours").format("YYYY-MM-DD HH:mm");
+      time = moment(this.state.date).format("YYYY-MM-DD HH:mm");
     }
+
+    end = moment(this.state.end).format("YYYY-MM-DD HH:mm");
 
     try {
       let response = await fetch(url, {
@@ -51,6 +55,7 @@ class Submit extends Component {
           body: this.state.body,
           submitter: user,
           time: time,
+          end: end
         })
       });
 
@@ -129,6 +134,31 @@ class Submit extends Component {
             // ... You can check the source to find the other keys.
           }}
           onDateChange={(date) => {this.setState({date: date})}}
+          />
+
+        <DatePicker
+          style={{width: 200}}
+          date={this.state.end}
+          mode="datetime"
+          placeholder="select date"
+          format="YYYY-MM-DD HH:mm"
+          minDate={moment().format("YYYY-MM-DD")}
+          maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              position: 'absolute',
+              left: 0,
+              top: 4,
+              marginLeft: 0
+            },
+            dateInput: {
+              marginLeft: 36
+            }
+            // ... You can check the source to find the other keys.
+          }}
+          onDateChange={(date) => {this.setState({end: date})}}
           />
 
         <TouchableOpacity onPress={this.submit}>

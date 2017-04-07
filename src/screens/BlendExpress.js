@@ -40,7 +40,7 @@ class BlendExpress extends Component {
   }
 
   navigateToMenu() {
-    this.props.navigator.push({ id: 'Menu', menu: this.state.menu });
+    this.props.navigator.push({ id: 'Menu', menu: this.state.menu, division: 'The Blend Express' });
   }
 
   navigateToRewards() {

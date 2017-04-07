@@ -4,11 +4,15 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>AppIcon60x60@2x.png</key>
+		<data>
+		QXAcK+D3cPIXR84WPsdBpQf8AVo=
+		</data>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			TPVCFZEbMrN591KM3pThbJ8A0vU=
+			nf2nqXRsz2bWJMhfExgLpq95xQA=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -224,7 +228,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		QgTFfO07BXgZzxhIglZcJFgoZE4=
+		51FjVJudqiXef8JuSvtwF7SqOWk=
 		</data>
 		<key>Ionicons.ttf</key>
 		<data>
@@ -256,7 +260,7 @@
 		</data>
 		<key>PlugIns/appTests.xctest/appTests</key>
 		<data>
-		KGR2yA9AzUFO1y+r8rwOFIZ2r/o=
+		xx2ocMVo6iSc31Z3XinShxf3f3o=
 		</data>
 		<key>SimpleLineIcons.ttf</key>
 		<data>
@@ -269,15 +273,26 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>AppIcon60x60@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			QXAcK+D3cPIXR84WPsdBpQf8AVo=
+			</data>
+			<key>hash2</key>
+			<data>
+			xmItTmJeEBpmhEYy6jncS9mRLCTD4FL4EqLW1QLInO4=
+			</data>
+		</dict>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			TPVCFZEbMrN591KM3pThbJ8A0vU=
+			nf2nqXRsz2bWJMhfExgLpq95xQA=
 			</data>
 			<key>hash2</key>
 			<data>
-			5B3KnOqnjLznKDPSYq9LCN/HOR4bnlUKpOyNs2cwyh8=
+			tkS1UgLe1VV4pYjyjWX6orHZx2Uwyi+Ksriz5XPayeg=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -920,11 +935,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KGR2yA9AzUFO1y+r8rwOFIZ2r/o=
+			xx2ocMVo6iSc31Z3XinShxf3f3o=
 			</data>
 			<key>hash2</key>
 			<data>
-			DEIyZ5tk+ZbU4l3PE1piRbU6Zz+Du+K7V1y1LN8c35Q=
+			tM+sePVaWIl1kdvq7e1qqdr3C/0oUAdNMjAxmVyc9Z8=
 			</data>
 		</dict>
 		<key>SimpleLineIcons.ttf</key>

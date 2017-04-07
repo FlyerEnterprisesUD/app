@@ -25,17 +25,31 @@ const NavigationBar = (toggleSideMenu) => {
     const fe = require('../images/wfe2.png');
     return (
       <TouchableHighlight>
-      <Image
-        source={fe}
-        style={styles.logo}/>
+        <Image
+          source={fe}
+          style={styles.logo}/>
       </TouchableHighlight>
     );
   };
 
   const Title = (route) => {
-    return (
-      <NavBarTitle style={styles.title} title={route.id} {...route.passProps} />
-    )
+    if(route.id == 'Product') {
+      return (
+        <NavBarTitle style={styles.title} title={route.id} name={route.product.name} {...route.passProps} />
+      )
+    } else if(route.id == 'Menu') {
+        return (
+          <NavBarTitle style={styles.title} title={route.id} name={route.division} {...route.passProps} />
+        )
+    } else if(route.id == 'Promotions') {
+        return (
+          <NavBarTitle style={styles.title} title={route.id} name={route.division} {...route.passProps} />
+        )
+    } else {
+      return (
+        <NavBarTitle style={styles.title} title={route.id} {...route.passProps} />
+      )
+    }
   };
 
   return (
@@ -71,9 +85,10 @@ let styles = StyleSheet.create({
     })
   },
   logo: {
-    width: 40,
-    height: 40,
-    marginRight: 5,
+    width: 28,
+    height: 28,
+    marginTop: 7,
+    marginRight: 9,
     ...Platform.select({
       android: {
         width: 48,

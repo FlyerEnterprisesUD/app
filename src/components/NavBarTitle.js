@@ -15,53 +15,76 @@ class NavBarTitle extends Component {
         </View>
       );
     }
-    if(this.props.title == 'Stuart\'s Landing') {
+    else if(this.props.title == 'Stuart\'s Landing') {
       return(
         <View>
           <Text style={ styles.text }>Stuarts Landing</Text>
         </View>
       );
     }
-    if(this.props.title == 'Art Street Cafe') {
+    else if(this.props.title == 'Art Street Cafe') {
       return(
         <View>
           <Text style={ styles.text }>ArtStreet Cafe</Text>
         </View>
       );
     }
-    if(this.props.title == 'Jury Box') {
+    else if(this.props.title == 'Jury Box') {
       return(
         <View>
           <Text style={ styles.text }>The Jury Box</Text>
         </View>
       );
     }
-    if(this.props.title == 'The Blend') {
+    else if(this.props.title == 'The Blend') {
       return(
         <View>
           <Text style={ styles.text }>The Blend</Text>
         </View>
       );
     }
-    if(this.props.title == 'The Blend Express') {
+    else if(this.props.title == 'The Blend Express') {
       return(
         <View>
           <Text style={ styles.text }>The Blend Express</Text>
         </View>
       );
     }
-    if(this.props.title == 'The Galley') {
+    else if(this.props.title == 'The Galley') {
       return(
         <View>
           <Text style={ styles.text }>The Galley</Text>
         </View>
       );
     }
-    return(
-      <View>
-        <Text style={ styles.text }>{this.props.title}</Text>
-      </View>
-    );
+    else if(this.props.title == 'Product') {
+      return(
+        <View>
+          <Text style={ styles.text }>{this.props.name}</Text>
+        </View>
+      );
+    }
+    else if(this.props.title == 'Menu') {
+      return(
+        <View>
+          <Text style={ styles.text }>{this.props.name}s Menu</Text>
+        </View>
+      );
+    }
+    else if(this.props.title == 'Promotions') {
+      return(
+        <View>
+          <Text style={ styles.text }>{this.props.name}s Promotions</Text>
+        </View>
+      );
+    }
+    else {
+      return(
+        <View>
+          <Text style={ styles.text }>{this.props.title}</Text>
+        </View>
+      );
+    }
   }
 }
 
