@@ -31,6 +31,10 @@ class DivisionBubbles extends Component {
     this.props.navigator.push({id:'Jury Box', user: this.props.user, token: this.props.token });
   }
 
+  navigateToMovingAndStorage() {
+    this.props.navigator.push({id:'Moving and Storage', user: this.props.user, token: this.props.token });
+  }
+
   render() {
     const chill = require('../images/chill.jpg');
     const blend = require('../images/blend.jpg');
@@ -39,6 +43,7 @@ class DivisionBubbles extends Component {
     const artstreetcafe = require('../images/artstreetcafe.jpg');
     const jurybox = require('../images/jurybox.jpg');
     const stuslanding = require('../images/stuslanding.jpg');
+    const movingandstorage = require('../images/movingandstorage.png');
 
     return(
       <View style={{backgroundColor:'#F2F2F2'}}>
@@ -85,6 +90,12 @@ class DivisionBubbles extends Component {
           <TouchableOpacity onPress={this.navigateToStusLanding.bind(this)}>
             <Image
               source={stuslanding}
+              style={styles.image} />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.navigateToMovingAndStorage.bind(this)}>
+            <Image
+              source={movingandstorage}
               style={styles.image} />
           </TouchableOpacity>
         </ScrollView>

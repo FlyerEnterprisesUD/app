@@ -10,6 +10,7 @@ import ArtStreetCafe from './screens/ArtStreetCafe';
 import JuryBox from './screens/JuryBox';
 import Blend from './screens/Blend';
 import BlendExpress from './screens/BlendExpress';
+import MovingAndStorage from './screens/MovingAndStorage';
 import Galley from './screens/Galley';
 import Menu from './screens/Menu';
 import Product from './screens/Product';
@@ -97,6 +98,13 @@ class App extends Component {
     });
   }
 
+  navigateToMovingAndStorage() {
+    this.refs.navigator.push({id:'Moving And Storage', user: this.props.user, token: this.props.token });
+    this.setState({
+      isOpen: false
+    });
+  }
+
   navigateToSettings() {
     this.refs.navigator.push({id:'Settings', nav: this.props.nav, user: this.props.user });
     this.setState({
@@ -145,6 +153,8 @@ class App extends Component {
         return(<BlendExpress navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
       case 'The Galley':
         return(<Galley navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+      case 'Moving And Storage':
+        return(<MovingAndStorage navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
       case 'Menu':
         return(<Menu navigator={ navigator } toggleSideMenu={ toggleSideMenu } menu={ route.menu } division={route.division} {...route.passProps} />);
       case 'Product':
@@ -279,6 +289,14 @@ class App extends Component {
             key='6'
             title={'Stuart\'s Landing'}
           />
+
+          <ListItem
+            roundAvatar
+            avatar={stuslanding}
+            onPress={this.navigateToMovingAndStorage.bind(this)}
+            key='7'
+            title={'Moving and Storage'}
+          />
           </List>
 
           <List containerStyle={{marginTop: 0}}>
@@ -370,6 +388,14 @@ class App extends Component {
             onPress={this.navigateToStusLanding.bind(this)}
             key='6'
             title={'Stuart\'s Landing'}
+          />
+
+          <ListItem
+            roundAvatar
+            avatar={stuslanding}
+            onPress={this.navigateToMovingAndStorage.bind(this)}
+            key='7'
+            title={'Moving and Storage'}
           />
           </List>
 
@@ -470,6 +496,14 @@ class App extends Component {
             onPress={this.navigateToStusLanding.bind(this)}
             key='6'
             title={'Stuart\'s Landing'}
+          />
+
+          <ListItem
+            roundAvatar
+            avatar={stuslanding}
+            onPress={this.navigateToMovingAndStorage.bind(this)}
+            key='7'
+            title={'Moving and Storage'}
           />
           </List>
 
@@ -578,6 +612,14 @@ class App extends Component {
             onPress={this.navigateToStusLanding.bind(this)}
             key='6'
             title={'Stuart\'s Landing'}
+          />
+
+          <ListItem
+            roundAvatar
+            avatar={stuslanding}
+            onPress={this.navigateToMovingAndStorage.bind(this)}
+            key='7'
+            title={'Moving and Storage'}
           />
           </List>
 

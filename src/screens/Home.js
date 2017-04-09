@@ -43,6 +43,7 @@ class Home extends Component {
     }
   }
 
+
   render() {
 
     var BlendHome = require('../images/BlendHome.jpg');
@@ -52,6 +53,7 @@ class Home extends Component {
     var StusHome = require('../images/StusHome.jpg');
     var ArtStreetCafeHome = require('../images/StusHome.jpg');
     var JuryBoxHome = require('../images/StusHome.jpg');
+    var MovingAndStorageHome = require('../images/StusHome.jpg');
 
     return(
       <View style={ styles.container }>
@@ -119,6 +121,13 @@ class Home extends Component {
                 <Text style={styles.text}>ArtStreet Cafe</Text>
               </View>
               </TouchableHighlight>
+            </Image>
+          </View>
+          <View key={7}>
+            <Image style={styles.image} source={MovingAndStorageHome}>
+              <View>
+                <Text style={styles.text}>Moving And Storage</Text>
+              </View>
             </Image>
           </View>
         </Carousel>

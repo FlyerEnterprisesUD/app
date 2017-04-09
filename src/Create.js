@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Card } from 'react-native-elements';
-var DeviceInfo = require('react-native-device-info');
 
 class Create extends Component {
   constructor(props) {
@@ -27,7 +26,6 @@ class Create extends Component {
     let username = this.state.username.trim();
     let password = this.state.password.trim();
     let email = this.state.email.trim();
-    let deviceId = DeviceInfo.getUniqueID();
 
     // Checks if any are empty
     if(username == '' || password == '' || email == '') {
@@ -84,8 +82,7 @@ class Create extends Component {
         body: JSON.stringify({
           username: username,
           password: password,
-          email: email,
-          deviceId: deviceId
+          email: email
         })
       });
 

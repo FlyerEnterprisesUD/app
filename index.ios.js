@@ -22,7 +22,6 @@ class app extends Component {
     }
   }
 
-
   render() {
     return(
       <Navigator
