@@ -12,7 +12,7 @@ class AccountSettings extends Component {
       email: this.props.user.email,
       name: this.props.user.name,
       year: this.props.user.year,
-      birthday: moment().format("YYYY-MM-DD"),
+      birthday: moment(this.props.birthday).format("YYYY-MM-DD"),
       location: this.props.location,
       gender: this.props.gender,
       major: this.props.major,
