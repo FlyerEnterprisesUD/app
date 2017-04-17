@@ -59,6 +59,7 @@ class Email extends Component {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={ styles.container }>
         <View>
+        <Text style={{fontFamily:'LabradorA-Bold', fontSize: 50, color: '#FFFFFF', textAlign: 'center', marginBottom: 10}}>Flyer Enterprises</Text>
           <Card>
             <View style={styles.inputContainer}>
               <TextInput
@@ -100,7 +101,7 @@ let styles = StyleSheet.create({
     borderBottomColor: '#D3D3D3'
   },
   buttonContainer: {
-    marginTop: 10,
+    marginTop: 30,
     alignItems: 'center'
   },
   button: {

@@ -129,22 +129,22 @@ class AccountSettings extends Component {
             <View style={styles.element}>
               <Icon color='#d3d3d3' name='grade' size={20} style={{justifyContent: 'center'}}/>
               <View style={styles.text}>
-              <Text
-                onPress={() => {
-                  this.refs.picker.show();
-                }}
-              >
-                  {this.state.year}
-              </Text>
-              <SimplePicker
-                 ref={'picker'}
-                 options={data}
-                 onSubmit={(option) => {
-                   this.setState({
-                     year: option,
-                   });
-                 }}
-               />
+                <Text
+                  onPress={() => {
+                    this.refs.picker.show();
+                  }}
+                >
+                    {this.state.year}
+                </Text>
+                <SimplePicker
+                   ref={'picker'}
+                   options={data}
+                   onSubmit={(option) => {
+                     this.setState({
+                       year: option,
+                     });
+                   }}
+                 />
               </View>
             </View>
             <View style={styles.element}>
