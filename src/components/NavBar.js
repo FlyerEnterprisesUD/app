@@ -21,10 +21,11 @@ const NavigationBar = (toggleSideMenu) => {
     );
   };
 
-  const RightButton = () => {
+  const RightButton = (navigator) => {
     const fe = require('../images/wfe2.png');
+
     return (
-      <TouchableHighlight>
+      <TouchableHighlight onPress={console.log('whyyyyyyy')}>
         <Image
           source={fe}
           style={styles.logo}/>

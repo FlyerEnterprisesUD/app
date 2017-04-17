@@ -195,6 +195,7 @@ class App extends Component {
     const artstreetcafe = require('./images/artstreetcafe.jpg');
     const jurybox = require('./images/jurybox.jpg');
     const stuslanding = require('./images/stuslanding.jpg');
+    const movingandstorage = require('./images/movingandstorage.jpg');
     const settings = require('./images/settings.jpg');
     const rewards = require('./images/trophy_red.png');
 
@@ -292,7 +293,7 @@ class App extends Component {
 
           <ListItem
             roundAvatar
-            avatar={stuslanding}
+            avatar={movingandstorage}
             onPress={this.navigateToMovingAndStorage.bind(this)}
             key='7'
             title={'Moving and Storage'}
@@ -392,7 +393,7 @@ class App extends Component {
 
           <ListItem
             roundAvatar
-            avatar={stuslanding}
+            avatar={movingandstorage}
             onPress={this.navigateToMovingAndStorage.bind(this)}
             key='7'
             title={'Moving and Storage'}
@@ -500,7 +501,7 @@ class App extends Component {
 
           <ListItem
             roundAvatar
-            avatar={stuslanding}
+            avatar={movingandstorage}
             onPress={this.navigateToMovingAndStorage.bind(this)}
             key='7'
             title={'Moving and Storage'}
@@ -616,7 +617,7 @@ class App extends Component {
 
           <ListItem
             roundAvatar
-            avatar={stuslanding}
+            avatar={movingandstorage}
             onPress={this.navigateToMovingAndStorage.bind(this)}
             key='7'
             title={'Moving and Storage'}

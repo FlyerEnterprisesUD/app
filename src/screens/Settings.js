@@ -64,8 +64,8 @@ class Settings extends Component {
   }
 
   async updatePushSettings() {
-    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/updatepushsettings';
-    var url = 'http://localhost:5000/user/updatepushsettings';
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/updatepushsettings';
+    //var url = 'http://localhost:5000/user/updatepushsettings';
 
     try {
       let response = await fetch(url, {
@@ -111,78 +111,88 @@ class Settings extends Component {
       return(
         <ScrollView style={ styles.container }>
 
-          <Text style={{marginTop: 10}}>Profile</Text>
-          <List containerStyle={{marginTop:1}}>
-            <ListItem
-              onPress={this.navigateToAccountSettings}
-              key='0'
-              title={'Account Settings'}
-            />
+          <View>
+            <Text style={{marginTop: 10}}>Profile</Text>
+            <List containerStyle={{marginTop:1}}>
+              <ListItem
+                onPress={this.navigateToAccountSettings}
+                key='0'
+                title={'Account Settings'}
+              />
+              <ListItem
+                onPress={this.navigateToChangePassword}
+                key='1'
+                title={'Change Password'}
+              />
+            </List>
+          </View>
 
-            <ListItem
-              onPress={this.navigateToChangePassword}
-              key='1'
-              title={'Change Password'}
-            />
-          </List>
-
+          <View>
           <Text style={{marginTop: 10}}>Push Notifications</Text>
-          <View>
-            <Text>The CHILL</Text>
-            <Switch
-              onValueChange={(value) => this.setState({chill: value})}
-              style={{marginBottom: 10}}
-              value={this.state.chill} />
+            <View style={styles.row}>
+              <View style={styles.element}>
+                <Text>The CHILL</Text>
+                <Switch
+                  onValueChange={(value) => this.setState({chill: value})}
+                  style={{marginBottom: 10}}
+                  value={this.state.chill} />
+              </View>
+
+              <View style={styles.switch}>
+                <Text>The Galley</Text>
+                <Switch
+                  onValueChange={(value) => this.setState({galley: value})}
+                  style={{marginBottom: 10}}
+                  value={this.state.galley} />
+              </View>
+
+              <View style={styles.switch}>
+                <Text>ArtStreet Cafe</Text>
+                <Switch
+                  onValueChange={(value) => this.setState({artstreet: value})}
+                  style={{marginBottom: 10}}
+                  value={this.state.artstreet} />
+              </View>
+            </View>
+
+            <View style={styles.row}>
+              <View>
+                <Text>Stuarts Landing</Text>
+                <Switch
+                  onValueChange={(value) => this.setState({stus: value})}
+                  style={{marginBottom: 10}}
+                  value={this.state.stus} />
+              </View>
+
+              <View>
+                <Text>The Blend</Text>
+                <Switch
+                  onValueChange={(value) => this.setState({blend: value})}
+                  style={{marginBottom: 10}}
+                  value={this.state.blend} />
+              </View>
+
+              <View>
+                <Text>The Blend Express</Text>
+                <Switch
+                  onValueChange={(value) => this.setState({blendexpress: value})}
+                  style={{marginBottom: 10, marginLeft: 27}}
+                  value={this.state.blendexpress} />
+              </View>
+            </View>
+
+            <View style={styles.row}>
+              <View>
+                <Text>The Jury Box</Text>
+                <Switch
+                  onValueChange={(value) => this.setState({jurybox: value})}
+                  style={{marginBottom: 10}}
+                  value={this.state.jurybox} />
+              </View>
+            </View>
           </View>
 
           <View>
-            <Text>The Galley</Text>
-            <Switch
-              onValueChange={(value) => this.setState({galley: value})}
-              style={{marginBottom: 10}}
-              value={this.state.galley} />
-          </View>
-
-          <View>
-            <Text>ArtStreet Cafe</Text>
-            <Switch
-              onValueChange={(value) => this.setState({artstreet: value})}
-              style={{marginBottom: 10}}
-              value={this.state.artstreet} />
-          </View>
-
-          <View>
-            <Text>Stuarts Landing</Text>
-            <Switch
-              onValueChange={(value) => this.setState({stus: value})}
-              style={{marginBottom: 10}}
-              value={this.state.stus} />
-          </View>
-
-          <View>
-            <Text>The Blend</Text>
-            <Switch
-              onValueChange={(value) => this.setState({blend: value})}
-              style={{marginBottom: 10}}
-              value={this.state.blend} />
-          </View>
-
-          <View>
-            <Text>The Blend Express</Text>
-            <Switch
-              onValueChange={(value) => this.setState({blendexpress: value})}
-              style={{marginBottom: 10}}
-              value={this.state.blendexpress} />
-          </View>
-
-          <View>
-            <Text>The Jury Box</Text>
-            <Switch
-              onValueChange={(value) => this.setState({jurybox: value})}
-              style={{marginBottom: 10}}
-              value={this.state.jurybox} />
-          </View>
-
           <TouchableOpacity onPress={ this.updatePushSettings }>
             <Text style={ styles.button }>Update Settings</Text>
           </TouchableOpacity>
@@ -190,6 +200,7 @@ class Settings extends Component {
           <TouchableOpacity onPress={ this.logout }>
             <Text style={ styles.button }>Logout</Text>
           </TouchableOpacity>
+          </View>
 
         </ScrollView>
       );
@@ -215,9 +226,9 @@ let styles = StyleSheet.create({
     marginTop: 65
   },
   button: {
-    width: Dimensions.get('window').width - 60,
-    marginLeft: 30,
-    marginRight: 30,
+    width: Dimensions.get('window').width - 30,
+    marginLeft: 15,
+    marginRight: 15,
     padding: 10,
     backgroundColor: '#CC0F40',
     color: '#FFFFFF',
@@ -225,6 +236,15 @@ let styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center',
     marginTop: 20
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 15,
+    marginRight: 15
+  },
+  element: {
+
   }
 });
 

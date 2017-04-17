@@ -43,7 +43,7 @@ class DivisionBubbles extends Component {
     const artstreetcafe = require('../images/artstreetcafe.jpg');
     const jurybox = require('../images/jurybox.jpg');
     const stuslanding = require('../images/stuslanding.jpg');
-    const movingandstorage = require('../images/movingandstorage.png');
+    const movingandstorage = require('../images/movingandstorage.jpg');
 
     return(
       <View style={{backgroundColor:'#F2F2F2'}}>

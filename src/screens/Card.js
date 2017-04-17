@@ -99,11 +99,13 @@ class Card extends Component {
   }
 
   render() {
-    var fav;
+    var fav, favWord;
     if(this.state.favorite == 1) {
       fav = require('../images/star.jpg');
+      favWord = "Favorited!"
     } else {
       fav = require('../images/unfilled_star.png');
+      favWord = "Click to Favorite!"
     }
 
     var StusVIP = "";
@@ -121,14 +123,6 @@ class Card extends Component {
             />
           }>
 
-            <View style={{alignItems: 'flex-end'}}>
-              <TouchableOpacity onPress={ this.favorite.bind(this) }>
-                <Image
-                  style={{width: 40, height: 40}}
-                  source={fav} />
-              </TouchableOpacity>
-            </View>
-
             <View style={{marginTop: 20}}>
               <Text style={{textAlign: 'center', marginBottom: 10}}>{this.props.card.name} Card {StusVIP}</Text>
 
@@ -143,19 +137,35 @@ class Card extends Component {
                 backgroundColor="#ff9999"
                 strokeCap="circle" />
 
-              <Text style={{textAlign: 'center'}}> You have {this.state.points} points out of {this.props.card.total}!</Text>
+              <View style={{alignItems: 'center', marginTop: -130}}>
+                <Text style={{fontFamily:'LabradorA-Bold', fontSize: 55, color: '#3f3f3f'}}>{this.props.card.total - this.state.points}</Text>
+                <Text style={{fontFamily:'LabradorA-Regular', fontSize: 16, color: '#3f3f3f', marginTop: -20}}>more punches</Text>
+                <Text style={{fontFamily:'LabradorA-Regular', fontSize: 16, color: '#3f3f3f'}}>until next reward</Text>
+              </View>
             </View>
 
-            <View>
-              <View style={styles.buttons}>
-                <TouchableOpacity onPress={ this.navigateToQR.bind(this) }>
-                  <Text style={ styles.button }>Punch</Text>
-                </TouchableOpacity>
+            <View style={styles.buttons}>
+              <TouchableOpacity onPress={ this.navigateToQR.bind(this) }>
+                <View style={styles.buttonContainer}>
+                    <Text style={ styles.button }>Punch</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={ this.redeem.bind(this) }>
+                <View style={styles.buttonContainer}>
+                    <Text style={ styles.button }>Redeem</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
 
-                <TouchableOpacity onPress={ this.redeem.bind(this) }>
-                  <Text style={ styles.button }>Redeem</Text>
-                </TouchableOpacity>
-              </View>
+            <View style={{alignItems: 'center', marginTop: 60}}>
+              <TouchableOpacity onPress={ this.favorite.bind(this) }>
+                <View style={{flexDirection: 'row'}}>
+                  <Image
+                    style={{width: 35, height: 35}}
+                    source={fav} />
+                  <Text style={{marginTop: 10}}>{favWord}</Text>
+                </View>
+              </TouchableOpacity>
             </View>
 
         </ScrollView>
@@ -170,20 +180,23 @@ let styles = StyleSheet.create({
     backgroundColor: 'white',
     marginTop: 65
   },
-  button: {
-    width: Dimensions.get('window').width / 2 - 40,
-    padding: 10,
+  buttonContainer:{
+    borderRadius: 30,
+    height: 60,
+    width: 60,
     backgroundColor: '#CC0F40',
-    color: '#FFFFFF',
+    justifyContent: 'center'
+  },
+  button: {
+    fontFamily:'LabradorA-Bold',
+    fontSize: 20,
     textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center',
-    marginRight: 5,
-    marginTop: 15
+    color: '#FFFFFF'
   },
   buttons: {
-    marginLeft: 30,
-    marginRight: 25,
+    marginLeft: 100,
+    marginRight: 100,
+    marginTop: 30,
     flexDirection: 'row',
     justifyContent: 'space-between'
   }

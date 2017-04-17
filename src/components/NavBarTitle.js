@@ -98,8 +98,9 @@ class NavBarTitle extends Component {
 let styles = StyleSheet.create({
   text: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 25,
     marginTop: 10,
+    fontFamily: 'LabradorA-Regular',
     ...Platform.select({
       android: {
         marginTop: 15
