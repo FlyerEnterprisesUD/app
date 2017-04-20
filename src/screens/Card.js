@@ -112,7 +112,7 @@ class Card extends Component {
     if(this.props.card.division == 'Stuarts Landing' && this.state.points == 20){
       StusVIP = "| You are a Stu's VIP!";
     }
-
+console.log(this.props.card);
     return(
       <View style={styles.container}>
         <ScrollView

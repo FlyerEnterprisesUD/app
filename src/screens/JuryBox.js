@@ -63,57 +63,75 @@ class JuryBox extends Component {
         />
         </View>
 
-        <View>
-        <Text style={{fontSize: 18, textAlign: 'center', fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10, marginBottom: 5}}> { this.state.about.location }</Text>
-        <Text style={{fontSize: 18, textAlign: 'center', fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10}}>Monday - Thursday 8am - 7pm</Text>
-        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10}}>Friday 8am - 3pm</Text>
+        <View style={styles.info}>
+          <View style={styles.about}>
+            <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Location</Text>
+            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Ground Floor of Keller Hall:</Text>
+            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>University of Dayton Law School</Text>
+          </View>
+          <View style={styles.hours}>
+            <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Hours</Text>
+            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Monday - Thursday 8am - 7pm</Text>
+            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Friday 8am - 3pm</Text>
+          </View>
         </View>
 
-        <View style={{marginBottom:10}}>
-        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-          <Text style={ styles.button }>Menu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
-          <Text style={ styles.button }>Promotions</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
-          <Text style={ styles.button }>Rewards</Text>
-        </TouchableOpacity>
+        <View style={styles.buttons}>
+          <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+            <View style={styles.buttonContainer}>
+                <Text style={ styles.button }>Menu</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
+            <View style={styles.buttonContainer}>
+                <Text style={ styles.button }>Specials</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
+            <View style={styles.buttonContainer}>
+                <Text style={ styles.button }>Rewards</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-
-        </View>
+      </View>
       );
     } else {
       return(
         <View style={styles.container}>
 
         <View>
-        <Image
-          style={{width: Dimensions.get('window').width, height: 200}}
-          source={{uri: 'http://i2.wp.com/flyerenterprises.com/wp-content/uploads/2016/01/IMG_2450.jpg?zoom=2&resize=1180%2C300'}}
-        />
+          <Image
+            style={{width: Dimensions.get('window').width, height: 200}}
+            source={{uri: 'http://i2.wp.com/flyerenterprises.com/wp-content/uploads/2016/01/IMG_2450.jpg?zoom=2&resize=1180%2C300'}}
+          />
         </View>
 
-        <View>
-        <Text style={{fontSize: 18, textAlign: 'center', fontWeight: 'bold', color: 'red'}}>Location:</Text>
-        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10, marginBottom: 5}}> { this.state.about.location }</Text>
-        <Text style={{fontSize: 18, textAlign: 'center', fontWeight: 'bold', color: 'red'}}>Hours:</Text>
-        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10}}>Monday - Thursday 8am - 7pm</Text>
-        <Text style={{fontSize: 18, textAlign: 'center', marginLeft: 10}}>Friday 8am - 3pm</Text>
+        <View style={styles.info}>
+          <View style={styles.about}>
+            <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Location</Text>
+            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Ground Floor of Keller Hall:</Text>
+            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>University of Dayton Law School</Text>
+          </View>
+          <View style={styles.hours}>
+            <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Hours</Text>
+            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Monday - Thursday 8am - 7pm</Text>
+            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Friday 8am - 3pm</Text>
+          </View>
         </View>
 
-        <View style={{marginBottom:10}}>
-        <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-          <Text style={ styles.button }>Menu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
-          <Text style={ styles.button }>Promotions</Text>
-        </TouchableOpacity>
+        <View style={styles.buttons}>
+          <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
+            <View style={styles.buttonContainer}>
+                <Text style={ styles.button }>Menu</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
+            <View style={styles.buttonContainer}>
+                <Text style={ styles.button }>Specials</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-
-        </View>
+      </View>
       );
     }
   }
@@ -122,22 +140,39 @@ class JuryBox extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
     backgroundColor: 'white',
     marginTop: 65
   },
+  buttonContainer:{
+    borderRadius: 30,
+    height: 60,
+    width: 60,
+    backgroundColor: '#CC0F40',
+    justifyContent: 'center'
+  },
   button: {
-    width: Dimensions.get('window').width - 40,
-    marginLeft: 20,
-    marginRight: 70,
-    marginTop: 10,
-    marginBottom: 5,
-    padding: 10,
-    backgroundColor: '#691325',
-    color: '#FFFFFF',
+    fontFamily:'LabradorA-Regular',
+    fontSize: 14,
     textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center'
+    color: '#FFFFFF'
+  },
+  info: {
+    marginLeft: 75,
+    marginRight: 75
+  },
+  about: {
+    alignItems: 'flex-end',
+    marginTop: 20
+  },
+  hours: {
+    marginTop: 20
+  },
+  buttons: {
+    marginLeft: 75,
+    marginRight: 75,
+    marginTop: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });
 

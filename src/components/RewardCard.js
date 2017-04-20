@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, ScrollView, Image } from 'react-native';
 
-class Cards extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  navigateToCard(card) {
-    this.props.navigator.push({id:'Card', user: this.props.user, card: card, token: this.props.token });
-  }
+class RewardCard extends Component {
 
   render() {
     var BlendCard = require('../images/blendcard.jpg');
@@ -33,26 +26,19 @@ class Cards extends Component {
     } else if(this.props.division == 'The CHILL') {
       CardImg = ChillCard;
     }
-
-    return (
-      <ScrollView style={{marginTop: 5}}>
-      {
-        this.props.cards.map((l, i) => (
-          <TouchableOpacity key={i} onPress={this.navigateToCard.bind(this, l.card)}>
-            <View style={styles.card}>
-              <Image style={styles.image} source={CardImg} />
-              <View style={styles.textContainer}>
-                <Text style={styles.textBold}>{l.card.name}</Text>
-                <Text style={styles.text}>{l.division}</Text>
-                <Text style={styles.textBold}>{l.card.total - l.points} punches until next reward</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))
-      }
-      </ScrollView>
+console.log(this.props);
+    return(
+      <View style={styles.card}>
+        <Image style={styles.image} source={CardImg} />
+        <View style={styles.textContainer}>
+          <Text style={styles.textBold}>{this.props.card.name}</Text>
+          <Text style={styles.text}>{this.props.division}</Text>
+          <Text style={styles.textBold}>{this.props.card.total - this.props.points} punches until next reward</Text>
+        </View>
+      </View>
     );
   }
+
 }
 
 let styles = StyleSheet.create({
@@ -93,4 +79,4 @@ let styles = StyleSheet.create({
   }
 });
 
-export default Cards;
+export default RewardCard;

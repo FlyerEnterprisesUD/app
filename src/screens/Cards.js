@@ -19,6 +19,11 @@ class Cards extends Component {
     var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/getcards';
     //var url = 'http://localhost:5000/auth/getcards';
 
+    var division = this.props.division;
+    if(division = 'The Blend Express') {
+      division = 'The Blend';
+    }
+
     try {
       let response = await fetch(url, {
         method: 'POST',
@@ -28,7 +33,8 @@ class Cards extends Component {
         },
         body: JSON.stringify({
           token: this.props.token,
-          division: this.props.division
+          division: division,
+          userId: this.props.user.id
         })
       });
 
@@ -46,7 +52,7 @@ class Cards extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <CardList user={this.props.user} navigator={ this.props.navigator } cards={this.state.cards} token={this.props.token} />
+        <CardList user={this.props.user} navigator={ this.props.navigator } cards={this.state.cards} division={this.props.division} token={this.props.token} />
       </View>
     );
   }

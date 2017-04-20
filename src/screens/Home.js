@@ -147,7 +147,7 @@ let styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').width - 145
+    height: Dimensions.get('window').height - 145
   },
   text: {
     backgroundColor: 'rgba(220,220,220,.9)',

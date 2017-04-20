@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, AsyncStorage, ScrollView, Switch } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import { List, ListItem, Card } from 'react-native-elements';
 
 class Settings extends Component {
   constructor(props) {
@@ -28,7 +28,9 @@ class Settings extends Component {
   }
 
   componentWillMount() {
-    this.getPushSettings();
+    if(this.props.user.username != 'Guest'){
+      this.getPushSettings();
+    }
   }
 
   async getPushSettings() {
@@ -112,7 +114,7 @@ class Settings extends Component {
         <ScrollView style={ styles.container }>
 
           <View>
-            <Text style={{marginTop: 10}}>Profile</Text>
+            <Text style={{marginTop: 10, marginLeft: 2, fontSize: 24, fontFamily: 'LabradorA-Regular'}}>Profile</Text>
             <List containerStyle={{marginTop:1}}>
               <ListItem
                 onPress={this.navigateToAccountSettings}
@@ -127,79 +129,72 @@ class Settings extends Component {
             </List>
           </View>
 
-          <View>
-          <Text style={{marginTop: 10}}>Push Notifications</Text>
-            <View style={styles.row}>
+
+
+
+          <View style={styles.information}>
+            <Text style={{marginTop: 15, marginLeft: 2}}>PUSH NOTIFICATION</Text>
+            <Card containerStyle={{marginTop: 0, paddingTop: 0, marginLeft: 0, marginRight: 0}}>
               <View style={styles.element}>
-                <Text>The CHILL</Text>
+                <Text style={{fontSize: 16, marginTop: 6}}>The CHILL</Text>
                 <Switch
                   onValueChange={(value) => this.setState({chill: value})}
-                  style={{marginBottom: 10}}
+                  style={{marginBottom: 5}}
                   value={this.state.chill} />
               </View>
-
-              <View style={styles.switch}>
-                <Text>The Galley</Text>
+              <View style={styles.element}>
+                <Text style={{fontSize: 16, marginTop: 6}}>The Galley</Text>
                 <Switch
                   onValueChange={(value) => this.setState({galley: value})}
-                  style={{marginBottom: 10}}
+                  style={{marginBottom: 5}}
                   value={this.state.galley} />
               </View>
-
-              <View style={styles.switch}>
-                <Text>ArtStreet Cafe</Text>
+              <View style={styles.element}>
+                <Text style={{fontSize: 16, marginTop: 6}}>ArtStreet Cafe</Text>
                 <Switch
                   onValueChange={(value) => this.setState({artstreet: value})}
-                  style={{marginBottom: 10}}
+                  style={{marginBottom: 5}}
                   value={this.state.artstreet} />
               </View>
-            </View>
-
-            <View style={styles.row}>
-              <View>
-                <Text>Stuarts Landing</Text>
+              <View style={styles.element}>
+                <Text style={{fontSize: 16, marginTop: 6}}>Stuarts Landing</Text>
                 <Switch
                   onValueChange={(value) => this.setState({stus: value})}
-                  style={{marginBottom: 10}}
+                  style={{marginBottom: 5}}
                   value={this.state.stus} />
               </View>
-
-              <View>
-                <Text>The Blend</Text>
+              <View style={styles.element}>
+                <Text style={{fontSize: 16, marginTop: 6}}>The Blend</Text>
                 <Switch
                   onValueChange={(value) => this.setState({blend: value})}
-                  style={{marginBottom: 10}}
+                  style={{marginBottom: 5}}
                   value={this.state.blend} />
               </View>
-
-              <View>
-                <Text>The Blend Express</Text>
+              <View style={styles.element}>
+                <Text style={{fontSize: 16, marginTop: 6}}>The Blend Express</Text>
                 <Switch
                   onValueChange={(value) => this.setState({blendexpress: value})}
-                  style={{marginBottom: 10, marginLeft: 27}}
+                  style={{marginBottom: 5}}
                   value={this.state.blendexpress} />
               </View>
-            </View>
-
-            <View style={styles.row}>
-              <View>
-                <Text>The Jury Box</Text>
+              <View style={styles.element}>
+                <Text style={{fontSize: 16, marginTop: 6}}>The Jury Box</Text>
                 <Switch
                   onValueChange={(value) => this.setState({jurybox: value})}
-                  style={{marginBottom: 10}}
+                  style={{marginBottom: 5}}
                   value={this.state.jurybox} />
               </View>
-            </View>
+            </Card>
           </View>
 
           <View>
-          <TouchableOpacity onPress={ this.updatePushSettings }>
-            <Text style={ styles.button }>Update Settings</Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={ this.updatePushSettings }>
+              <Text style={ styles.button }>Update Settings</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity onPress={ this.logout }>
-            <Text style={ styles.button }>Logout</Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={ this.logout }>
+              <Text style={ styles.button }>Logout</Text>
+            </TouchableOpacity>
           </View>
 
         </ScrollView>
@@ -222,7 +217,7 @@ class Settings extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#fafafa',
     marginTop: 65
   },
   button: {
@@ -237,13 +232,14 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20
   },
-  row: {
+  element: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginLeft: 15,
-    marginRight: 15
+    borderBottomWidth: 1,
+    borderBottomColor: '#d3d3d3',
+    marginTop: 5
   },
-  element: {
+  row: {
 
   }
 });

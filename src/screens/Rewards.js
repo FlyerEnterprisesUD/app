@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
-import Cards from '../components/Cards';
+import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, ScrollView, Image } from 'react-native';
+import RewardCard from '../components/RewardCard';
 
 class Rewards extends Component {
   constructor(props) {
@@ -36,6 +36,8 @@ class Rewards extends Component {
 
       this.setState({ cards: responseJson.response.cards });
 
+      console.log(this.state.cards);
+
       return responseJson;
     } catch (err) {
       console.error(err);
@@ -53,13 +55,7 @@ class Rewards extends Component {
         {
           this.state.cards.map((l, i) => (
             <TouchableOpacity key={i} onPress={this.navigateToCard.bind(this, l.card)}>
-              <View style={styles.card}>
-                <View style={styles.text}>
-                  <Text>{l.card.name}</Text>
-                  <Text>{l.division}</Text>
-                  <Text>{l.total}</Text>
-                </View>
-              </View>
+              <RewardCard card={l.card} division={l.division} points={l.points} />
             </TouchableOpacity>
           ))
         }
@@ -87,10 +83,28 @@ let styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     overflow: 'hidden',
-    height: 100
+    height: 120
+  },
+  textContainer: {
+    marginLeft: 20,
+    marginTop: -100,
+    backgroundColor: 'rgba(52, 52, 52, 0)'
+  },
+  textBold: {
+    color: '#FFFFFF',
+    fontFamily:'LabradorA-Bold',
+    fontSize: 26
+  },
+  image: {
+    height: 120,
+    width: Dimensions.get('window').width - 10
   },
   text: {
-    margin: 5
+    color: '#FFFFFF',
+    fontFamily:'LabradorA-Regular',
+    fontSize: 20,
+    marginTop: -6,
+    marginBottom: 10
   }
 });
 
