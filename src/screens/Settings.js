@@ -114,7 +114,7 @@ class Settings extends Component {
         <ScrollView style={ styles.container }>
 
           <View>
-            <Text style={{marginTop: 10, marginLeft: 2, fontSize: 24, fontFamily: 'LabradorA-Regular'}}>Profile</Text>
+            <Text style={{marginTop: 10, marginLeft: 2}}>PROFILE</Text>
             <List containerStyle={{marginTop:1}}>
               <ListItem
                 onPress={this.navigateToAccountSettings}
@@ -230,7 +230,7 @@ let styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 4,
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 10
   },
   element: {
     flexDirection: 'row',

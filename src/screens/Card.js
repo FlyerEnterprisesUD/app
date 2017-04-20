@@ -124,7 +124,7 @@ console.log(this.props.card);
           }>
 
             <View style={{marginTop: 20}}>
-              <Text style={{textAlign: 'center', marginBottom: 10}}>{this.props.card.name} Card {StusVIP}</Text>
+              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 26, textAlign: 'center', marginBottom: 20}}>{this.props.card.name} Card {StusVIP}</Text>
 
               <AnimatedGaugeProgress
                 size={260}
@@ -137,7 +137,7 @@ console.log(this.props.card);
                 backgroundColor="#ff9999"
                 strokeCap="circle" />
 
-              <View style={{alignItems: 'center', marginTop: -130}}>
+              <View style={{alignItems: 'center', marginTop: -150}}>
                 <Text style={{fontFamily:'LabradorA-Bold', fontSize: 55, color: '#3f3f3f'}}>{this.props.card.total - this.state.points}</Text>
                 <Text style={{fontFamily:'LabradorA-Regular', fontSize: 16, color: '#3f3f3f', marginTop: -20}}>more punches</Text>
                 <Text style={{fontFamily:'LabradorA-Regular', fontSize: 16, color: '#3f3f3f'}}>until next reward</Text>

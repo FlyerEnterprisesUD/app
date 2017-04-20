@@ -20,8 +20,8 @@ class Cards extends Component {
     //var url = 'http://localhost:5000/auth/getcards';
 
     var division = this.props.division;
-    if(division = 'The Blend Express') {
-      division = 'The Blend';
+    if(division == "The Blend Express") {
+      division = "The Blend";
     }
 
     try {

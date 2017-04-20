@@ -67,14 +67,14 @@ class NavBarTitle extends Component {
     else if(this.props.title == 'Menu') {
       return(
         <View>
-          <Text style={ styles.text }>{this.props.name}s Menu</Text>
+          <Text style={ styles.text }>{this.props.name} Menu</Text>
         </View>
       );
     }
     else if(this.props.title == 'Promotions') {
       return(
         <View>
-          <Text style={ styles.text }>{this.props.name}s Promotions</Text>
+          <Text style={ styles.text }>{this.props.name} Promotions</Text>
         </View>
       );
     }
@@ -82,6 +82,13 @@ class NavBarTitle extends Component {
       return(
         <View>
           <Text style={ styles.text }>Moving and Storage</Text>
+        </View>
+      );
+    }
+    else if(this.props.title == 'EditSubmit') {
+      return(
+        <View>
+          <Text style={ styles.text }>Edit Submission</Text>
         </View>
       );
     }

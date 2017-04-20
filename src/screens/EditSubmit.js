@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Picker, Switch } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Picker, Switch, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment-timezone';
+import SimplePicker from 'react-native-simple-picker';
+import { Card, List, ListItem } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class EditSubmit extends Component {
   constructor(props) {
@@ -92,111 +95,162 @@ class EditSubmit extends Component {
   }
 
   render() {
+    const divisions = [
+      'The Blend',
+      'The Galley',
+      'The Blend Express',
+      'ArtStreet Cafe',
+      'The Jury Box',
+      'Stuarts Landing',
+      'Moving And Storage',
+      'The CHILL'
+    ];
+
     return(
-      <View style={styles.container}>
-        <Text>Title: </Text>
-        <TextInput
-          placeholder="Title"
-          autoCorrect={false}
-          value={ this.state.title }
-          onChangeText={(text) => this.setState({title: text})}
-          style={ styles.input }
-          keyboardType='default' />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ScrollView style={ styles.container }>
 
-        <Text>Division: </Text>
-        <Picker
-          selectedValue={this.state.division}
-          onValueChange={(text) => this.setState({division: text})}>
-          <Picker.Item label="The CHILL" value="The CHILL" />
-          <Picker.Item label="The Blend" value="The Blend" />
-          <Picker.Item label="The Blend Express" value="The Blend Express" />
-          <Picker.Item label="The Jury Box" value="The Jury Box" />
-          <Picker.Item label="ArtStreet Cafe" value="ArtStreet Cafe" />
-          <Picker.Item label="The Galley" value="The Galley" />
-          <Picker.Item label="Stuarts Landing" value="Stuarts Landing" />
-          <Picker.Item label="Moving and Storage" value="Moving and Storage" />
-        </Picker>
-
-        <Text>Division: {this.state.submitter}</Text>
-
-        <Text>Body: </Text>
-        <TextInput
-          placeholder="Body"
-          autoCorrect={false}
-          value={ this.state.body }
-          onChangeText={(text) => this.setState({body: text})}
-          style={ styles.input }
-          keyboardType='default' />
-
-          <Text>Now: </Text>
-          <Switch
-            onValueChange={(value) => this.setState({ready: value})}
-            style={{marginBottom: 10}}
-            value={this.state.ready} />
-
-          <DatePicker
-            style={{width: 200}}
-            date={this.state.time}
-            mode="datetime"
-            placeholder="select date"
-            format="YYYY-MM-DD HH:mm"
-            minDate={moment().format("YYYY-MM-DD")}
-            maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            customStyles={{
-              dateIcon: {
-                position: 'absolute',
-                left: 0,
-                top: 4,
-                marginLeft: 0
-              },
-              dateInput: {
-                marginLeft: 36
-              }
-              // ... You can check the source to find the other keys.
-            }}
-            onDateChange={(date) => {this.setState({time: date})}}
-            />
-
-
-            <DatePicker
-              style={{width: 200}}
-              date={this.state.end}
-              mode="datetime"
-              placeholder="select date"
-              format="YYYY-MM-DD HH:mm"
-              minDate={moment().format("YYYY-MM-DD")}
-              maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0
-                },
-                dateInput: {
-                  marginLeft: 36
-                }
-                // ... You can check the source to find the other keys.
-              }}
-              onDateChange={(date) => {this.setState({end: date})}}
-              />
-
-
-        <View style={styles.buttons}>
-        <TouchableOpacity onPress={this.approve}>
-          <Text style={ styles.button }>Approve</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={this.deny}>
-          <Text style={ styles.button }>Deny</Text>
-        </TouchableOpacity>
+        <View style={styles.information}>
+          <Text style={{marginTop: 15, marginLeft: 15}}>INFORMATION</Text>
+          <Card containerStyle={{marginTop: 0, paddingTop: 0}}>
+            <View style={styles.element}>
+              <Icon color='#d3d3d3' name='person' size={20} />
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="Title"
+                  autoCorrect={false}
+                  value={ this.state.title }
+                  onChangeText={(text) => this.setState({title: text})}
+                  style={ styles.input }
+                  keyboardType='default' />
+              </View>
+            </View>
+            <View style={styles.element}>
+              <Icon color='#d3d3d3' name='email' size={20} />
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="Body"
+                  autoCorrect={false}
+                  multiline = {true}
+                  numberOfLines = {4}
+                  value={ this.state.body }
+                  onChangeText={(text) => this.setState({body: text})}
+                  style={{height: 60}}
+                  keyboardType='default' />
+                </View>
+            </View>
+            <View style={styles.element}>
+              <Icon color='#d3d3d3' name='grade' size={20} style={{justifyContent: 'center'}}/>
+              <View style={styles.text}>
+                <Text
+                  onPress={() => {
+                    this.refs.picker.show();
+                  }}
+                >
+                    {this.state.division}
+                </Text>
+                <SimplePicker
+                   ref={'picker'}
+                   options={divisions}
+                   onSubmit={(option) => {
+                     this.setState({
+                       division: option,
+                     });
+                   }}
+                 />
+              </View>
+            </View>
+          </Card>
         </View>
 
-      </View>
+        <View style={styles.time}>
+          <Text style={{marginTop: 15, marginLeft: 15}}>TIME</Text>
+          <Card containerStyle={{marginTop: 0, paddingTop: 0}}>
+            <View style={styles.element}>
+              <Icon color='#d3d3d3' name='person' size={20} />
+              <View style={styles.dateContainer}>
+                <Text>Now</Text>
+                <Switch
+                  onValueChange={(value) => this.setState({now: value})}
+                  style={{marginBottom: 10}}
+                  value={this.state.ready} />
+
+                <Text> | Start Date </Text>
+
+                <DatePicker
+                  style={{width: 140}}
+                  date={this.state.time}
+                  mode="datetime"
+                  placeholder="select date"
+                  format="YYYY-MM-DD hh:mm"
+                  minDate={moment().format("YYYY-MM-DD")}
+                  maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  customStyles={{
+                    dateInput: {
+                      height: 30
+                    },
+                    dateIcon: {
+                      height: 0,
+                      width: 0
+                    },
+                    dateTouchBody: {
+                      height: 30
+                    }
+                  }}
+                  onDateChange={(date) => {this.setState({date: date})}}
+                  />
+              </View>
+            </View>
+            <View style={styles.element}>
+              <Icon color='#d3d3d3' name='today' size={20} />
+              <View style={styles.dateContainer}>
+                  <Text style={{marginTop: 5, marginRight: 10}} >End Date</Text>
+                  <DatePicker
+                    style={{width: 200}}
+                    date={this.state.end}
+                    mode="datetime"
+                    placeholder="select date"
+                    format="YYYY-MM-DD hh:mm"
+                    minDate={moment().format("YYYY-MM-DD")}
+                    maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateInput: {
+                        height: 30
+                      },
+                      dateIcon: {
+                        height: 0,
+                        width: 0
+                      },
+                      dateTouchBody: {
+                        height: 30
+                      }
+                    }}
+                    onDateChange={(date) => {this.setState({end: date})}}
+                    />
+              </View>
+            </View>
+          </Card>
+        </View>
+
+        <View style={styles.buttons}>
+          <TouchableOpacity onPress={ this.approve }>
+            <View style={styles.buttonContainer}>
+                <Text style={ styles.button }>Approve</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ this.deny }>
+            <View style={styles.buttonContainer}>
+                <Text style={ styles.button }>Deny</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+      </ScrollView>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -204,35 +258,60 @@ class EditSubmit extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#fafafa',
     marginTop: 65
   },
-  input: {
-    height: 35,
-    marginBottom: 15,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: '#DCDCDC',
-    borderRadius: 4,
-    alignItems: 'center'
+  element: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginTop: 15
   },
-  button: {
-    width: Dimensions.get('window').width / 2 - 40,
-    padding: 10,
-    backgroundColor: '#CC0F40',
-    color: '#FFFFFF',
-    textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center'
+  text: {
+    marginLeft: 5,
+    paddingBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#D3D3D3',
+    flex: 2
+  },
+  inputContainer: {
+    marginLeft: 5,
+    paddingBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#D3D3D3',
+    flex: 2
+  },
+  input: {
+    height: 15
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginLeft: 5,
+    paddingBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#D3D3D3',
+    flex: 2
   },
   buttons: {
-    marginLeft: 30,
-    marginRight: 30,
+    marginLeft: 75,
+    marginRight: 75,
+    marginTop: 30,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10
+    justifyContent: 'space-between'
+  },
+  buttonContainer:{
+    borderRadius: 30,
+    height: 60,
+    width: 60,
+    backgroundColor: '#CC0F40',
+    justifyContent: 'center'
+  },
+  button: {
+    fontFamily:'LabradorA-Regular',
+    fontSize: 14,
+    textAlign: 'center',
+    color: '#FFFFFF'
   }
 });
 
