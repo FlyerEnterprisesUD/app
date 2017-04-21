@@ -53,7 +53,7 @@ class Galley extends Component {
   }
 
   render() {
-    var home = require('../images/GalleyMain.jpg');
+    var home = require('../images/newgalley.jpg');
 
     if(this.props.user.username != 'Guest') {
       return(

@@ -52,7 +52,7 @@ class ArtStreetCafe extends Component {
   }
 
   render() {
-    var home = require('../images/ArtSteetMain.jpg');
+    var home = require('../images/newart.jpg');
 
     if(this.props.user.username != 'Guest') {
       return(

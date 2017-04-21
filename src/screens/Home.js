@@ -51,9 +51,9 @@ class Home extends Component {
     var ChillHome = require('../images/TheChill.jpg');
     var GalleyHome = require('../images/GalleyHome.jpg');
     var StusHome = require('../images/StusHome.jpg');
-    var ArtStreetCafeHome = require('../images/StusHome.jpg');
-    var JuryBoxHome = require('../images/StusHome.jpg');
-    var MovingAndStorageHome = require('../images/StusHome.jpg');
+    var ArtStreetCafeHome = require('../images/newart.jpg');
+    var JuryBoxHome = require('../images/newjury.jpg');
+    var MovingAndStorageHome = require('../images/moving.jpg');
 
     return(
       <View style={ styles.container }>

@@ -53,7 +53,7 @@ class Chill extends Component {
   }
 
   render() {
-    var home = require('../images/MainChill.jpg');
+    var home = require('../images/newchill.jpg');
 
     if(this.props.user.username != 'Guest') {
       return(
@@ -102,7 +102,7 @@ class Chill extends Component {
           <View>
             <Image
               style={{width: Dimensions.get('window').width, height: 200}}
-              source={{uri: 'http://i0.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/IMG_2555-1.jpg?zoom=2&resize=1180%2C300'}}
+              source={home}
             />
           </View>
 

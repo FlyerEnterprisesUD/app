@@ -52,6 +52,8 @@ class JuryBox extends Component {
   }
 
   render() {
+    var home = require('../images/newjury.jpg');
+
     if(this.props.user.username != 'Guest') {
       return(
         <View style={styles.container}>
@@ -59,7 +61,7 @@ class JuryBox extends Component {
         <View>
         <Image
           style={{width: Dimensions.get('window').width, height: 200}}
-          source={{uri: 'http://i2.wp.com/flyerenterprises.com/wp-content/uploads/2016/01/IMG_2450.jpg?zoom=2&resize=1180%2C300'}}
+          source={home}
         />
         </View>
 
@@ -102,7 +104,7 @@ class JuryBox extends Component {
         <View>
           <Image
             style={{width: Dimensions.get('window').width, height: 200}}
-            source={{uri: 'http://i2.wp.com/flyerenterprises.com/wp-content/uploads/2016/01/IMG_2450.jpg?zoom=2&resize=1180%2C300'}}
+            source={home}
           />
         </View>
 

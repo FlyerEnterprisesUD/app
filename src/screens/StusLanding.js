@@ -47,7 +47,7 @@ class StusLanding extends Component {
   }
 
   render() {
-    var home = require('../images/StusMain.jpg');
+    var home = require('../images/newstusmain.jpg');
 
     if(this.props.user.username != 'Guest') {
       return(

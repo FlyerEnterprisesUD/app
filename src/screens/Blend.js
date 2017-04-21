@@ -52,7 +52,7 @@ class Blend extends Component {
   }
 
   render() {
-    //var home = require('../images/Main.jpg');
+    var home = require('../images/newblend.jpg');
 
     if(this.props.user.username != 'Guest') {
       return(
@@ -60,7 +60,7 @@ class Blend extends Component {
           <View>
             <Image
               style={{width: Dimensions.get('window').width, height: 200}}
-              source={{uri: 'http://i1.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/Copy-of-IMG_2429.jpg?zoom=2&resize=1180%2C300'}}
+              source={home}
             />
           </View>
 
@@ -104,7 +104,7 @@ class Blend extends Component {
           <View>
             <Image
               style={{width: Dimensions.get('window').width, height: 200}}
-              source={{uri: 'http://i1.wp.com/flyerenterprises.com/wp-content/uploads/2016/03/Copy-of-IMG_2429.jpg?zoom=2&resize=1180%2C300'}}
+              source={home}
             />
           </View>
 
