@@ -32,7 +32,7 @@ class DivisionBubbles extends Component {
   }
 
   navigateToMovingAndStorage() {
-    this.props.navigator.push({id:'Moving and Storage', user: this.props.user, token: this.props.token });
+    this.props.navigator.push({id:'Moving And Storage', user: this.props.user, token: this.props.token });
   }
 
   render() {

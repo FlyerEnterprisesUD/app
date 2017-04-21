@@ -6,10 +6,7 @@ class movingandstorage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      about: '',
-      ProductList: {},
-      How: {},
-      FAQs: {}
+      about: {}
     }
     this.getInfo = this.getInfo.bind(this);
   }
@@ -32,10 +29,7 @@ class movingandstorage extends Component {
       });
 
       let responseJson = await response.json();
-      this.setState({ about: responseJson.about.info });
-      this.setState({ ProductList: responseJson.ProductList });
-      this.setState({ How: responseJson.How})
-      this.setState({ FAQs: responseJson.FAQs})
+      this.setState({ about: responseJson.about });
 
       return responseJson;
     } catch (err) {
@@ -44,19 +38,20 @@ class movingandstorage extends Component {
   }
 
   navigateToProductList() {
-    this.props.navigator.push({ id: 'Menu', menu: this.state.products });
+    this.props.navigator.push({ id: 'Menu', menu: this.state.about, division: 'Moving And Storage'  });
   }
 
   navigateToHow() {
-    this.props.navigator.push({ id: 'How', menu: this.state.How });
+    this.props.navigator.push({ id: 'How', menu: this.state.about.How });
   }
 
   navigateToFAQs() {
-    this.props.navigator.push({ id: 'FAQs', menu: this.state.FAQs });
+    this.props.navigator.push({ id: 'FAQs', menu: this.state.about.FAQs });
   }
 
 
   render() {
+    console.log(this.state.products);
     return(
       <View style={styles.container}>
 
@@ -66,7 +61,7 @@ class movingandstorage extends Component {
           <Text style={{textAlign: 'center'}}>Phone: (937) 687-8678</Text>
           <Text style={{textAlign: 'center'}}>Website: FlyerEnterprises.com/Storage/</Text>
           <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>About Us</Text>
-          <Text style={{textAlign: 'center'}}>{ this.state.about }</Text>
+          <Text style={{textAlign: 'center'}}>{ this.state.about.info }</Text>
         </View>
 
         <View style={{marginBottom:10}}>

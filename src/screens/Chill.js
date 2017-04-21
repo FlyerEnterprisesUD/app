@@ -65,25 +65,33 @@ class Chill extends Component {
             />
           </View>
 
-          <View>
-            <View>
-            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
-            <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
-            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
-            <Text style={{fontSize: 18, textAlign: 'center'}}>Sunday - Thursday 11am - 11pm</Text>
-            <Text style={{fontSize: 18, textAlign: 'center'}}>Friday - Saturday 11am - 9pm</Text>
+          <View style={styles.info}>
+            <View style={styles.about}>
+              <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Location</Text>
+              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Recplex</Text>
+            </View>
+            <View style={styles.hours}>
+              <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Hours</Text>
+              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Sunday - Thursday 11am - 11pm</Text>
+              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Friday - Saturday 11am - 9pm</Text>
             </View>
           </View>
 
-          <View style={{marginBottom:10}}>
+          <View style={styles.buttons}>
             <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-              <Text style={ styles.button }>Menu</Text>
+              <View style={styles.buttonContainer}>
+                  <Text style={ styles.button }>Menu</Text>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
-              <Text style={ styles.button }>Promotions</Text>
+              <View style={styles.buttonContainer}>
+                  <Text style={ styles.button }>Specials</Text>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
-              <Text style={ styles.button }>Rewards</Text>
+              <View style={styles.buttonContainer}>
+                  <Text style={ styles.button }>Rewards</Text>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -98,22 +106,28 @@ class Chill extends Component {
             />
           </View>
 
-          <View>
-            <View>
-            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Location:</Text>
-            <Text style={{fontSize: 18, textAlign: 'center', marginBottom: 5}}>{ this.state.about.location }</Text>
-            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Hours:</Text>
-            <Text style={{fontSize: 18, textAlign: 'center'}}>Sunday - Thursday 11am - 11pm</Text>
-            <Text style={{fontSize: 18, textAlign: 'center'}}>Friday - Saturday 11am - 9pm</Text>
+          <View style={styles.info}>
+            <View style={styles.about}>
+              <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Location</Text>
+              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Recplex</Text>
+            </View>
+            <View style={styles.hours}>
+              <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Hours</Text>
+              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Sunday - Thursday 11am - 11pm</Text>
+              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Friday - Saturday 11am - 9pm</Text>
             </View>
           </View>
 
-          <View style={{marginBottom:10}}>
+          <View style={styles.buttons}>
             <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-              <Text style={ styles.button }>Menu</Text>
+              <View style={styles.buttonContainer}>
+                  <Text style={ styles.button }>Menu</Text>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
-              <Text style={ styles.button }>Promotions</Text>
+              <View style={styles.buttonContainer}>
+                  <Text style={ styles.button }>Specials</Text>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -125,22 +139,39 @@ class Chill extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
     backgroundColor: 'white',
     marginTop: 65
   },
+  buttonContainer:{
+    borderRadius: 30,
+    height: 60,
+    width: 60,
+    backgroundColor: '#CC0F40',
+    justifyContent: 'center'
+  },
   button: {
-    width: Dimensions.get('window').width - 40,
-    marginLeft: 20,
-    marginRight: 70,
-    marginTop: 10,
-    marginBottom: 5,
-    padding: 10,
-    backgroundColor: '#87BFCE',
-    color: '#FFFFFF',
+    fontFamily:'LabradorA-Regular',
+    fontSize: 14,
     textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center'
+    color: '#FFFFFF'
+  },
+  info: {
+    marginLeft: 75,
+    marginRight: 75
+  },
+  about: {
+    alignItems: 'flex-end',
+    marginTop: 20
+  },
+  hours: {
+    marginTop: 20
+  },
+  buttons: {
+    marginLeft: 75,
+    marginRight: 75,
+    marginTop: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });
 
