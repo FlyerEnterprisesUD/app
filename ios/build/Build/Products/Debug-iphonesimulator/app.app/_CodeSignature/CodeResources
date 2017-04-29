@@ -12,7 +12,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			nf2nqXRsz2bWJMhfExgLpq95xQA=
+			VhQBEe4D+3d1eohKwtUYbZqnYa0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -228,11 +228,27 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		hbd9tpErOJzt8fPjUz+QrdzUelI=
+		W2NRqlj0l2hgurt8s5ktW9fwsQY=
 		</data>
 		<key>Ionicons.ttf</key>
 		<data>
 		D3lWcE/mG0nEHqGiIFEkD3AKK0Q=
+		</data>
+		<key>LabradorA-Bold.otf</key>
+		<data>
+		28azyEQpZEWdwNFKJK7wC6q2Yl8=
+		</data>
+		<key>LabradorA-Light.otf</key>
+		<data>
+		leE702xrw2LeJBfKJcEYyMWmQqY=
+		</data>
+		<key>LabradorA-Medium.otf</key>
+		<data>
+		WhQ9jDB7PP2QFfDkJ8PtevfmMeA=
+		</data>
+		<key>LabradorA-Regular.otf</key>
+		<data>
+		jrEtweRgnh79EWxCtxUFT7OCf90=
 		</data>
 		<key>MaterialCommunityIcons.ttf</key>
 		<data>
@@ -252,15 +268,15 @@
 		</data>
 		<key>PlugIns/appTests.xctest/Info.plist</key>
 		<data>
-		EeRbUF04UjQ8LK25VUNsrc2NPkM=
+		Pib9BvhvieUsUISL6WLD1bN2vDE=
 		</data>
 		<key>PlugIns/appTests.xctest/_CodeSignature/CodeResources</key>
 		<data>
-		BhSHitoKEmOieWFZbzZpmw757uY=
+		1OoiNyEvo/pfMICyMuHFrewnq/c=
 		</data>
 		<key>PlugIns/appTests.xctest/appTests</key>
 		<data>
-		zs2id4QQGhFaWFAka3N5iFQLSms=
+		cDGk3JlKo8dofQZ8giqbDgGGwcw=
 		</data>
 		<key>SimpleLineIcons.ttf</key>
 		<data>
@@ -288,11 +304,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			nf2nqXRsz2bWJMhfExgLpq95xQA=
+			VhQBEe4D+3d1eohKwtUYbZqnYa0=
 			</data>
 			<key>hash2</key>
 			<data>
-			tkS1UgLe1VV4pYjyjWX6orHZx2Uwyi+Ksriz5XPayeg=
+			RVSzvVxVwyUCYCU3vEqrvoez1+i2pm2n8UJ1TXaV/ZE=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -876,6 +892,50 @@
 			u0dnmwuuuEgbf1HGitM65aUmc2y1CxcXzGD/a2X5CKM=
 			</data>
 		</dict>
+		<key>LabradorA-Bold.otf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			28azyEQpZEWdwNFKJK7wC6q2Yl8=
+			</data>
+			<key>hash2</key>
+			<data>
+			3I/hBDTpAnmZRUrJLhF0SuayK6nO17CwRFL/ve+I5P0=
+			</data>
+		</dict>
+		<key>LabradorA-Light.otf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			leE702xrw2LeJBfKJcEYyMWmQqY=
+			</data>
+			<key>hash2</key>
+			<data>
+			R6CA205H5L0H1HPz/TOL5qJtGRaprh1Vmj0sqbd4pGo=
+			</data>
+		</dict>
+		<key>LabradorA-Medium.otf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			WhQ9jDB7PP2QFfDkJ8PtevfmMeA=
+			</data>
+			<key>hash2</key>
+			<data>
+			N5hyTY2ccOy5uQRzU3/LTFMBazeEb6Ewca9TroGb5s4=
+			</data>
+		</dict>
+		<key>LabradorA-Regular.otf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			jrEtweRgnh79EWxCtxUFT7OCf90=
+			</data>
+			<key>hash2</key>
+			<data>
+			Y/7AH7OOzpBlFFc9S/utuOcJ1qVh84oMhVsBM9wCnfc=
+			</data>
+		</dict>
 		<key>MaterialCommunityIcons.ttf</key>
 		<dict>
 			<key>hash</key>
@@ -913,33 +973,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EeRbUF04UjQ8LK25VUNsrc2NPkM=
+			Pib9BvhvieUsUISL6WLD1bN2vDE=
 			</data>
 			<key>hash2</key>
 			<data>
-			sku2OURAQvwj/HnXD9ukrrXYG6Ya6xQYXGhst5PDhTc=
+			HcvbTPhzyUqyA4A5F17GDoqwvwc+0fjphLO4ZtCBW5o=
 			</data>
 		</dict>
 		<key>PlugIns/appTests.xctest/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			BhSHitoKEmOieWFZbzZpmw757uY=
+			1OoiNyEvo/pfMICyMuHFrewnq/c=
 			</data>
 			<key>hash2</key>
 			<data>
-			bKtkjmuxwZttKHUch/7pdCNW0+nex5ZLRyc5eHaA25E=
+			WOLM0dpWN1X9rwhEMk78dRkcFVTja++kXEQGIoMdmeo=
 			</data>
 		</dict>
 		<key>PlugIns/appTests.xctest/appTests</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zs2id4QQGhFaWFAka3N5iFQLSms=
+			cDGk3JlKo8dofQZ8giqbDgGGwcw=
 			</data>
 			<key>hash2</key>
 			<data>
-			OEv5i9JEtzDzVfjj54AM1l006dXmKye7Cgc5D3MzB2c=
+			L9xZ4xPqray2QbpAT2ghAiVU39+eutOWRBZkQolXAbs=
 			</data>
 		</dict>
 		<key>SimpleLineIcons.ttf</key>

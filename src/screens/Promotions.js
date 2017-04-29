@@ -14,7 +14,7 @@ class Promotions extends Component {
   }
 
   componentWillMount() {
-    this.getPromotions();
+    this.setState({promotions: this.props.promotions});
   }
 
   async getPromotions() {
@@ -36,7 +36,6 @@ class Promotions extends Component {
       let responseJson = await response.json();
 
       this.setState({ promotions: responseJson.response.promotions });
-
 
       return responseJson;
     } catch (err) {
@@ -97,8 +96,7 @@ class Promotions extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    marginTop: 65
+    backgroundColor: 'white'
   },
   card: {
     borderColor: '#D3D3D3',

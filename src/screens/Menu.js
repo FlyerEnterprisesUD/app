@@ -36,8 +36,7 @@ class Menu extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    marginTop: 65
+    backgroundColor: 'white'
   }
 });
 
