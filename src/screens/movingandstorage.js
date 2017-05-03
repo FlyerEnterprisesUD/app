@@ -3,7 +3,6 @@ import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab
 
 import MovingAndStorageHome from './MovingAndStorageHome';
 import QA from './QA';
-import Promotions from './Promotions';
 
 class MovingAndStorage extends Component {
   constructor(props) {
@@ -83,7 +82,6 @@ class MovingAndStorage extends Component {
        renderTabBar={() => <ScrollableTabBar />}
      >
        <MovingAndStorageHome tabLabel='Home' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } {...this.props.passProps} />
-       <Promotions tabLabel='Promotions' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } promotions={this.state.promotions} division='Moving And Storage' {...this.props.passProps} />
        <QA tabLabel='FAQs' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } questions={this.state.questions} division='Moving And Storage' {...this.props.passProps} />
      </ScrollableTabView>
     );

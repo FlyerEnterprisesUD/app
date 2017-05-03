@@ -12,18 +12,21 @@ class StusLanding extends Component {
     this.state = {
       about: {},
       cards: [],
-      promotions: []
+      promotions: [],
+      newCards: []
     };
 
     this.getInfo = this.getInfo.bind(this);
     this.getPromotions = this.getPromotions.bind(this);
     this.getCards = this.getCards.bind(this);
+    this.getDivisionCards = this.getDivisionCards.bind(this);
   }
 
   componentWillMount() {
     this.getInfo();
     this.getCards();
     this.getPromotions();
+    this.getDivisionCards();
   }
 
   async getInfo() {
@@ -69,6 +72,56 @@ class StusLanding extends Component {
       let responseJson = await response.json();
 
       this.setState({ cards: responseJson.response.cards });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getDivisionCards() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/getdivisioncards';
+    //var url = 'http://localhost:5000/auth/getdivisioncards';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          token: this.props.token,
+          division: "Stuarts Landing",
+          userId: this.props.user.id
+        })
+      });
+
+      let responseJson = await response.json();
+
+      var cards = [];
+      var newCards = [];
+
+      cards = responseJson.response.cards;
+
+      var unique = true;
+      for(var i = 0; i < cards.length; i++) {
+        for(var j = 0; j < this.state.cards.length; j++) {
+          if(cards[i].id === this.state.cards[j].card.id) {
+            unique = false;
+            console.log("Not Unique: " + this.state.cards[j].card.name);
+          }
+        }
+        if(unique) {
+          console.log("Push: " + cards[i].name);
+          newCards.push(cards[i]);
+        }
+        unique = true;
+      }
+
+      console.log(newCards);
+
+      this.setState({ newCards: newCards});
 
       return responseJson;
     } catch (err) {
@@ -129,7 +182,7 @@ class StusLanding extends Component {
      >
        <Division tabLabel='Home' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } location={this.state.about.location} hours={this.props.about.hours}  division='Stuarts Landing' {...this.props.passProps} />
        <Promotions tabLabel='Promotions' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } promotions={this.state.promotions} division='Stuarts Landing' {...this.props.passProps} />
-       <Cards tabLabel='Rewards' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } cards={ this.state.cards } division='Stuarts Landing' {...this.props.passProps} />
+       <Cards tabLabel='Rewards' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } cards={ this.state.cards } newCards={ this.state.newCards } division='Stuarts Landing' {...this.props.passProps} />
      </ScrollableTabView>
     );
   }

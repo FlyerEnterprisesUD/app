@@ -27,6 +27,7 @@ import Settings from './screens/Settings';
 import Rewards from './screens/Rewards';
 import Card from './screens/Card';
 
+import RoleMenu from './screens/RoleMenu';
 import ChangePassword from './screens/ChangePassword';
 import AccountSettings from './screens/AccountSettings';
 import PunchQR from './screens/PunchQR';
@@ -60,8 +61,9 @@ class App extends Component {
   }
 
   toggleSideMenu() {
+    console.log(this.state.isOpen);
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: true
     });
   }
 
@@ -142,15 +144,8 @@ class App extends Component {
     });
   }
 
-  navigateToApprove() {
-    this.refs.navigator.push({id:'Approve', user: this.props.user, token: this.props.token });
-    this.setState({
-      isOpen: false
-    });
-  }
-
-  navigateToSubmit() {
-    this.refs.navigator.push({id:'Submit', user: this.props.user, token: this.props.token });
+  navigateToRoleMenu() {
+    this.refs.navigator.push({id:'Role Menu', user: this.props.user, token: this.props.token });
     this.setState({
       isOpen: false
     });
@@ -372,6 +367,9 @@ class App extends Component {
         return(<Submit navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
       case 'EditSubmit':
         return(<EditSubmit navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } promotion={ route.promotion } {...route.passProps} />);
+      case 'Role Menu':
+        return(<RoleMenu navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+
     }
   }
 
@@ -603,7 +601,7 @@ class App extends Component {
       </View>
     );
 
-    const SubmitterMenuComponent = (
+    const RoleMenuComponent = (
       <View style={{flex: 1, backgroundColor: '#CC0F40'}}>
         <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: 20}}>
 
@@ -701,9 +699,9 @@ class App extends Component {
             <ListItem
               roundAvatar
               avatar={settings}
-              onPress={this.navigateToSubmit.bind(this)}
+              onPress={this.navigateToRoleMenu.bind(this)}
               key='0'
-              title={'Submit'}
+              title={'FE Settings'}
             />
 
             <ListItem
@@ -711,130 +709,6 @@ class App extends Component {
               avatar={settings}
               onPress={this.navigateToSettings.bind(this)}
               key='1'
-              title={'Settings'}
-            />
-          </List>
-
-        </ScrollView>
-      </View>
-    );
-
-    const ApproverMenuComponent = (
-      <View style={{flex: 1, backgroundColor: '#CC0F40'}}>
-        <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: 20}}>
-
-          <List containerStyle={{marginTop: 0, marginBottom: 0}}>
-          <ListItem
-            key='0'
-            title={ 'Welcome, ' + user}
-            hideChevron
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToHome.bind(this)}
-            avatar={fe}
-            key='1'
-            title={'Home'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToRewards.bind(this)}
-            avatar={rewards}
-            key='2'
-            title={'My Rewards'}
-          />
-          </List>
-
-          <List containerStyle={{marginTop: 0}}>
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToChill.bind(this)}
-            avatar={chill}
-            key='0'
-            title={'The CHILL'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToBlend.bind(this)}
-            avatar={blend}
-            key='1'
-            title={'The Blend'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToBlendExpress.bind(this)}
-            avatar={blendexpress}
-            key='2'
-            title={'The Blend Express'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToGalley.bind(this)}
-            avatar={galley}
-            key='3'
-            title={'The Galley'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToArtStreetCafe.bind(this)}
-            avatar={artstreetcafe}
-            key='4'
-            title={'Art Street Cafe'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToJuryBox.bind(this)}
-            avatar={jurybox}
-            key='5'
-            title={'The Jury Box'}
-          />
-
-          <ListItem
-            roundAvatar
-            avatar={stuslanding}
-            onPress={this.navigateToStusLanding.bind(this)}
-            key='6'
-            title={'Stuart\'s Landing'}
-          />
-
-          <ListItem
-            roundAvatar
-            avatar={movingandstorage}
-            onPress={this.navigateToMovingAndStorage.bind(this)}
-            key='7'
-            title={'Moving and Storage'}
-          />
-          </List>
-
-          <List containerStyle={{marginTop: 0}}>
-            <ListItem
-              roundAvatar
-              avatar={settings}
-              onPress={this.navigateToSubmit.bind(this)}
-              key='0'
-              title={'Submit'}
-            />
-
-            <ListItem
-              roundAvatar
-              avatar={settings}
-              onPress={this.navigateToApprove.bind(this)}
-              key='1'
-              title={'Approve'}
-            />
-
-            <ListItem
-              roundAvatar
-              avatar={settings}
-              onPress={this.navigateToSettings.bind(this)}
-              key='2'
               title={'Settings'}
             />
           </List>
@@ -925,12 +799,12 @@ class App extends Component {
             />
         </SideMenu>
       );
-    } else if (this.props.user.role == 'approver' || this.props.user.role == 'admin'){
+    } else if (this.props.user.role == 'user'){
       return(
         <SideMenu
           ref="sidemenu"
           isOpen={ this.state.isOpen }
-          menu={ ApproverMenuComponent }
+          menu={ UserMenuComponent }
           navigate={this.navigate}>
 
           <Navigator
@@ -1005,92 +879,12 @@ class App extends Component {
           />
         </SideMenu>
       );
-    } else if (this.props.user.role == 'submitter'){
-      return(
-        <SideMenu
-          ref="sidemenu"
-          isOpen={ this.state.isOpen }
-          menu={ SubmitterMenuComponent }
-          navigate={this.navigate}>
-
-          <Navigator
-            ref="navigator"
-            initialRoute = {{ id: 'Home', user: this.props.user, token: this.props.token }}
-            renderScene = { this.navigatorRenderScene }
-            navigationBar={
-              <Navigator.NavigationBar
-                routeMapper={{
-                  LeftButton: (route, navigator, index, navState) => {
-                    if (index > 0) {
-                      const leftAction = navigator.pop
-                      return (
-                        <TouchableOpacity
-                          style={{marginTop: 7, marginLeft: 9}}
-                          onPress={leftAction}
-                          underlayColor='transparent'>
-                          <Icon
-                            color='white'
-                            name='chevron-left'
-                            size={28} />
-                        </TouchableOpacity>
-                      )
-                    }
-                    return(
-                      <TouchableOpacity
-                        style={{marginTop: 7, marginLeft: 9}}
-                        onPress={this.toggleSideMenu}
-                        underlayColor='transparent'>
-                        <Icon
-                          color='white'
-                          name='menu'
-                          size={28}
-                        />
-                      </TouchableOpacity>
-                    );
-                  },
-                  RightButton: (route, navigator, index, navState) => {
-                    const fe_logo_white = require('./images/wfe2.png');
-                    return(
-                      <TouchableOpacity onPress={this.navigateToHome.bind(this)}>
-                        <Image
-                          source={fe_logo_white}
-                          style={styles.logo}
-                        />
-                      </TouchableOpacity>
-                    );
-                  },
-                  Title: (route, navigator, index, navState) => {
-                    if(route.id == 'Product') {
-                      return (
-                        <NavBarTitle style={styles.title} title={route.id} name={route.product.name} {...route.passProps} />
-                      )
-                    } else if(route.id == 'Menu') {
-                        return (
-                          <NavBarTitle style={styles.title} title={route.id} name={route.division} {...route.passProps} />
-                        )
-                    } else if(route.id == 'Promotions') {
-                        return (
-                          <NavBarTitle style={styles.title} title={route.id} name={route.division} {...route.passProps} />
-                        )
-                    } else {
-                      return (
-                        <NavBarTitle style={styles.title} title={route.id} {...route.passProps} />
-                      )
-                    }
-                  },
-                }}
-                style={styles.navBar}
-              />
-            }
-            />
-        </SideMenu>
-      );
     } else {
       return(
         <SideMenu
           ref="sidemenu"
           isOpen={ this.state.isOpen }
-          menu={ UserMenuComponent }
+          menu={ RoleMenuComponent }
           navigate={this.navigate}>
 
           <Navigator

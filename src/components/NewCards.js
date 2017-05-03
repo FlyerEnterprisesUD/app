@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, ScrollView, Image } from 'react-native';
 
-class Cards extends Component {
+class NewCards extends Component {
   constructor(props) {
     super(props);
   }
@@ -38,13 +38,13 @@ class Cards extends Component {
       <View>
       {
         this.props.cards.map((l, i) => (
-          <TouchableOpacity key={i} onPress={this.navigateToCard.bind(this, l.card)}>
+          <TouchableOpacity key={i} onPress={this.navigateToCard.bind(this, l)}>
             <View style={styles.card}>
               <Image style={styles.image} source={CardImg} />
               <View style={styles.textContainer}>
-                <Text style={styles.textBold}>{l.card.name}</Text>
+                <Text style={styles.textBold}>{l.name}</Text>
                 <Text style={styles.text}>{l.division}</Text>
-                <Text style={styles.textBold}>{l.card.total - l.points} punches until next reward</Text>
+                <Text style={styles.textBold}>{l.total} punches until next reward</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -93,4 +93,4 @@ let styles = StyleSheet.create({
   }
 });
 
-export default Cards;
+export default NewCards;
