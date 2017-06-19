@@ -212,7 +212,8 @@ let styles = StyleSheet.create({
     fontFamily:'LabradorA-Bold',
     fontSize: 20,
     textAlign: 'center',
-    color: '#FFFFFF'
+    color: '#FFFFFF',
+    backgroundColor: 'rgba(220,220,220,0)'
   },
   buttons: {
     marginLeft: 100,

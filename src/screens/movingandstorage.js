@@ -22,8 +22,8 @@ class MovingAndStorage extends Component {
   }
 
   async getQuestions() {
-    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/movingandstorage';
-    var url = 'http://localhost:5000/movingandstorage';
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/movingandstorage';
+    //var url = 'http://localhost:5000/movingandstorage';
 
     try {
       let response = await fetch(url, {

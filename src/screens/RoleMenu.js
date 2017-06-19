@@ -8,12 +8,34 @@ class RoleMenu extends Component {
     super(props);
   }
 
-  navigateToSubmitPromotion(product) {
+  navigateToSubmitPromotion() {
     this.props.navigator.push({ id: 'Submit', user: this.props.user, token: this.props.token });
   }
 
-  navigateToApprovePromotion(product) {
+  navigateToApprovePromotion() {
     this.props.navigator.push({ id: 'Approve', user: this.props.user, token: this.props.token });
+  }
+
+  navigateToSubmitPush() {
+    this.props.navigator.push({ id: 'Submit Push', user: this.props.user, token: this.props.token });
+  }
+
+  navigateToApprovePush() {
+    this.props.navigator.push({ id: 'Approve Push', user: this.props.user, token: this.props.token });
+  }
+
+
+
+  navigateToAdminCards() {
+    this.props.navigator.push({ id: 'Admin Cards', user: this.props.user, token: this.props.token });
+  }
+
+  navigateToAddCard() {
+    this.props.navigator.push({ id: 'Add Card', user: this.props.user, token: this.props.token });
+  }
+
+  navigateToUsers() {
+    this.props.navigator.push({ id: 'Users', user: this.props.user, token: this.props.token });
   }
 
   render() {
@@ -22,10 +44,12 @@ class RoleMenu extends Component {
         <ScrollView style={styles.container}>
           <ListItem
             key={0}
+            onPress={this.navigateToSubmitPush.bind(this)}
             title={'Submit Push Notification'}
           />
           <ListItem
             key={1}
+            onPress={this.navigateToApprovePush.bind(this)}
             title={'Approve Push Notification'}
           />
           <ListItem
@@ -33,21 +57,28 @@ class RoleMenu extends Component {
             onPress={this.navigateToSubmitPromotion.bind(this)}
             title={'Submit Promotion'}
           />
+
           <ListItem
             key={3}
             onPress={this.navigateToApprovePromotion.bind(this)}
             title={'Approve Promotion'}
           />
+
           <ListItem
             key={4}
+            onPress={this.navigateToAddCard.bind(this)}
             title={'Add Card'}
           />
+
           <ListItem
             key={5}
+            onPress={this.navigateToAdminCards.bind(this)}
             title={'Edit Card'}
           />
+
           <ListItem
             key={6}
+            onPress={this.navigateToUsers.bind(this)}
             title={'Change User Role'}
           />
         </ScrollView>

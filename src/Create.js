@@ -68,6 +68,30 @@ class Create extends Component {
       return null;
     }
 
+    if(this.state.password.length < 8) {
+      this.setState({ error: 'Password must be longer than 8 characters', password: '', passwordAgain: '' });
+      this.refs.password.focus();
+      this.setState({ visible: false });
+      return null;
+    }
+
+    var counter = 0;
+    if (/[a-z]/.test(this.state.password)) {
+        counter++;
+    }
+    if (/[A-Z]/.test(this.state.password)) {
+        counter++;
+    }
+
+    if(counter < 2) {
+      this.setState({ error: 'Password must have at least one lowercase and uppercase letter', password: '', passwordAgain: '' });
+      this.refs.password.focus();
+      this.setState({ visible: false });
+      return null;
+    }
+
+
+
     // Connects to API
     var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/create';
     //var url = 'http://localhost:5000/user/create';
@@ -171,6 +195,7 @@ class Create extends Component {
                 }} />
             </View>
             <Text style={ styles.error }>{ this.state.error }</Text>
+            <Text>*Passwords must be at least 8 characters and have at least one uppercase and lowercase letter</Text>
           </Card>
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={ this.create }>

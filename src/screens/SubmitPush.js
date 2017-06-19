@@ -1,36 +1,55 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Picker, Switch, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, AlertIOS, Dimensions, Picker, Switch, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment-timezone';
 import SimplePicker from 'react-native-simple-picker';
 import { Card, List, ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-class EditSubmit extends Component {
+class SubmitPush extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: this.props.promotion.title,
-      division: this.props.promotion.division,
-      submitter: this.props.promotion.submitter,
-      body: this.props.promotion.body,
-      time: moment(this.props.promotion.time).format("YYYY-MM-DD HH:mm"),
-      ready: this.props.promotion.ready,
-      end: moment(this.props.promotion.end).format("YYYY-MM-DD HH:mm")
+      title: '',
+      division: 'Click to choose division',
+      submitter: '',
+      body: '',
+      date: moment().format("YYYY-MM-DD HH:mm"),
+      now: true,
+      time: ''
     };
-    this.approve = this.approve.bind(this);
-    this.deny = this.deny.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
-  async approve() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/approve';
-    //var url = 'http://localhost:5000/auth/approve';
+  async submit() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/submitpush';
+    //var url = 'http://localhost:5000/auth/submitpush';
 
+    if(this.state.division == 'Click to choose division') {
+      AlertIOS.alert(
+        'Flyer Enterprises',
+        'Please choose a division!',
+        [{
+          text: 'Dismiss',
+          onPress: null,
+        }]
+      );
+      return null;
+    }
+
+    var user = '';
     var time = '';
-    if(this.state.ready == true) {
+
+    if(this.props.user.name && this.props.user.name.trim() != "") {
+      user = this.props.user.name;
+    } else {
+      user = this.props.user.username;
+    }
+
+    if(this.state.now == true) {
       time = 'now';
     } else {
-      time = this.state.time;
+      time = moment(this.state.date).add('4', 'hours').format("YYYY-MM-DD HH:mm");
     }
 
     try {
@@ -42,51 +61,19 @@ class EditSubmit extends Component {
         },
         body: JSON.stringify({
           token: this.props.token,
-          id: this.props.promotion.id,
           title: this.state.title,
           division: this.state.division,
           body: this.state.body,
-          time: moment(this.state.time).format("YYYY-MM-DD HH:mm"),
-          end: moment(this.state.end).format("YYYY-MM-DD HH:mm")
+          submitter: user,
+          time: time
         })
       });
 
       let responseJson = await response.json();
 
       if(responseJson.response.success == true) {
-        this.props.navigator.replace({id: 'Approve', user: this.props.user, token: this.props.token});
+        this.props.navigator.resetTo({id: 'Home', user: this.props.user, token: this.props.token});
       }
-
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async deny() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/deny';
-    //var url = 'http://localhost:5000/auth/deny';
-
-    try {
-      let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          token: this.props.token,
-          id: this.props.promotion.id
-        })
-      });
-
-      let responseJson = await response.json();
-
-      if(responseJson.response.success == true) {
-        this.props.navigator.replace({id: 'Approve', user: this.props.user, token: this.props.token});
-      }
-
 
       return responseJson;
     } catch (err) {
@@ -102,7 +89,6 @@ class EditSubmit extends Component {
       'ArtStreet Cafe',
       'The Jury Box',
       'Stuarts Landing',
-      'Moving And Storage',
       'The CHILL'
     ];
 
@@ -173,13 +159,13 @@ class EditSubmit extends Component {
                 <Switch
                   onValueChange={(value) => this.setState({now: value})}
                   style={{marginBottom: 10}}
-                  value={this.state.ready} />
+                  value={this.state.now} />
 
                 <Text> | Start Date </Text>
 
                 <DatePicker
                   style={{width: 140}}
-                  date={this.state.time}
+                  date={this.state.date}
                   mode="datetime"
                   placeholder="select date"
                   format="YYYY-MM-DD hh:mm"
@@ -203,48 +189,13 @@ class EditSubmit extends Component {
                   />
               </View>
             </View>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='today' size={20} />
-              <View style={styles.dateContainer}>
-                  <Text style={{marginTop: 5, marginRight: 10}} >End Date</Text>
-                  <DatePicker
-                    style={{width: 200}}
-                    date={this.state.end}
-                    mode="datetime"
-                    placeholder="select date"
-                    format="YYYY-MM-DD hh:mm"
-                    minDate={moment().format("YYYY-MM-DD")}
-                    maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                      dateInput: {
-                        height: 30
-                      },
-                      dateIcon: {
-                        height: 0,
-                        width: 0
-                      },
-                      dateTouchBody: {
-                        height: 30
-                      }
-                    }}
-                    onDateChange={(date) => {this.setState({end: date})}}
-                    />
-              </View>
-            </View>
           </Card>
         </View>
 
         <View style={styles.buttons}>
-          <TouchableOpacity onPress={ this.approve }>
+          <TouchableOpacity onPress={ this.submit }>
             <View style={styles.buttonContainer}>
-                <Text style={ styles.button }>Approve</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={ this.deny }>
-            <View style={styles.buttonContainer}>
-                <Text style={ styles.button }>Deny</Text>
+                <Text style={ styles.button }>Submit</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -298,7 +249,7 @@ let styles = StyleSheet.create({
     marginRight: 75,
     marginTop: 30,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'center'
   },
   buttonContainer:{
     borderRadius: 30,
@@ -316,4 +267,4 @@ let styles = StyleSheet.create({
   }
 });
 
-export default EditSubmit
+export default SubmitPush

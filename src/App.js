@@ -28,13 +28,23 @@ import Rewards from './screens/Rewards';
 import Card from './screens/Card';
 
 import RoleMenu from './screens/RoleMenu';
-import ChangePassword from './screens/ChangePassword';
-import AccountSettings from './screens/AccountSettings';
-import PunchQR from './screens/PunchQR';
-import Approve from './screens/Approve';
+import ChangeRole from './screens/ChangeRole';
+import Users from './screens/Users';
 import Submit from './screens/Submit';
 import EditSubmit from './screens/EditSubmit';
+import ApprovePush from './screens/ApprovePush';
+import SubmitPush from './screens/SubmitPush';
+import EditSubmitPush from './screens/EditSubmitPush';
 
+import ChangePassword from './screens/ChangePassword';
+import AccountSettings from './screens/AccountSettings';
+
+import PunchQR from './screens/PunchQR';
+import Approve from './screens/Approve';
+
+import AdminCards from './screens/AdminCards.js';
+import EditCard from './screens/EditCard.js';
+import AddCard from './screens/AddCard.js';
 
 class App extends Component {
   constructor() {
@@ -369,6 +379,22 @@ class App extends Component {
         return(<EditSubmit navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } promotion={ route.promotion } {...route.passProps} />);
       case 'Role Menu':
         return(<RoleMenu navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+      case 'Users':
+        return(<Users navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+      case 'Change Role':
+        return(<ChangeRole navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } newUser={ route.newUser } {...route.passProps} />);
+      case 'Approve Push':
+        return(<ApprovePush navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+      case 'Submit Push':
+        return(<SubmitPush navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+      case 'EditSubmit Push':
+        return(<EditSubmitPush navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } push={ route.push } {...route.passProps} />);
+      case 'Admin Cards':
+        return(<AdminCards navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+      case 'Add Card':
+        return(<AddCard navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+      case 'Edit Card':
+        return(<EditCard navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } card={ route.card } {...route.passProps} />);
 
     }
   }

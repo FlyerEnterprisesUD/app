@@ -45,7 +45,7 @@ class Settings extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          userId: this.props.user.id
+          username: this.props.user.username
         })
       });
 

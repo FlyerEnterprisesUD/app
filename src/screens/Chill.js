@@ -26,8 +26,11 @@ class Chill extends Component {
   componentWillMount() {
     this.getInfo();
     this.getCards();
-    this.getPromotions();
-    this.getDivisionCards();
+
+    if(this.props.user.username != 'Guest') {
+      this.getPromotions();
+      this.getDivisionCards();
+    }
   }
 
   async getInfo() {

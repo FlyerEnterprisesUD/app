@@ -26,7 +26,7 @@ class QA extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#fafafa'
   }
 });
 

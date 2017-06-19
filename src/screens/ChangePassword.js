@@ -18,8 +18,52 @@ class ChangePassword extends Component {
     var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/changepassword';
     //var url = 'http://localhost:5000/user/changepassword';
 
-    if(this.state.newPassAgain != this.state.newPass) {
-      this.setState({ error: "New Passwords do not match" });
+    // Gets info from the state
+    let username = this.state.username.trim();
+    let password = this.state.password.trim();
+
+    // Checks if any are empty
+    if(username == '' || password == '') {
+      this.setState({ error: 'All fields are required' });
+      if(username == ''){
+        this.refs.username.focus();
+        this.setState({ visible: false });
+        return null;
+      } else {
+        this.refs.password.focus();
+        this.setState({ visible: false });
+        return null;
+      }
+    }
+
+
+
+    if(this.state.password != this.state.passwordAgain) {
+      this.setState({ error: 'Passwords must match', password: '', passwordAgain: '' });
+      this.refs.password.focus();
+      this.setState({ visible: false });
+      return null;
+    }
+
+    if(this.state.password.length < 8) {
+      this.setState({ error: 'Password must be longer than 8 characters', password: '', passwordAgain: '' });
+      this.refs.password.focus();
+      this.setState({ visible: false });
+      return null;
+    }
+
+    var counter = 0;
+    if (/[a-z]/.test(this.state.password)) {
+        counter++;
+    }
+    if (/[A-Z]/.test(this.state.password)) {
+        counter++;
+    }
+
+    if(counter < 2) {
+      this.setState({ error: 'Password must have at least one lowercase and uppercase letter', password: '', passwordAgain: '' });
+      this.refs.password.focus();
+      this.setState({ visible: false });
       return null;
     }
 

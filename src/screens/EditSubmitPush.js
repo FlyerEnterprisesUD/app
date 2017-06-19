@@ -6,25 +6,24 @@ import SimplePicker from 'react-native-simple-picker';
 import { Card, List, ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-class EditSubmit extends Component {
+class EditSubmitPush extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: this.props.promotion.title,
-      division: this.props.promotion.division,
-      submitter: this.props.promotion.submitter,
-      body: this.props.promotion.body,
-      time: moment(this.props.promotion.time).format("YYYY-MM-DD HH:mm"),
-      ready: this.props.promotion.ready,
-      end: moment(this.props.promotion.end).format("YYYY-MM-DD HH:mm")
+      title: this.props.push.title,
+      division: this.props.push.division,
+      submitter: this.props.push.submitter,
+      body: this.props.push.body,
+      time: moment(this.props.push.time).format("YYYY-MM-DD HH:mm"),
+      ready: this.props.push.ready
     };
     this.approve = this.approve.bind(this);
     this.deny = this.deny.bind(this);
   }
 
   async approve() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/approve';
-    //var url = 'http://localhost:5000/auth/approve';
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/approvepush';
+    //var url = 'http://localhost:5000/auth/approvepush';
 
     var time = '';
     if(this.state.ready == true) {
@@ -42,19 +41,18 @@ class EditSubmit extends Component {
         },
         body: JSON.stringify({
           token: this.props.token,
-          id: this.props.promotion.id,
+          id: this.props.push.id,
           title: this.state.title,
           division: this.state.division,
           body: this.state.body,
-          time: moment(this.state.time).format("YYYY-MM-DD HH:mm"),
-          end: moment(this.state.end).format("YYYY-MM-DD HH:mm")
+          time: moment(this.state.time).add('4', 'hours').format("YYYY-MM-DD HH:mm")
         })
       });
 
       let responseJson = await response.json();
 
       if(responseJson.response.success == true) {
-        this.props.navigator.replace({id: 'Approve', user: this.props.user, token: this.props.token});
+        this.props.navigator.replace({id: 'Approve Push', user: this.props.user, token: this.props.token});
       }
 
 
@@ -65,8 +63,8 @@ class EditSubmit extends Component {
   }
 
   async deny() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/deny';
-    //var url = 'http://localhost:5000/auth/deny';
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/denypush';
+    //var url = 'http://localhost:5000/auth/denypush';
 
     try {
       let response = await fetch(url, {
@@ -77,16 +75,15 @@ class EditSubmit extends Component {
         },
         body: JSON.stringify({
           token: this.props.token,
-          id: this.props.promotion.id
+          id: this.props.push.id
         })
       });
 
       let responseJson = await response.json();
 
       if(responseJson.response.success == true) {
-        this.props.navigator.replace({id: 'Approve', user: this.props.user, token: this.props.token});
+        this.props.navigator.replace({id: 'Approve Push', user: this.props.user, token: this.props.token});
       }
-
 
       return responseJson;
     } catch (err) {
@@ -102,7 +99,6 @@ class EditSubmit extends Component {
       'ArtStreet Cafe',
       'The Jury Box',
       'Stuarts Landing',
-      'Moving And Storage',
       'The CHILL'
     ];
 
@@ -171,7 +167,7 @@ class EditSubmit extends Component {
               <View style={styles.dateContainer}>
                 <Text>Now</Text>
                 <Switch
-                  onValueChange={(value) => this.setState({now: value})}
+                  onValueChange={(value) => this.setState({ready: value})}
                   style={{marginBottom: 10}}
                   value={this.state.ready} />
 
@@ -199,38 +195,8 @@ class EditSubmit extends Component {
                       height: 30
                     }
                   }}
-                  onDateChange={(date) => {this.setState({date: date})}}
+                  onDateChange={(date) => {this.setState({time: date})}}
                   />
-              </View>
-            </View>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='today' size={20} />
-              <View style={styles.dateContainer}>
-                  <Text style={{marginTop: 5, marginRight: 10}} >End Date</Text>
-                  <DatePicker
-                    style={{width: 200}}
-                    date={this.state.end}
-                    mode="datetime"
-                    placeholder="select date"
-                    format="YYYY-MM-DD hh:mm"
-                    minDate={moment().format("YYYY-MM-DD")}
-                    maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                      dateInput: {
-                        height: 30
-                      },
-                      dateIcon: {
-                        height: 0,
-                        width: 0
-                      },
-                      dateTouchBody: {
-                        height: 30
-                      }
-                    }}
-                    onDateChange={(date) => {this.setState({end: date})}}
-                    />
               </View>
             </View>
           </Card>
@@ -316,4 +282,4 @@ let styles = StyleSheet.create({
   }
 });
 
-export default EditSubmit
+export default EditSubmitPush

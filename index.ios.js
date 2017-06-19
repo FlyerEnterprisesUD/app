@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Navigator, PushNotificationIOS, AlertIOS } from 'react-native';
+import { AppRegistry, Navigator, PushNotificationIOS, AlertIOS, AsyncStorage } from 'react-native';
 
 import App from './src/App';
 import Login from './src/Login';
@@ -45,6 +45,7 @@ class app extends Component {
         onPress: null,
       }]
     );*/
+    AsyncStorage.setItem('devicetoken', deviceToken).done();
     console.log(deviceToken);
   }
 
@@ -62,8 +63,8 @@ class app extends Component {
 
   _onRemoteNotification(notification) {
     AlertIOS.alert(
-      'Push Notification Received',
-      'Alert message: ' + notification.getMessage(),
+      'Flyer Enterprises',
+      notification.getMessage(),
       [{
         text: 'Dismiss',
         onPress: null,

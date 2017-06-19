@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Image, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Card, List, ListItem } from 'react-native-elements';
+import DeviceInfo from 'react-native-device-info';
+
+var deviceToken;
 
 class Login extends Component {
   constructor(props) {
@@ -12,7 +15,8 @@ class Login extends Component {
       token: '',
       user: {},
       error: '',
-      visible: false
+      visible: false,
+      deviceToken: ''
     };
     this.login = this.login.bind(this);
     this.navigateToCreate = this.navigateToCreate.bind(this);
@@ -21,6 +25,8 @@ class Login extends Component {
     this.checkToken = this.checkToken.bind(this);
     this.verifyToken = this.verifyToken.bind(this);
     this.guest = this.guest.bind(this);
+    this.sendToken = this.sendToken.bind(this);
+    this.setVariables = this.setVariables.bind(this);
   }
 
   componentWillMount() {
@@ -71,6 +77,7 @@ class Login extends Component {
           return responseJson;
         } else {
           this.setState({ user: responseJson.response.user });
+          this.setVariables();
           this.props.navigator.replace({id: 'App', user: this.state.user, token: this.state.token});
         }
 
@@ -79,6 +86,49 @@ class Login extends Component {
       }
     } else {
       console.log('this ran first again');
+    }
+  }
+
+  async setVariables() {
+    try {
+      const devicetoken = await AsyncStorage.getItem('devicetoken', devicetoken);
+      if (devicetoken !== null){
+        //this.setState({deviceToken: devicetoken});
+        deviceToken = devicetoken;
+        this.sendToken();
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
+
+  async sendToken() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/createtoken';
+    //var url = 'http://localhost:5000/createtoken';
+
+    console.log(this.state.user);
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          token: deviceToken,
+          uid: DeviceInfo.getUniqueID(),
+          device: 'iOS',
+          username: this.state.user.username,
+          role: this.state.user.role
+        })
+      });
+
+      let responseJson = await response.json();
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -130,6 +180,7 @@ class Login extends Component {
         this.setState({ user: responseJson.response.user });
         this.setState({ token: responseJson.response.token });
         this.persistToken();
+        this.setVariables();
         this.props.navigator.replace({id: 'App', user: this.state.user, token: this.state.token});
       }
 

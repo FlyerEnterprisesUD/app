@@ -65,7 +65,7 @@ class Submit extends Component {
       let responseJson = await response.json();
 
       if(responseJson.response.success == true) {
-        this.props.navigator.replace({id: 'Home', user: this.props.user, token: this.props.token});
+        this.props.navigator.resetTo({id: 'Home', user: this.props.user, token: this.props.token});
       }
 
       return responseJson;
@@ -286,7 +286,8 @@ let styles = StyleSheet.create({
     fontFamily:'LabradorA-Regular',
     fontSize: 14,
     textAlign: 'center',
-    color: '#FFFFFF'
+    color: '#FFFFFF',
+    backgroundColor: 'rgba(220,220,220,0)'
   }
 });
 
