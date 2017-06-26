@@ -92,6 +92,13 @@ class NavBarTitle extends Component {
         </View>
       );
     }
+    else if(this.props.title == 'Role Menu') {
+      return(
+        <View>
+          <Text style={ styles.text }>FE Settings</Text>
+        </View>
+      );
+    }
     else {
       return(
         <View>

@@ -2,37 +2,223 @@ import React, { Component } from 'react';
 import { StyleSheet, ScrollView, View, Image, TouchableOpacity, Text, Navigator } from 'react-native';
 
 class DivisionBubbles extends Component {
+  constructor() {
+    super();
+    this.state = {
+      ArtStreetAbout: {},
+      BlendAbout: {},
+      BlendExpressAbout: {},
+      ChillAbout: {},
+      GalleyAbout: {},
+      JuryBoxAbout: {},
+      StusAbout: {}
+    };
+
+    this.getArtStreetInfo = this.getArtStreetInfo.bind(this);
+    this.getBlendInfo = this.getBlendInfo.bind(this);
+    this.getBlendExpressInfo = this.getBlendExpressInfo.bind(this);
+    this.getChillInfo = this.getChillInfo.bind(this);
+    this.getGalleyInfo = this.getGalleyInfo.bind(this);
+    this.getJuryBoxInfo = this.getJuryBoxInfo.bind(this);
+    this.getStusInfo = this.getStusInfo.bind(this);
+  }
 
   navigateToChill() {
-    this.props.navigator.push({id:'The Chill', user: this.props.user, token: this.props.token });
+    this.props.navigator.resetTo({id:'The Chill', user: this.props.user, token: this.props.token, about: this.state.ChillAbout });
   }
 
   navigateToStusLanding() {
-    this.props.navigator.push({id:'Stuart\'s Landing', user: this.props.user, token: this.props.token });
+    this.props.navigator.resetTo({id:'Stuart\'s Landing', user: this.props.user, token: this.props.token, about: this.state.StusAbout });
   }
 
   navigateToArtStreetCafe() {
-    this.props.navigator.push({id:'Art Street Cafe', user: this.props.user, token: this.props.token });
+    this.props.navigator.resetTo({id:'Art Street Cafe', user: this.props.user, token: this.props.token, about: this.state.ArtStreetAbout });
   }
 
   navigateToBlend() {
-    this.props.navigator.push({id:'The Blend', user: this.props.user, token: this.props.token });
+    this.props.navigator.resetTo({id:'The Blend', user: this.props.user, token: this.props.token, about: this.state.BlendAbout });
   }
 
   navigateToBlendExpress() {
-    this.props.navigator.push({id:'The Blend Express', user: this.props.user, token: this.props.token });
+    this.props.navigator.resetTo({id:'The Blend Express', user: this.props.user, token: this.props.token, about: this.state.BlendExpressAbout });
   }
 
   navigateToGalley() {
-    this.props.navigator.push({id:'The Galley', user: this.props.user, token: this.props.token });
+    this.props.navigator.resetTo({id:'The Galley', user: this.props.user, token: this.props.token, about: this.state.GalleyAbout });
   }
 
   navigateToJuryBox() {
-    this.props.navigator.push({id:'Jury Box', user: this.props.user, token: this.props.token });
+    this.props.navigator.resetTo({id:'Jury Box', user: this.props.user, token: this.props.token, about: this.state.JuryBoxAbout });
   }
 
   navigateToMovingAndStorage() {
-    this.props.navigator.push({id:'Moving And Storage', user: this.props.user, token: this.props.token });
+    this.props.navigator.resetTo({id:'Moving And Storage', user: this.props.user, token: this.props.token, about: this.state.MovingAndStorageAbout });
+  }
+
+  componentWillMount() {
+    this.getArtStreetInfo();
+    this.getBlendInfo();
+    this.getBlendExpressInfo();
+    this.getChillInfo();
+    this.getGalleyInfo();
+    this.getJuryBoxInfo();
+    this.getStusInfo();
+  }
+
+  async getArtStreetInfo() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/artstreet';
+    //var url = 'http://localhost:5000/artstreet';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ ArtStreetAbout: responseJson.about });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getBlendInfo() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/blend';
+    //var url = 'http://localhost:5000/blend';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ BlendAbout: responseJson.about });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getBlendExpressInfo() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/blendexpress';
+    //var url = 'http://localhost:5000/blendexpress';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ BlendExpressAbout: responseJson.about });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getChillInfo() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/chill';
+    //var url = 'http://localhost:5000/chill';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ ChillAbout: responseJson.about });
+
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getGalleyInfo() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/galley';
+    //var url = 'http://localhost:5000/galley';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ GalleyAbout: responseJson.about });
+
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getJuryBoxInfo() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/jurybox';
+    //var url = 'http://localhost:5000/jurybox';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ JuryBoxAbout: responseJson.about });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getStusInfo() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/stuslanding';
+    //var url = 'http://localhost:5000/stuslanding';
+
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let responseJson = await response.json();
+      this.setState({ StusAbout: responseJson.about });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   render() {

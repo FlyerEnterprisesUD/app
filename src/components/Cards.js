@@ -35,7 +35,7 @@ class Cards extends Component {
     }
 
     return (
-      <ScrollView style={{marginTop: 5}}>
+      <View>
       {
         this.props.cards.map((l, i) => (
           <TouchableOpacity key={i} onPress={this.navigateToCard.bind(this, l.card)}>
@@ -50,7 +50,7 @@ class Cards extends Component {
           </TouchableOpacity>
         ))
       }
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -60,7 +60,7 @@ let styles = StyleSheet.create({
     borderColor: '#D3D3D3',
     borderStyle: 'solid',
     borderWidth: 2,
-    marginBottom: 5,
+    marginTop: 5,
     marginLeft: 5,
     marginRight: 5,
     borderBottomLeftRadius: 10,

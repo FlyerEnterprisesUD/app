@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
-class movingandstorage extends Component {
+import MovingAndStorageHome from './MovingAndStorageHome';
+import QA from './QA';
+
+class MovingAndStorage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      about: {}
-    }
-    this.getInfo = this.getInfo.bind(this);
+      questions: [],
+      promotions: []
+    };
+
+    this.getPromotions = this.getPromotions.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
   }
 
   componentWillMount() {
-    this.getInfo();
+    this.getPromotions();
+    this.getQuestions();
   }
 
-  async getInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/movingandstorage';
-    //var url = 'http://localhost:5000/movingandstorage';
+  async getQuestions() {
+    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/movingandstorage';
+    var url = 'http://localhost:5000/movingandstorage';
 
     try {
       let response = await fetch(url, {
@@ -29,7 +35,8 @@ class movingandstorage extends Component {
       });
 
       let responseJson = await response.json();
-      this.setState({ about: responseJson.about });
+
+      this.setState({ questions: responseJson.about.faqs });
 
       return responseJson;
     } catch (err) {
@@ -37,70 +44,48 @@ class movingandstorage extends Component {
     }
   }
 
-  navigateToProductList() {
-    this.props.navigator.push({ id: 'Menu', menu: this.state.about, division: 'Moving And Storage'  });
-  }
+  async getPromotions() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/getpromotions';
+    //var url = 'http://localhost:5000/getpromotions';
 
-  navigateToHow() {
-    this.props.navigator.push({ id: 'How', menu: this.state.about.How });
-  }
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          division: "Moving And Storage"
+        })
+      });
 
-  navigateToFAQs() {
-    this.props.navigator.push({ id: 'FAQs', menu: this.state.about.FAQs });
-  }
+      let responseJson = await response.json();
 
+      this.setState({ promotions: responseJson.response.promotions });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   render() {
-    console.log(this.state.products);
+    var test = [];
+
     return(
-      <View style={styles.container}>
-
-        <View>
-          <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>Contact Info</Text>
-          <Text style={{textAlign: 'center'}}>Email: FEStorage@flyerenterprises.com</Text>
-          <Text style={{textAlign: 'center'}}>Phone: (937) 687-8678</Text>
-          <Text style={{textAlign: 'center'}}>Website: FlyerEnterprises.com/Storage/</Text>
-          <Text style={{fontWeight: 'bold', color: 'red', textAlign: 'center'}}>About Us</Text>
-          <Text style={{textAlign: 'center'}}>{ this.state.about.info }</Text>
-        </View>
-
-        <View style={{marginBottom:10}}>
-          <TouchableOpacity onPress={ this.navigateToProductList.bind(this) }>
-            <Text style={ styles.button }>Product List</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={ this.navigateToHow.bind(this) }>
-            <Text style={ styles.button }>How it Works</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={ this.navigateToFAQs.bind(this) }>
-            <Text style={ styles.button }>FAQs</Text>
-          </TouchableOpacity>
-        </View>
-
-      </View>
+      <ScrollableTabView
+       style={{marginTop: 65, backgroundColor: '#FFFFFF' }}
+       tabBarActiveTextColor='#CC0F40'
+       tabBarUnderlineStyle={{backgroundColor: '#CC0F40'}}
+       initialPage={0}
+       renderTabBar={() => <ScrollableTabBar />}
+     >
+       <MovingAndStorageHome tabLabel='Home' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } {...this.props.passProps} />
+       <QA tabLabel='FAQs' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } questions={this.state.questions} division='Moving And Storage' {...this.props.passProps} />
+     </ScrollableTabView>
     );
   }
 }
 
-let styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    backgroundColor: 'white',
-    marginTop: 65
-  },
-  button: {
-    width: Dimensions.get('window').width - 40,
-    marginLeft: 20,
-    marginRight: 70,
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: '#95D500',
-    color: '#FFFFFF',
-    textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center'
-  }
-});
-
-export default movingandstorage;
+export default MovingAndStorage;

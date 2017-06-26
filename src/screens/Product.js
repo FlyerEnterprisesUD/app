@@ -1,33 +1,26 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Card } from 'react-native-elements';
 
 class Product extends Component {
   render() {
     return(
       <View style={styles.container}>
         <ScrollView>
-          <ListItem
-            key={0}
-            title={'Price: ' + this.props.product.price}
-            hideChevron
-          />
+          <Card>
+            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, textAlign: 'center'}}>{this.props.product.price}</Text>
+          </Card>
 
-          <ListItem
-            key={1}
-            title={''}
-            hideChevron
-          />
-
+          <Card>
           {
             this.props.product.ingredients.map((l, i) => (
-              <ListItem
-                key={i}
-                title={l}
-                hideChevron
-              />
+              <Text key={i} style={{fontFamily:'LabradorA-Regular', fontSize: 18, textAlign: 'center'}}>{l}</Text>
             ))
           }
+          </Card>
+
+          <View style={{marginBottom: 20}} />
+
         </ScrollView>
       </View>
     );
@@ -37,7 +30,7 @@ class Product extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#fafafa',
     marginTop: 65
   }
 });

@@ -9,13 +9,18 @@ class Card extends Component {
       card: {},
       points: 0,
       favorite: 0,
-      refreshing: false
+      refreshing: false,
+      punch: false
     };
     this.getCard = this.getCard.bind(this);
   }
 
   componentWillMount() {
     this.getCard();
+  }
+
+  componentWillUnmount() {
+    this.setState({punch: false});
   }
 
   async getCard() {
@@ -41,6 +46,7 @@ class Card extends Component {
 
       if(responseJson.response.success == true) {
         this.setState({ card: responseJson.response.card, points: responseJson.response.card.points, favorite: responseJson.response.card.favorite});
+        console.log(this.state.card);
       } else {
 
       }
@@ -84,11 +90,17 @@ class Card extends Component {
   }
 
   navigateToQR() {
-    this.props.navigator.push({ id: 'PunchQR', user: this.props.user, token: this.props.token, card: this.state.card });
+    this.setState({punch: true});
+    if(this.state.points < this.props.card.total) {
+      this.props.navigator.push({ id: 'PunchQR', user: this.props.user, token: this.props.token, card: this.state.card });
+    }
   }
 
   redeem() {
-    this.props.navigator.push({ id: 'PunchQR', user: this.props.user, token: this.props.token, card: this.state.card });
+    this.setState({punch: true});
+    if(this.state.points == this.props.card.total) {
+      this.props.navigator.push({ id: 'PunchQR', user: this.props.user, token: this.props.token, card: this.state.card });
+    }
   }
 
   onRefresh() {
@@ -99,6 +111,15 @@ class Card extends Component {
   }
 
   render() {
+
+    if(this.state.points == undefined) {
+       this.getCard();
+    }
+
+    if(this.state.punch == true) {
+       this.getCard();
+    }
+
     var fav, favWord;
     if(this.state.favorite == 1) {
       fav = require('../images/star.jpg');
@@ -112,7 +133,7 @@ class Card extends Component {
     if(this.props.card.division == 'Stuarts Landing' && this.state.points == 20){
       StusVIP = "| You are a Stu's VIP!";
     }
-console.log(this.props.card);
+
     return(
       <View style={styles.container}>
         <ScrollView

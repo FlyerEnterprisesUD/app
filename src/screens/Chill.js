@@ -1,19 +1,33 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator, Image } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
+
+import Division from './Division';
+import Menu from './Menu';
+import Promotions from './Promotions';
+import Cards from './Cards';
 
 class Chill extends Component {
   constructor(props) {
     super(props);
     this.state = {
       menu: {},
-      about: {}
-    }
+      about: {},
+      cards: [],
+      promotions: [],
+      newCards: []
+    };
+
     this.getInfo = this.getInfo.bind(this);
+    this.getPromotions = this.getPromotions.bind(this);
+    this.getCards = this.getCards.bind(this);
+    this.getDivisionCards = this.getDivisionCards.bind(this);
   }
 
   componentWillMount() {
     this.getInfo();
+    this.getCards();
+    this.getPromotions();
+    this.getDivisionCards();
   }
 
   async getInfo() {
@@ -33,6 +47,33 @@ class Chill extends Component {
       this.setState({ menu: responseJson.menu });
       this.setState({ about: responseJson.about });
 
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getCards() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/getcards';
+    //var url = 'http://localhost:5000/auth/getcards';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          token: this.props.token,
+          division: "The CHILL",
+          userId: this.props.user.id
+        })
+      });
+
+      let responseJson = await response.json();
+
+      this.setState({ cards: responseJson.response.cards });
 
       return responseJson;
     } catch (err) {
@@ -40,139 +81,115 @@ class Chill extends Component {
     }
   }
 
-  navigateToMenu() {
-    this.props.navigator.push({ id: 'Menu', menu: this.state.menu, division: 'The CHILL' });
-  }
+  async getDivisionCards() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/getdivisioncards';
+    //var url = 'http://localhost:5000/auth/getdivisioncards';
 
-  navigateToRewards() {
-    this.props.navigator.push({ id: 'Cards', user: this.props.user, token: this.props.token, division: 'The CHILL' });
-  }
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          token: this.props.token,
+          division: "The Chill",
+          userId: this.props.user.id
+        })
+      });
 
-  navigateToPromotions() {
-    this.props.navigator.push({ id: 'Promotions', user: this.props.user, token: this.props.token, division: 'The CHILL' });
-  }
+      let responseJson = await response.json();
 
-  render() {
-    var home = require('../images/newchill.jpg');
+      var cards = [];
+      var newCards = [];
 
-    if(this.props.user.username != 'Guest') {
-      return(
-        <View style={styles.container}>
-          <View>
-            <Image
-              style={{width: Dimensions.get('window').width, height: 200}}
-              source={home}
-            />
-          </View>
+      cards = responseJson.response.cards;
 
-          <View style={styles.info}>
-            <View style={styles.about}>
-              <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Location</Text>
-              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Recplex</Text>
-            </View>
-            <View style={styles.hours}>
-              <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Hours</Text>
-              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Sunday - Thursday 11am - 11pm</Text>
-              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Friday - Saturday 11am - 9pm</Text>
-            </View>
-          </View>
+      var unique = true;
+      for(var i = 0; i < cards.length; i++) {
+        for(var j = 0; j < this.state.cards.length; j++) {
+          if(cards[i].id === this.state.cards[j].card.id) {
+            unique = false;
+            console.log("Not Unique: " + this.state.cards[j].card.name);
+          }
+        }
+        if(unique) {
+          console.log("Push: " + cards[i].name);
+          newCards.push(cards[i]);
+        }
+        unique = true;
+      }
 
-          <View style={styles.buttons}>
-            <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-              <View style={styles.buttonContainer}>
-                  <Text style={ styles.button }>Menu</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
-              <View style={styles.buttonContainer}>
-                  <Text style={ styles.button }>Specials</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={ this.navigateToRewards.bind(this) }>
-              <View style={styles.buttonContainer}>
-                  <Text style={ styles.button }>Rewards</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
-    } else {
-      return(
-        <View style={styles.container}>
-          <View>
-            <Image
-              style={{width: Dimensions.get('window').width, height: 200}}
-              source={home}
-            />
-          </View>
+      console.log(newCards);
 
-          <View style={styles.info}>
-            <View style={styles.about}>
-              <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Location</Text>
-              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Recplex</Text>
-            </View>
-            <View style={styles.hours}>
-              <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Hours</Text>
-              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Sunday - Thursday 11am - 11pm</Text>
-              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>Friday - Saturday 11am - 9pm</Text>
-            </View>
-          </View>
+      this.setState({ newCards: newCards});
 
-          <View style={styles.buttons}>
-            <TouchableOpacity onPress={ this.navigateToMenu.bind(this) }>
-              <View style={styles.buttonContainer}>
-                  <Text style={ styles.button }>Menu</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={ this.navigateToPromotions.bind(this) }>
-              <View style={styles.buttonContainer}>
-                  <Text style={ styles.button }>Specials</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
+      return responseJson;
+    } catch (err) {
+      console.error(err);
     }
   }
-}
 
-let styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    marginTop: 65
-  },
-  buttonContainer:{
-    borderRadius: 30,
-    height: 60,
-    width: 60,
-    backgroundColor: '#CC0F40',
-    justifyContent: 'center'
-  },
-  button: {
-    fontFamily:'LabradorA-Regular',
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#FFFFFF'
-  },
-  info: {
-    marginLeft: 75,
-    marginRight: 75
-  },
-  about: {
-    alignItems: 'flex-end',
-    marginTop: 20
-  },
-  hours: {
-    marginTop: 20
-  },
-  buttons: {
-    marginLeft: 75,
-    marginRight: 75,
-    marginTop: 30,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  async getPromotions() {
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/getpromotions';
+    //var url = 'http://localhost:5000/getpromotions';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          division: "The CHILL"
+        })
+      });
+
+      let responseJson = await response.json();
+
+      this.setState({ promotions: responseJson.response.promotions });
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
   }
-});
+
+
+  render() {
+    if(this.props.user.username == 'Guest') {
+      return(
+        <ScrollableTabView
+         style={{marginTop: 65, backgroundColor: '#FFFFFF' }}
+         tabBarActiveTextColor='#CC0F40'
+         tabBarUnderlineStyle={{backgroundColor: '#CC0F40'}}
+         initialPage={0}
+         renderTabBar={() => <ScrollableTabBar />}
+       >
+         <Division tabLabel='Home' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } location={this.state.about.location} hours={this.props.about.hours}  division='The CHILL' {...this.props.passProps} />
+         <Menu tabLabel='Menu' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } menu={ this.state.menu } division='The CHILL' {...this.props.passProps} />
+         <Promotions tabLabel='Promotions' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } promotions={this.state.promotions} division='The CHILL' {...this.props.passProps} />
+       </ScrollableTabView>
+      );
+    }
+
+    return(
+      <ScrollableTabView
+       style={{marginTop: 65, backgroundColor: '#FFFFFF' }}
+       tabBarActiveTextColor='#CC0F40'
+       tabBarUnderlineStyle={{backgroundColor: '#CC0F40'}}
+       initialPage={0}
+       renderTabBar={() => <ScrollableTabBar />}
+     >
+       <Division tabLabel='Home' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } location={this.state.about.location} hours={this.props.about.hours}  division='The CHILL' {...this.props.passProps} />
+       <Menu tabLabel='Menu' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } menu={ this.state.menu } division='The CHILL' {...this.props.passProps} />
+       <Promotions tabLabel='Promotions' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } promotions={this.state.promotions} division='The CHILL' {...this.props.passProps} />
+       <Cards tabLabel='Rewards' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } cards={ this.state.cards } newCards={ this.state.newCards } division='The CHILL' {...this.props.passProps} />
+     </ScrollableTabView>
+    );
+  }
+}
 
 export default Chill;

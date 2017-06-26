@@ -23,9 +23,10 @@ class RewardCard extends Component {
       CardImg = GalleyCard;
     } else if(this.props.division == 'Stuarts Landing') {
       CardImg = StusCard;
-    } else if(this.props.division == 'The CHILL') {
+    } else if(this.props.division == 'The Chill') {
       CardImg = ChillCard;
     }
+
 console.log(this.props);
     return(
       <View style={styles.card}>

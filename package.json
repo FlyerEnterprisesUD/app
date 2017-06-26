@@ -19,6 +19,7 @@
     "react-native-elements": "^0.9.3",
     "react-native-image-slider": "^1.1.5",
     "react-native-loading-spinner-overlay": "^0.4.1",
+    "react-native-scrollable-tab-view": "^0.6.5",
     "react-native-simple-gauge": "^0.1.2",
     "react-native-simple-picker": "^1.2.1",
     "react-native-vector-icons": "^4.0.0"
@@ -33,6 +34,8 @@
     "preset": "react-native"
   },
   "rnpm": {
-   "assets": ["./src/assets"]
+    "assets": [
+      "./src/assets"
+    ]
   }
 }
