@@ -6,6 +6,8 @@ import Menu from './Menu';
 import Promotions from './Promotions';
 import Cards from './Cards';
 
+var stateCards = [];
+
 class StusLanding extends Component {
   constructor(props) {
     super(props);
@@ -75,6 +77,7 @@ class StusLanding extends Component {
       let responseJson = await response.json();
 
       this.setState({ cards: responseJson.response.cards });
+      stateCards = responseJson.response.cards;
 
       return responseJson;
     } catch (err) {
@@ -107,22 +110,26 @@ class StusLanding extends Component {
 
       cards = responseJson.response.cards;
 
-      var unique = true;
+      var unique;
       for(var i = 0; i < cards.length; i++) {
-        for(var j = 0; j < this.state.cards.length; j++) {
-          if(cards[i].id === this.state.cards[j].card.id) {
-            unique = false;
-            console.log("Not Unique: " + this.state.cards[j].card.name);
+        console.log("j")
+        if(stateCards.length > 0) {
+          for(var j = 0; j < stateCards.length; j++) {
+            if(cards[i].id == stateCards[j].card.id) {
+              unique = false;
+              break;
+            } else {
+              unique = true;
+            }
           }
+        } else {
+          unique = true;
         }
         if(unique) {
-          console.log("Push: " + cards[i].name);
           newCards.push(cards[i]);
         }
         unique = true;
       }
-
-      console.log(newCards);
 
       this.setState({ newCards: newCards});
 

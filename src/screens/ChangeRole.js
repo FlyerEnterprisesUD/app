@@ -17,8 +17,8 @@ class ChangeRole extends Component {
   }
 
   async changeRole() {
-    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/changerole';
-    var url = 'http://localhost:5000/auth/changerole';
+    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/changerole';
+    //var url = 'http://localhost:5000/auth/changerole';
 
     try {
       let response = await fetch(url, {

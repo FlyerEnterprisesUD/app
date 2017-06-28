@@ -66,18 +66,6 @@ class RoleMenu extends Component {
 
           <ListItem
             key={4}
-            onPress={this.navigateToAddCard.bind(this)}
-            title={'Add Card'}
-          />
-
-          <ListItem
-            key={5}
-            onPress={this.navigateToAdminCards.bind(this)}
-            title={'Edit Card'}
-          />
-
-          <ListItem
-            key={6}
             onPress={this.navigateToUsers.bind(this)}
             title={'Change User Role'}
           />

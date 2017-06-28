@@ -9,7 +9,8 @@ class Cards extends Component {
   }
 
   render() {
-    console.log(this.props.newCards);
+    //console.log(this.props.cards);
+    //console.log(this.props.newCards);
     return (
       <ScrollView style={styles.container}>
         <CardList user={this.props.user} navigator={ this.props.navigator } cards={this.props.cards} division={this.props.division} token={this.props.token} />

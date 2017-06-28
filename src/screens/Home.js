@@ -9,14 +9,14 @@ class Home extends Component {
   }
 
   render() {
-    var BlendHome = require('../images/BlendHome.jpg');
-    var BlendExpressHome = require('../images/BlendExpressHome.jpg');
-    var ChillHome = require('../images/TheChill.jpg');
-    var GalleyHome = require('../images/GalleyHome.jpg');
-    var StusHome = require('../images/StusHome.jpg');
-    var ArtStreetCafeHome = require('../images/newart.jpg');
-    var JuryBoxHome = require('../images/newjury.jpg');
-    var MovingAndStorageHome = require('../images/moving.jpg');
+    var BlendHome = require('../images/blendc.jpg');
+    var BlendExpressHome = require('../images/blendexpressc.jpg');
+    var ChillHome = require('../images/chillc.jpg');
+    var GalleyHome = require('../images/galleyc.jpg');
+    var StusHome = require('../images/stusc.jpg');
+    var ArtStreetCafeHome = require('../images/artstreetc.jpg');
+    var JuryBoxHome = require('../images/juryboxc.jpg');
+    var MovingAndStorageHome = require('../images/storagec.jpg');
 
     return(
       <View style={ styles.container }>

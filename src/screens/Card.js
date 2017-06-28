@@ -44,7 +44,10 @@ class Card extends Component {
 
       let responseJson = await response.json();
 
+
+
       if(responseJson.response.success == true) {
+        console.log(responseJson.response.success);
         this.setState({ card: responseJson.response.card, points: responseJson.response.card.points, favorite: responseJson.response.card.favorite});
         console.log(this.state.card);
       } else {

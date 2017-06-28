@@ -200,6 +200,20 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		581C4A2A1F03FCCE00FE82CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 581C4A261F03FCCD00FE82CE /* ART.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
+			remoteInfo = ART;
+		};
+		581C4A4E1F03FCF100FE82CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 581C4A4A1F03FCF100FE82CE /* ART.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
+			remoteInfo = ART;
+		};
 		5829D1931E70DECB0056C82D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E0861E20EB864A0EB43BD793 /* RCTCamera.xcodeproj */;
@@ -296,6 +310,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = app/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		4AE40DDC91C7432C95DF9748 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		581C4A261F03FCCD00FE82CE /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
+		581C4A4A1F03FCF100FE82CE /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "/Users/ajaypatnaik/Desktop/app/node_modules/react-native/Libraries/PushNotificationIOS/../ART/ART.xcodeproj"; sourceTree = "<absolute>"; };
 		5894BAC61E848DF400896BDD /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../../realtest/node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		58F254011EA579FE004B5D87 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		58F254961EA581F0004B5D87 /* app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = app.entitlements; path = app/app.entitlements; sourceTree = "<group>"; };
@@ -444,6 +460,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				581C4A261F03FCCD00FE82CE /* ART.xcodeproj */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -459,6 +476,22 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		581C4A271F03FCCD00FE82CE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				581C4A2B1F03FCCE00FE82CE /* libART.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		581C4A4B1F03FCF100FE82CE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				581C4A4F1F03FCF100FE82CE /* libART.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -527,6 +560,7 @@
 			children = (
 				58F254011EA579FE004B5D87 /* RCTPushNotification.xcodeproj */,
 				5894BAC61E848DF400896BDD /* ART.xcodeproj */,
+				581C4A4A1F03FCF100FE82CE /* ART.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -673,8 +707,16 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 581C4A4B1F03FCF100FE82CE /* Products */;
+					ProjectRef = 581C4A4A1F03FCF100FE82CE /* ART.xcodeproj */;
+				},
+				{
 					ProductGroup = 5894BAC71E848DF400896BDD /* Products */;
 					ProjectRef = 5894BAC61E848DF400896BDD /* ART.xcodeproj */;
+				},
+				{
+					ProductGroup = 581C4A271F03FCCD00FE82CE /* Products */;
+					ProjectRef = 581C4A261F03FCCD00FE82CE /* ART.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -891,6 +933,20 @@
 			fileType = archive.ar;
 			path = libjschelpers.a;
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		581C4A2B1F03FCCE00FE82CE /* libART.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libART.a;
+			remoteRef = 581C4A2A1F03FCCE00FE82CE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		581C4A4F1F03FCF100FE82CE /* libART.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libART.a;
+			remoteRef = 581C4A4E1F03FCF100FE82CE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5829D1941E70DECB0056C82D /* libRCTCamera.a */ = {

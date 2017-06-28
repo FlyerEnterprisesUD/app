@@ -49,19 +49,29 @@ class Rewards extends Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView style={{marginTop: 5}}>
-        {
-          this.state.cards.map((l, i) => (
-            <TouchableOpacity key={i} onPress={this.navigateToCard.bind(this, l.card)}>
-              <RewardCard card={l.card} division={l.division} points={l.points} />
-            </TouchableOpacity>
-          ))
-        }
-        </ScrollView>
-      </View>
-    );
+    if(this.state.cards.length == 0) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.no}>You Have No Favorited Reward Cards!</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <ScrollView style={{marginTop: 5}}>
+          {
+            this.state.cards.map((l, i) => (
+              <TouchableOpacity key={i} onPress={this.navigateToCard.bind(this, l.card)}>
+                <RewardCard card={l.card} division={l.division} points={l.points} />
+              </TouchableOpacity>
+            ))
+          }
+          </ScrollView>
+        </View>
+      );
+    }
+
+
   }
 }
 
@@ -105,6 +115,13 @@ let styles = StyleSheet.create({
     fontSize: 20,
     marginTop: -6,
     marginBottom: 10
+  },
+  no: {
+    fontFamily:'LabradorA-Bold',
+    fontSize: 25,
+    textAlign: 'center',
+    justifyContent: 'center',
+    marginTop: 20
   }
 });
 

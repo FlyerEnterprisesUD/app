@@ -6,6 +6,8 @@ import Menu from './Menu';
 import Promotions from './Promotions';
 import Cards from './Cards';
 
+var stateCards = [];
+
 class Chill extends Component {
   constructor(props) {
     super(props);
@@ -69,7 +71,7 @@ class Chill extends Component {
         },
         body: JSON.stringify({
           token: this.props.token,
-          division: "The CHILL",
+          division: "The Chill",
           userId: this.props.user.id
         })
       });
@@ -77,6 +79,8 @@ class Chill extends Component {
       let responseJson = await response.json();
 
       this.setState({ cards: responseJson.response.cards });
+      stateCards = responseJson.response.cards;
+      //console.log(this.state.cards);
 
       return responseJson;
     } catch (err) {
@@ -109,22 +113,26 @@ class Chill extends Component {
 
       cards = responseJson.response.cards;
 
-      var unique = true;
+      var unique;
       for(var i = 0; i < cards.length; i++) {
-        for(var j = 0; j < this.state.cards.length; j++) {
-          if(cards[i].id === this.state.cards[j].card.id) {
-            unique = false;
-            console.log("Not Unique: " + this.state.cards[j].card.name);
+        console.log("j")
+        if(stateCards.length > 0) {
+          for(var j = 0; j < stateCards.length; j++) {
+            if(cards[i].id == stateCards[j].card.id) {
+              unique = false;
+              break;
+            } else {
+              unique = true;
+            }
           }
+        } else {
+          unique = true;
         }
         if(unique) {
-          console.log("Push: " + cards[i].name);
           newCards.push(cards[i]);
         }
         unique = true;
       }
-
-      console.log(newCards);
 
       this.setState({ newCards: newCards});
 
@@ -146,7 +154,7 @@ class Chill extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          division: "The CHILL"
+          division: "The Chill"
         })
       });
 

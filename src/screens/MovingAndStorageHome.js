@@ -7,7 +7,7 @@ class MovingAndStorageHome extends Component {
   }
 
   render() {
-    var home = require('../images/newart.jpg');
+    var home = require('../images/storagehome.jpg');
     return(
       <View style={styles.container}>
 

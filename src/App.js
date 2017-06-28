@@ -71,7 +71,6 @@ class App extends Component {
   }
 
   toggleSideMenu() {
-    console.log(this.state.isOpen);
     this.setState({
       isOpen: true
     });
