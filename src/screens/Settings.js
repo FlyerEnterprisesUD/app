@@ -8,6 +8,7 @@ class Settings extends Component {
     this.logout = this.logout.bind(this);
     this.navigateToChangePassword = this.navigateToChangePassword.bind(this);
     this.navigateToAccountSettings = this.navigateToAccountSettings.bind(this);
+    this.navigateToPrivacyPolicy = this.navigateToPrivacyPolicy.bind(this);
     this.getPushSettings = this.getPushSettings.bind(this);
     this.updatePushSettings = this.updatePushSettings.bind(this);
 
@@ -108,6 +109,10 @@ class Settings extends Component {
     this.props.navigator.push({id: 'Account Settings', user: this.props.user});
   }
 
+  navigateToPrivacyPolicy() {
+    this.props.navigator.push({id: 'Privacy Policy', user: this.props.user});
+  }
+
   render() {
     if(this.props.user.username != "Guest"){
       return(
@@ -185,6 +190,17 @@ class Settings extends Component {
                   value={this.state.jurybox} />
               </View>
             </Card>
+          </View>
+
+          <View>
+            <Text style={{marginTop: 10, marginLeft: 2}}>LEGAL</Text>
+            <List containerStyle={{marginTop:1}}>
+              <ListItem
+                onPress={this.navigateToPrivacyPolicy}
+                key='0'
+                title={'Privacy Policy'}
+              />
+            </List>
           </View>
 
           <View>

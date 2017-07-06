@@ -38,6 +38,7 @@ import EditSubmitPush from './screens/EditSubmitPush';
 
 import ChangePassword from './screens/ChangePassword';
 import AccountSettings from './screens/AccountSettings';
+import PrivacyPolicy from './screens/PrivacyPolicy';
 
 import PunchQR from './screens/PunchQR';
 import Approve from './screens/Approve';
@@ -360,6 +361,8 @@ class App extends Component {
         return(<ChangePassword navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'Account Settings':
         return(<AccountSettings navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
+      case 'Privacy Policy':
+        return(<PrivacyPolicy navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
       case 'PunchQR':
         return(<PunchQR navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } card={ route.card } {...route.passProps} />);
       case 'Rewards':

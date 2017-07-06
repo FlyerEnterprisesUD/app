@@ -1,6 +1,6 @@
 dependencies: \
-  /Users/ajaypatnaik/Desktop/realtest/node_modules/react-native/Libraries/ART/ViewManagers/ARTNodeManager.m \
-  /Users/ajaypatnaik/Desktop/realtest/node_modules/react-native/Libraries/ART/ViewManagers/ARTNodeManager.h \
+  /Users/ajaypatnaik/Desktop/app/node_modules/react-native/Libraries/ART/ViewManagers/ARTNodeManager.m \
+  /Users/ajaypatnaik/Desktop/app/node_modules/react-native/Libraries/ART/ViewManagers/ARTNodeManager.h \
   /Users/ajaypatnaik/Desktop/app/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTViewManager.h \
   /Users/ajaypatnaik/Desktop/app/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
   /Users/ajaypatnaik/Desktop/app/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
@@ -22,4 +22,4 @@ dependencies: \
   /Users/ajaypatnaik/Desktop/app/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
   /Users/ajaypatnaik/Desktop/app/ios/build/Build/Products/Debug-iphonesimulator/include/React/UIView+React.h \
   /Users/ajaypatnaik/Desktop/app/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTComponent.h \
-  /Users/ajaypatnaik/Desktop/realtest/node_modules/react-native/Libraries/ART/ARTNode.h
+  /Users/ajaypatnaik/Desktop/app/node_modules/react-native/Libraries/ART/ARTNode.h
