@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import { Card } from 'react-native-elements';
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import SimplePicker from 'react-native-simple-picker';
+import { Fumi } from 'react-native-textinput-effects';
+import Display from 'react-native-display';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class ChangeRole extends Component {
   constructor() {
     super();
     this.state = {
-      role: ''
+      role: '',
+      email: '',
+      username: ''
     };
-    this.changeRole = this.changeRole.bind(this);
+    this.update = this.update.bind(this);
   }
 
   componentWillMount() {
-    this.setState({role: this.props.newUser.role});
+    this.setState({role: this.props.newUser.role, username: this.props.newUser.username, email: this.props.newUser.email});
   }
 
-  async changeRole() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/changerole';
-    //var url = 'http://localhost:5000/auth/changerole';
+  async update() {
+    var url = 'https://flyerentapi.herokuapp.com/user/update';
+    //var url = 'http://localhost:3000/user/update';
 
     try {
       let response = await fetch(url, {
@@ -30,7 +34,9 @@ class ChangeRole extends Component {
         body: JSON.stringify({
           token: this.props.token,
           id: this.props.newUser.id,
-          role: this.state.role
+          role: this.state.role,
+          username: this.state.username,
+          email: this.state.email
         })
       });
 
@@ -48,40 +54,82 @@ class ChangeRole extends Component {
 
   render() {
     const roles = [
-      'user',
-      'submitter',
-      'approver',
-      'admin'
+      'User',
+      'Submitter',
+      'Approver',
+      'Editor',
+      'Admin'
     ];
 
     return(
-      <View style={styles.container}>
-        <Card>
-          <Text style={{fontFamily:'LabradorA-Regular', fontSize: 26, textAlign: 'center'}}>{this.props.newUser.username}</Text>
-          <View style={styles.text}>
-            <Text
-              onPress={() => {
-                this.refs.picker.show();
-              }}
-            >
-                {this.state.role}
-            </Text>
-            <SimplePicker
-               ref={'picker'}
-               options={roles}
-               onSubmit={(option) => {
-                 this.setState({
-                   role: option,
-                 });
-               }}
-             />
-          </View>
-        </Card>
+      <ScrollView style={styles.container}>
 
-        <TouchableOpacity onPress={ this.changeRole }>
-          <Text style={ styles.button }>Change Role</Text>
-        </TouchableOpacity>
-      </View>
+        <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}>Information</Text>
+        <View style={{marginTop: 4, marginLeft: 16, marginRight: 16, shadowColor: '#a3a3a3', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.8, shadowRadius: 2, borderColor: 'rgba(163, 163, 163, 0.5)', borderWidth: 1}}>
+          <Fumi
+            label={'Username'}
+            labelStyle={{ color: '#a3a3a3', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}
+            inputStyle={{ color: '#2e2e2e', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}
+            style={{}}
+            iconClass={Icon}
+            iconName={'user'}
+            iconColor={'#CC0F40'}
+            iconSize={15}
+            autoCapitalize={'none'}
+            autoCorrect={false}
+            keyboardType={'default'}
+            value={this.state.username}
+            onChangeText={(text) => this.setState({username: text})}
+            ref={'username'}
+            onSubmitEditing={(event) => {
+
+            }}
+          />
+        </View>
+
+        <View style={{marginTop: 4, marginLeft: 16, marginRight: 16, shadowColor: '#a3a3a3', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.8, shadowRadius: 2, borderColor: 'rgba(163, 163, 163, 0.5)', borderWidth: 1}}>
+          <Fumi
+            label={'Email'}
+            labelStyle={{ color: '#a3a3a3', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}
+            inputStyle={{ color: '#2e2e2e', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}
+            style={{}}
+            iconClass={Icon}
+            iconName={'envelope'}
+            iconColor={'#CC0F40'}
+            iconSize={15}
+            autoCapitalize={'none'}
+            autoCorrect={false}
+            keyboardType={'default'}
+            value={this.state.email}
+            onChangeText={(text) => this.setState({email: text})}
+            ref={'email'}
+            onSubmitEditing={(event) => {
+
+            }}
+          />
+        </View>
+
+        <View style={styles.section}>
+          <View style={styles.item}>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <Icon name="bookmark" size={16} color="#CC0F40" style={{marginTop: 6}} />
+              <Text onPress={() => { this.refs.picker.show();}} style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16, color: '#414141'}}>{this.state.role}</Text>
+              <SimplePicker ref={'picker'} options={roles} onSubmit={(option) => { this.setState({ role: option }); }} />
+            </View>
+            <View>
+            </View>
+          </View>
+        </View>
+
+        <View style={{marginTop: 10}}>
+          <TouchableOpacity onPress={this.update}>
+            <View style={styles.button}>
+              <Text style={{color: '#FFFFFF', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16}}>Update</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+      </ScrollView>
     );
   }
 }
@@ -89,28 +137,46 @@ class ChangeRole extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#f2f2f2',
     marginTop: 65
   },
-  text: {
-    paddingBottom: 5,
-    paddingTop: 5,
-    borderWidth: 2,
-    borderColor: '#D3D3D3',
-    alignItems: 'center',
-    marginTop: 10
+  section: {
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
+  },
+  item: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   button: {
-    width: Dimensions.get('window').width - 30,
-    marginLeft: 15,
-    marginRight: 15,
-    padding: 10,
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
     backgroundColor: '#CC0F40',
-    color: '#FFFFFF',
-    textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center',
-    marginTop: 10
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1,
+    alignItems: 'center'
   }
 });
 

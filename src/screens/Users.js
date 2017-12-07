@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Navigator, ScrollView, RefreshControl, Dimensions, TouchableOpacity, Image } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Users extends Component {
   constructor(props) {
@@ -17,8 +17,8 @@ class Users extends Component {
   }
 
   async getUsers() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/getusers';
-    //var url = 'http://localhost:5000/auth/getusers';
+    var url = 'https://flyerentapi.herokuapp.com/user/get';
+    //var url = 'http://localhost:3000/user/get';
 
     try {
       let response = await fetch(url, {
@@ -64,18 +64,27 @@ class Users extends Component {
             />
           }
         >
-
+        <View style={{marginBottom: 20, marginTop: 10}}>
         {
           this.state.users.map((l, i) => (
-            <ListItem
-              key={i}
-              title={l.username}
-              subtitle={l.role}
-              onPress={this.navigateToChangeRole.bind(this, l)}
-            />
+            <View key={i}>
+              <TouchableOpacity onPress={this.navigateToChangeRole.bind(this, l)}>
+                <View style={styles.section}>
+                  <View style={styles.item}>
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                      <Icon name="user" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                      <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>{l.username} ({l.role})</Text>
+                    </View>
+                    <View>
+                      <Icon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                    </View>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
           ))
         }
-
+        </View>
         </ScrollView>
       </View>
     );
@@ -85,8 +94,30 @@ class Users extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f2f2f2',
     marginTop: 65
+  },
+  section: {
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
+  },
+  item: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });
 

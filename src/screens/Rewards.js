@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, ScrollView, Image, RefreshControl } from 'react-native';
 import RewardCard from '../components/RewardCard';
 
 class Rewards extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: [],
+      divisions: [],
     }
     this.getFavorites = this.getFavorites.bind(this);
   }
@@ -15,9 +15,16 @@ class Rewards extends Component {
     this.getFavorites();
   }
 
+  onRefresh() {
+    this.setState({refreshing: true});
+    this.getFavorites().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
   async getFavorites() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/getfavorites';
-    //var url = 'http://localhost:5000/auth/getfavorites';
+    var url = 'https://flyerentapi.herokuapp.com/card/getfavorites';
+    //var url = 'http://localhost:3000/card/getfavorites';
 
     try {
       let response = await fetch(url, {
@@ -34,9 +41,7 @@ class Rewards extends Component {
 
       let responseJson = await response.json();
 
-      this.setState({ cards: responseJson.response.cards });
-
-      console.log(this.state.cards);
+      this.setState({ divisions: responseJson.response.divisions });
 
       return responseJson;
     } catch (err) {
@@ -48,8 +53,10 @@ class Rewards extends Component {
     this.props.navigator.push({id:'Card', user: this.props.user, card: card, token: this.props.token });
   }
 
+  //TODO refresh
   render() {
-    if(this.state.cards.length == 0) {
+    console.log()
+    if(this.state.divisions.length == 0) {
       return (
         <View style={styles.container}>
           <Text style={styles.no}>You Have No Favorited Reward Cards!</Text>
@@ -58,12 +65,17 @@ class Rewards extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <ScrollView style={{marginTop: 5}}>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh.bind(this)}
+              />
+            }
+          >
           {
-            this.state.cards.map((l, i) => (
-              <TouchableOpacity key={i} onPress={this.navigateToCard.bind(this, l.card)}>
-                <RewardCard card={l.card} division={l.division} points={l.points} />
-              </TouchableOpacity>
+            this.state.divisions.map((l, i) => (
+              <RewardCard key={i} division={l} navigator={this.props.navigator} user={this.props.user} token={this.props.token}/>
             ))
           }
           </ScrollView>
@@ -78,7 +90,7 @@ class Rewards extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f2f2f2',
     marginTop: 65
   },
   card: {
@@ -102,8 +114,8 @@ let styles = StyleSheet.create({
   },
   textBold: {
     color: '#FFFFFF',
-    fontFamily:'LabradorA-Bold',
-    fontSize: 26
+    fontFamily: 'avenir', fontWeight: 'bold',
+    fontSize: 18
   },
   image: {
     height: 120,
@@ -111,14 +123,14 @@ let styles = StyleSheet.create({
   },
   text: {
     color: '#FFFFFF',
-    fontFamily:'LabradorA-Regular',
-    fontSize: 20,
+    fontFamily: 'avenir', fontWeight: 'bold',
+    fontSize: 16,
     marginTop: -6,
     marginBottom: 10
   },
   no: {
-    fontFamily:'LabradorA-Bold',
-    fontSize: 25,
+    fontFamily: 'avenir', fontWeight: 'bold',
+    fontSize: 14,
     textAlign: 'center',
     justifyContent: 'center',
     marginTop: 20

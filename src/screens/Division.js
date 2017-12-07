@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity, Dimensions, Navigator, Image } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import Display from 'react-native-display';
 
-class ArtStreetCafe extends Component {
+class Division extends Component {
   constructor(props) {
     super(props);
   }
@@ -15,24 +15,29 @@ class ArtStreetCafe extends Component {
     var JuryBoxHome = require('../images/newjury.jpg');
     var ArtStreetHome = require('../images/newart.jpg');
     var StuartsLandingHome = require('../images/newstusmain.jpg');
+    var HeritageHome = require('../images/newheritage.png');
     var MovingAndStorageHome = require('../images/BlendHome.jpg');
 
     var home;
 
-    if(this.props.division == 'The CHILL') {
+    console.log(this.props.division);
+
+    if(this.props.division.division.name == 'The CHILL') {
       home = ChillHome;
-    } else if(this.props.division == 'The Blend') {
+    } else if(this.props.division.division.name == 'The Blend') {
       home = BlendHome;
-    } else if(this.props.division == 'The Blend Express') {
+    } else if(this.props.division.division.name == 'The Blend Express') {
       home = BlendExpressHome;
-    } else if(this.props.division == 'The Galley') {
+    } else if(this.props.division.division.name == 'The Galley') {
       home = GalleyHome;
-    } else if(this.props.division == 'The Jury Box') {
+    } else if(this.props.division.division.name == 'The Jury Box') {
       home = JuryBoxHome;
-    } else if(this.props.division == 'ArtStreet Cafe') {
+    } else if(this.props.division.division.name == 'ArtStreet Cafe') {
       home = ArtStreetHome;
-    } else if(this.props.division == 'Stuarts Landing') {
+    } else if(this.props.division.division.name == 'Stuarts Landing') {
       home = StuartsLandingHome;
+    } else if(this.props.division.division.name == 'Heritage Coffeehouse') {
+      home = HeritageHome;
     } else {
       home = MovingAndStorageHome;
     }
@@ -49,17 +54,29 @@ class ArtStreetCafe extends Component {
 
         <View style={styles.info}>
           <View style={styles.about}>
-            <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Location</Text>
-            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>{this.props.location}</Text>
+            <Text style={{fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#515151'}}>Location</Text>
+            <Text style={{fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 14, color: '#515151'}}>{this.props.division.division.location}</Text>
           </View>
           <View style={styles.hours}>
-            <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>Hours</Text>
+            <Text style={{fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#515151'}}>Hours</Text>
+
 
             {
-              this.props.hours.map((l, i) => (
-                <Text key={i} style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>{l}</Text>
+              this.props.division.hours.map((l, i) => (
+                <Display key={i} enable={!l.endDay}>
+                  <Text style={{fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 14, color: '#515151'}}>{l.startDay} {l.startHour} - {l.endHour}</Text>
+                </Display>
               ))
             }
+
+            {
+              this.props.division.hours.map((l, i) => (
+                <Display key={i} enable={l.endDay}>
+                  <Text style={{fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 14, color: '#515151'}}>{l.startDay} - {l.endDay} {l.startHour} - {l.endHour}</Text>
+                </Display>
+              ))
+            }
+
 
           </View>
         </View>
@@ -71,7 +88,7 @@ class ArtStreetCafe extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: '#f2f2f2'
   },
   buttonContainer:{
     borderRadius: 30,
@@ -81,14 +98,14 @@ let styles = StyleSheet.create({
     justifyContent: 'center'
   },
   button: {
-    fontFamily:'LabradorA-Regular',
+    fontFamily: 'avenir', fontWeight: 'bold',
     fontSize: 14,
     textAlign: 'center',
     color: '#FFFFFF'
   },
   info: {
-    marginLeft: 75,
-    marginRight: 75
+    marginLeft: 70,
+    marginRight: 70
   },
   about: {
     alignItems: 'flex-end',
@@ -98,12 +115,12 @@ let styles = StyleSheet.create({
     marginTop: 20
   },
   buttons: {
-    marginLeft: 75,
-    marginRight: 75,
+    marginLeft: 70,
+    marginRight: 70,
     marginTop: 30,
     flexDirection: 'row',
     justifyContent: 'space-between'
   }
 });
 
-export default ArtStreetCafe;
+export default Division;

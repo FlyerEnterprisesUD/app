@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { Card } from 'react-native-elements';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import moment from 'moment-timezone';
 
 class Promotion extends Component {
@@ -10,18 +9,18 @@ class Promotion extends Component {
 
   render() {
     return(
-      <View style={styles.container}>
-        <Card>
-          <Text style={{fontFamily:'LabradorA-Regular', fontSize: 26, textAlign: 'center'}}>{this.props.promotion.title}</Text>
-          <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, textAlign: 'center'}}>{this.props.promotion.division}</Text>
-        </Card>
-        <Card>
-          <Text style={{fontFamily:'LabradorA-Regular', fontSize: 20, textAlign: 'center'}}>{moment(this.props.promotion.time).format("MMM DD")} - {moment(this.props.promotion.end).format("MMM DD")}</Text>
-        </Card>
-        <Card>
-          <Text style={{fontFamily:'LabradorA-Regular', fontSize: 20, textAlign: 'center'}}>{this.props.promotion.body}</Text>
-        </Card>
-      </View>
+      <ScrollView style={styles.container}>
+        <View style={styles.section}>
+          <Text style={{fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 20, textAlign: 'center'}}>{this.props.promotion.name}</Text>
+          <Text style={{fontFamily: 'avenir',  fontSize: 14, textAlign: 'center'}}>{this.props.division}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text style={{fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 14, textAlign: 'center'}}>{moment(this.props.promotion.startTime).format("MMM DD")} - {moment(this.props.promotion.endTime).format("MMM DD")}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text style={{fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 14, textAlign: 'center'}}>{this.props.promotion.body}</Text>
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -29,13 +28,26 @@ class Promotion extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#f2f2f2',
     marginTop: 65
   },
-  image: {
-    height: 50,
-    width: 50,
-    marginTop: 200
+  section: {
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 10,
+    marginBottom: 6,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
   }
 });
 

@@ -13,6 +13,7 @@ var PunchQR = React.createClass({
   },
 
   getDefaultProps: function() {
+
     return {
       cancelButtonVisible: false,
       cancelButtonTitle: 'Cancel',
@@ -48,6 +49,7 @@ var PunchQR = React.createClass({
   },
 
   async punch(result) {
+
     try {
       let response = await fetch(result, {
         method: 'POST',
@@ -56,22 +58,27 @@ var PunchQR = React.createClass({
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          token: this.props.token,
           userId: this.props.user.id,
-          cardId: this.props.card.cardId
+          cardId: this.props.card.id,
+          divisionId: this.props.card.divisionId
         })
       });
 
       let responseJson = await response.json();
 
-      return responseJson;
+      return null;
     } catch (err) {
       console.error(err);
+      return null;
     }
   },
 
   render: function() {
     this.barCodeFlag = true;
+
+    console.log("HI");
+    console.log(this.props.user.id);
+    console.log(this.props.card.id);
 
     const cancelButton = <CancelButton onPress={this._onPressCancel} title={this.props.cancelButtonTitle} />;
 

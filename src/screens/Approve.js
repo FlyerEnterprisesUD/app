@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Navigator, ScrollView, RefreshControl } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import { StyleSheet, Text, View, Navigator, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Promotion from '../components/Promotion';
 
-class Approve extends Component {
+class ApprovePush extends Component {
   constructor(props) {
     super(props);
     this.state = {
       refreshing: false,
-      promotions: []
+      divisions: []
     };
-    this.getApproves = this.getApproves.bind(this);
+    this.getUnapproved = this.getUnapproved.bind(this);
   }
 
   componentWillMount() {
-    this.getApproves();
+    this.getUnapproved();
   }
 
-  async getApproves() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/getapproves';
-    //var url = 'http://localhost:5000/auth/getapproves';
+  async getUnapproved() {
+    var url = 'https://flyerentapi.herokuapp.com/promotion/getunapproved';
+    //var url = 'http://localhost:3000/promotion/getunapproved';
 
     try {
       let response = await fetch(url, {
@@ -34,8 +35,7 @@ class Approve extends Component {
 
       let responseJson = await response.json();
 
-      this.setState({ promotions: responseJson.response.promotions });
-
+      this.setState({ divisions: responseJson.response.promotions });
 
       return responseJson;
     } catch (err) {
@@ -45,13 +45,9 @@ class Approve extends Component {
 
   onRefresh() {
     this.setState({refreshing: true});
-    this.getApproves().then(() => {
+    this.getUnapproved().then(() => {
       this.setState({refreshing: false});
     });
-  }
-
-  navigateToEditSubmit(promotion) {
-    this.props.navigator.push({id: 'EditSubmit', user: this.props.user, token: this.props.token, promotion: promotion});
   }
 
   render() {
@@ -65,20 +61,15 @@ class Approve extends Component {
             />
           }
         >
-          <List containerStyle={{marginTop: 0}}>
-          {
-            this.state.promotions.map((l, i) => (
 
-                <ListItem
-                  key={i}
-                  title={l.title}
-                  onPress={this.navigateToEditSubmit.bind(this, l)}
-                  subtitle={l.division}
-                />
+          {
+            this.state.divisions.map((l, i) => (
+
+              <Promotion key={i} division={l} navigator={this.props.navigator} user={this.props.user}/>
 
             ))
           }
-          </List>
+
         </ScrollView>
       </View>
     );
@@ -88,9 +79,31 @@ class Approve extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f2f2f2',
     marginTop: 65
+  },
+  section: {
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
+  },
+  item: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });
 
-export default Approve;
+export default ApprovePush;

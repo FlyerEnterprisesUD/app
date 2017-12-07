@@ -3,33 +3,114 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Picker
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment-timezone';
 import SimplePicker from 'react-native-simple-picker';
-import { Card, List, ListItem } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Fumi } from 'react-native-textinput-effects';
+import Display from 'react-native-display';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class EditSubmitPush extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: this.props.push.title,
-      division: this.props.push.division,
-      submitter: this.props.push.submitter,
-      body: this.props.push.body,
-      time: moment(this.props.push.time).format("YYYY-MM-DD HH:mm"),
-      ready: this.props.push.ready
+      name: '',
+      division: 'Click to choose division',
+      submitter: '',
+      approver: '',
+      body: '',
+      startTime: moment().format("YYYY-MM-DD HH:mm"),
+      ready: true,
+      divisionId: ''
     };
     this.approve = this.approve.bind(this);
     this.deny = this.deny.bind(this);
+    this.getName = this.getName.bind(this);
+    this.getId = this.getId.bind(this);
   }
 
-  async approve() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/approvepush';
-    //var url = 'http://localhost:5000/auth/approvepush';
+  componentWillMount() {
+    this.getName(this.props.notification.divisionId);
 
-    var time = '';
-    if(this.state.ready == true) {
-      time = 'now';
-    } else {
-      time = this.state.time;
+    this.setState({
+      name: this.props.notification.name,
+      submitter: this.props.notification.submitter,
+      body: this.props.notification.body,
+      ready: this.props.notification.ready,
+      startTime: moment(this.props.notification.startTime).add(4, 'hours').format("YYYY-MM-DD HH:mm")
+    });
+  }
+
+  async getName(id) {
+    var url = 'https://flyerentapi.herokuapp.com/division/getname';
+    //var url = 'http://localhost:3000/division/getname';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: id
+        })
+      });
+
+      let responseJson = await response.json();
+
+      if(responseJson.response.success == true) {
+        this.setState({division: responseJson.response.division.name})
+      }
+
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getId() {
+    //var url = 'http://localhost:3000/division/getid';
+    var url = 'https://flyerentapi.herokuapp.com/division/getid';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: this.state.division,
+        })
+      });
+
+      let responseJson = await response.json();
+
+      if(responseJson.response.success == true) {
+        this.approve(responseJson.response.division.id);
+        this.props.navigator.resetTo({id: 'Home', user: this.props.user, token: this.props.token});
+        return null;
+      }
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async approve(divisionId) {
+    var url = 'https://flyerentapi.herokuapp.com/notification/approvenotification';
+    //var url = 'http://localhost:3000/notification/approvenotification';
+
+    if(this.state.name == '' || this.state.body == '') {
+      AlertIOS.alert(
+        'Error',
+        'Please fill out all fields',
+        [{
+          text: 'Dismiss',
+          onPress: null,
+        }]
+      );
+      return null;
     }
 
     try {
@@ -41,18 +122,20 @@ class EditSubmitPush extends Component {
         },
         body: JSON.stringify({
           token: this.props.token,
-          id: this.props.push.id,
-          title: this.state.title,
-          division: this.state.division,
+          id: this.props.notification.id,
+          name: this.state.name,
+          divisionId: divisionId,
+          approver: this.props.user.username,
           body: this.state.body,
-          time: moment(this.state.time).add('4', 'hours').format("YYYY-MM-DD HH:mm")
+          ready: this.state.ready,
+          startTime: moment(this.state.startTime).subtract(4, 'hours').format("YYYY-MM-DD HH:mm")
         })
       });
 
       let responseJson = await response.json();
 
       if(responseJson.response.success == true) {
-        this.props.navigator.replace({id: 'Approve Push', user: this.props.user, token: this.props.token});
+        //this.props.navigator.replace({id: 'Approve Push', user: this.props.user, token: this.props.token});
       }
 
 
@@ -63,8 +146,8 @@ class EditSubmitPush extends Component {
   }
 
   async deny() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/denypush';
-    //var url = 'http://localhost:5000/auth/denypush';
+    var url = 'https://flyerentapi.herokuapp.com/notification/denynotification';
+    //var url = 'http://localhost:3000/notification/denynotification';
 
     try {
       let response = await fetch(url, {
@@ -75,7 +158,7 @@ class EditSubmitPush extends Component {
         },
         body: JSON.stringify({
           token: this.props.token,
-          id: this.props.push.id
+          id: this.props.notification.id
         })
       });
 
@@ -106,113 +189,131 @@ class EditSubmitPush extends Component {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView style={ styles.container }>
 
-        <View style={styles.information}>
-          <Text style={{marginTop: 15, marginLeft: 15}}>INFORMATION</Text>
-          <Card containerStyle={{marginTop: 0, paddingTop: 0}}>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='person' size={20} />
-              <View style={styles.inputContainer}>
-                <TextInput
-                  placeholder="Title"
-                  autoCorrect={false}
-                  value={ this.state.title }
-                  onChangeText={(text) => this.setState({title: text})}
-                  style={ styles.input }
-                  keyboardType='default' />
+        <View>
+          <Text style={{marginTop: 10, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}>Information</Text>
+          <View style={styles.section}>
+            <View style={styles.item}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Icon name="user" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16, color: '#414141'}}>{this.state.submitter}</Text>
+              </View>
+              <View>
               </View>
             </View>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='email' size={20} />
-              <View style={styles.inputContainer}>
-                <TextInput
-                  placeholder="Body"
-                  autoCorrect={false}
-                  multiline = {true}
-                  numberOfLines = {4}
-                  value={ this.state.body }
-                  onChangeText={(text) => this.setState({body: text})}
-                  style={{height: 60}}
-                  keyboardType='default' />
-                </View>
-            </View>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='grade' size={20} style={{justifyContent: 'center'}}/>
-              <View style={styles.text}>
-                <Text
-                  onPress={() => {
-                    this.refs.picker.show();
-                  }}
-                >
-                    {this.state.division}
-                </Text>
-                <SimplePicker
-                   ref={'picker'}
-                   options={divisions}
-                   onSubmit={(option) => {
-                     this.setState({
-                       division: option,
-                     });
-                   }}
-                 />
+          </View>
+          <View style={{marginTop: 4, marginLeft: 16, marginRight: 16, shadowColor: '#a3a3a3', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.8, shadowRadius: 2, borderColor: 'rgba(163, 163, 163, 0.5)', borderWidth: 1}}>
+            <Fumi
+              label={'Title'}
+              labelStyle={{ color: '#a3a3a3', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}
+              inputStyle={{ color: '#2e2e2e', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}
+              style={{}}
+              iconClass={Icon}
+              iconName={'bookmark'}
+              iconColor={'#CC0F40'}
+              iconSize={15}
+              autoCapitalize={'none'}
+              autoCorrect={false}
+              keyboardType={'default'}
+              value={this.state.name}
+              onChangeText={(text) => this.setState({name: text})}
+              ref={'name'}
+              onSubmitEditing={(event) => {
+
+              }}
+            />
+          </View>
+          <View style={styles.section}>
+            <View style={styles.item}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Icon name="bookmark" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                <Text onPress={() => { this.refs.picker.show();}} style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16, color: '#414141'}}>{this.state.division}</Text>
+                <SimplePicker ref={'picker'} options={divisions} onSubmit={(option) => { this.setState({ division: option }); }} />
+              </View>
+              <View>
               </View>
             </View>
-          </Card>
+          </View>
+          <View style={styles.section}>
+            <TextInput
+              style={{height: 300, fontFamily: 'avenir', fontWeight: 'bold', fontSize: 16}}
+              onChangeText={(text) => this.setState({body: text})}
+              value={this.state.body}
+              multiline={true}
+            />
+          </View>
         </View>
 
-        <View style={styles.time}>
-          <Text style={{marginTop: 15, marginLeft: 15}}>TIME</Text>
-          <Card containerStyle={{marginTop: 0, paddingTop: 0}}>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='person' size={20} />
-              <View style={styles.dateContainer}>
-                <Text>Now</Text>
-                <Switch
-                  onValueChange={(value) => this.setState({ready: value})}
-                  style={{marginBottom: 10}}
-                  value={this.state.ready} />
-
-                <Text> | Start Date </Text>
-
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}>Time</Text>
+          <View style={styles.section}>
+            <View style={styles.item}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Icon name="calendar" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                <Text style={{marginTop: 4, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>Now?</Text>
+              </View>
+              <View>
+                <Switch onValueChange={(value) => this.setState({ready: value})} value={this.state.ready} onTintColor={'#CC0F40'} />
+              </View>
+            </View>
+          </View>
+          <Display enable={!this.state.ready}>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}>Start Time</Text>
+          <View style={styles.section}>
+            <View style={styles.item}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Icon name="calendar" size={16} color="#CC0F40" style={{marginTop: 6}} />
                 <DatePicker
-                  style={{width: 140}}
-                  date={this.state.time}
+                  style={{width: 200}}
+                  date={this.state.startTime}
                   mode="datetime"
                   placeholder="select date"
-                  format="YYYY-MM-DD hh:mm"
+                  format="YYYY-MM-DD HH:mm"
                   minDate={moment().format("YYYY-MM-DD")}
                   maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
+                  showIcon={false}
                   customStyles={{
                     dateInput: {
-                      height: 30
-                    },
-                    dateIcon: {
-                      height: 0,
-                      width: 0
+                      height: 30,
+                      borderWidth: 0
                     },
                     dateTouchBody: {
-                      height: 30
+                      height: 30,
+                      marginLeft: -40
+                    },
+                    dateText: {
+                      fontFamily: 'avenir', fontWeight: 'bold',
+                      fontSize: 16,
+                      color: '#414141',
+                      marginTop: 4
                     }
                   }}
-                  onDateChange={(date) => {this.setState({time: date})}}
+                  onDateChange={(date) => {this.setState({startTime: date})}}
                   />
               </View>
+              <View>
+              </View>
             </View>
-          </Card>
-        </View>
+          </View>
+          </Display>
 
-        <View style={styles.buttons}>
-          <TouchableOpacity onPress={ this.approve }>
-            <View style={styles.buttonContainer}>
-                <Text style={ styles.button }>Approve</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={ this.deny }>
-            <View style={styles.buttonContainer}>
-                <Text style={ styles.button }>Deny</Text>
-            </View>
-          </TouchableOpacity>
+          <View style={{marginTop: 10}}>
+            <TouchableOpacity onPress={this.getId}>
+              <View style={styles.button}>
+                <Text style={{color: '#FFFFFF', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16}}>Approve</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{marginTop: 10, marginBottom: 120}}>
+            <TouchableOpacity onPress={this.deny}>
+              <View style={styles.button}>
+                <Text style={{color: '#FFFFFF', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16}}>Deny</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
         </View>
 
       </ScrollView>
@@ -224,61 +325,46 @@ class EditSubmitPush extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#f2f2f2',
     marginTop: 65
   },
-  element: {
+  section: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginTop: 15
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
   },
-  text: {
-    marginLeft: 5,
-    paddingBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D3D3D3',
-    flex: 2
-  },
-  inputContainer: {
-    marginLeft: 5,
-    paddingBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D3D3D3',
-    flex: 2
-  },
-  input: {
-    height: 15
-  },
-  dateContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginLeft: 5,
-    paddingBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D3D3D3',
-    flex: 2
-  },
-  buttons: {
-    marginLeft: 75,
-    marginRight: 75,
-    marginTop: 30,
+  item: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  buttonContainer:{
-    borderRadius: 30,
-    height: 60,
-    width: 60,
-    backgroundColor: '#CC0F40',
-    justifyContent: 'center'
-  },
   button: {
-    fontFamily:'LabradorA-Regular',
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#FFFFFF',
-    backgroundColor: 'rgba(220,220,220,0)'
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#CC0F40',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1,
+    alignItems: 'center'
   }
 });
 

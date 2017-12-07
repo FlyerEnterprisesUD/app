@@ -8,26 +8,23 @@ class MovingAndStorage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: [],
-      promotions: []
+      questions: []
     };
 
-    this.getPromotions = this.getPromotions.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
   }
 
   componentWillMount() {
-    this.getPromotions();
     this.getQuestions();
   }
 
   async getQuestions() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/movingandstorage';
-    //var url = 'http://localhost:5000/movingandstorage';
+    var url = 'https://flyerentapi.herokuapp.com/division/getqas';
+    //var url = 'http://localhost:3000/division/getqas';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -36,33 +33,7 @@ class MovingAndStorage extends Component {
 
       let responseJson = await response.json();
 
-      this.setState({ questions: responseJson.about.faqs });
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async getPromotions() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/getpromotions';
-    //var url = 'http://localhost:5000/getpromotions';
-
-    try {
-      let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          division: "Moving And Storage"
-        })
-      });
-
-      let responseJson = await response.json();
-
-      this.setState({ promotions: responseJson.response.promotions });
+      this.setState({ questions: responseJson.response.qas });
 
       return responseJson;
     } catch (err) {
@@ -71,7 +42,6 @@ class MovingAndStorage extends Component {
   }
 
   render() {
-    var test = [];
 
     return(
       <ScrollableTabView

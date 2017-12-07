@@ -16,6 +16,7 @@ class Home extends Component {
     var StusHome = require('../images/stusc.jpg');
     var ArtStreetCafeHome = require('../images/artstreetc.jpg');
     var JuryBoxHome = require('../images/juryboxc.jpg');
+    var HeritageHome = require('../images/Heritage.jpg');
     var MovingAndStorageHome = require('../images/storagec.jpg');
 
     return(
@@ -24,55 +25,62 @@ class Home extends Component {
 
         <Carousel animate={true} delay={5000} indicatorAtBottom={true} indicatorOffset={0}>
           <View key={0}>
+            <Image style={styles.image} source={HeritageHome}>
+              <View>
+                <Text style={styles.text}>NEW! Heritage Coffeehouse</Text>
+              </View>
+            </Image>
+          </View>
+          <View key={1}>
             <Image style={styles.image} source={BlendHome}>
               <View>
                 <Text style={styles.text}>The Blend</Text>
               </View>
             </Image>
           </View>
-          <View key={1}>
+          <View key={2}>
             <Image style={styles.image} source={ChillHome}>
               <View>
                 <Text style={styles.text}>The CHILL</Text>
               </View>
             </Image>
           </View>
-          <View key={2}>
+          <View key={3}>
             <Image style={styles.image} source={GalleyHome}>
               <View>
                 <Text style={styles.text}>The Galley</Text>
               </View>
             </Image>
           </View>
-          <View key={3}>
+          <View key={4}>
             <Image style={styles.image} source={BlendExpressHome}>
               <View>
                 <Text style={styles.text}>The Blend Express</Text>
               </View>
             </Image>
           </View>
-          <View key={4}>
+          <View key={5}>
             <Image style={styles.image} source={StusHome}>
               <View>
                 <Text style={styles.text}>Stuarts Landing</Text>
               </View>
             </Image>
           </View>
-          <View key={5}>
+          <View key={6}>
             <Image style={styles.image} source={JuryBoxHome}>
               <View>
                 <Text style={styles.text}>The Jury Box</Text>
               </View>
             </Image>
           </View>
-          <View key={6}>
+          <View key={7}>
             <Image style={styles.image} source={ArtStreetCafeHome}>
               <View>
                 <Text style={styles.text}>ArtStreet Cafe</Text>
               </View>
             </Image>
           </View>
-          <View key={7}>
+          <View key={8}>
             <Image style={styles.image} source={MovingAndStorageHome}>
               <View>
                 <Text style={styles.text}>Moving And Storage</Text>

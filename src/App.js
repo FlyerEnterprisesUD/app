@@ -1,8 +1,21 @@
-import React, { Component } from 'react';
-import { View, StyleSheet, Image, Navigator, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
-import { List, ListItem, SideMenu } from 'react-native-elements';
+// DO NOT RUN BEAUTIFY ON THIS FILE!!!
+import React, {Component} from 'react';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Navigator,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Platform,
+  AsyncStorage
+} from 'react-native';
+
+import {List, ListItem, SideMenu} from 'react-native-elements';
 import navigationBar from './components/NavBar';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import FontIcon from 'react-native-vector-icons/FontAwesome';
 import NavBarTitle from './components/NavBarTitle';
 
 import Home from './screens/Home';
@@ -15,6 +28,7 @@ import Blend from './screens/Blend';
 import BlendExpress from './screens/BlendExpress';
 import MovingAndStorage from './screens/MovingAndStorage';
 import Galley from './screens/Galley';
+import HeritageCoffeehouse from './screens/HeritageCoffeehouse';
 
 import Division from './screens/Division';
 import Menu from './screens/Menu';
@@ -35,157 +49,100 @@ import EditSubmit from './screens/EditSubmit';
 import ApprovePush from './screens/ApprovePush';
 import SubmitPush from './screens/SubmitPush';
 import EditSubmitPush from './screens/EditSubmitPush';
+import PunchQR from './screens/PunchQR';
+import Approve from './screens/Approve';
 
 import ChangePassword from './screens/ChangePassword';
 import AccountSettings from './screens/AccountSettings';
 import PrivacyPolicy from './screens/PrivacyPolicy';
+import Feedback from './screens/Feedback';
 
-import PunchQR from './screens/PunchQR';
-import Approve from './screens/Approve';
+import AddCard from './screens/AddCard';
+import EditCard from './screens/EditCard';
+import AdminCards from './screens/AdminCards';
+import DivisionsMenu from './screens/DivisionsMenu';
+import DivisionMenu from './screens/DivisionMenu';
+import GroupMenu from './screens/GroupMenu';
+import AddGroup from './screens/AddGroup';
+import ProductMenu from './screens/ProductMenu';
+import AddProduct from './screens/AddProduct';
+import EditGroup from './screens/EditGroup';
+import IngredientsMenu from './screens/IngredientsMenu';
+import AddIngredient from './screens/AddIngredient';
+import AddPrice from './screens/AddPrice';
+import AddAddon from './screens/AddAddon';
+import EditProduct from './screens/EditProduct';
+import EditIngredient from './screens/EditIngredient';
+import EditPrice from './screens/EditPrice';
+import EditAddon from './screens/EditAddon';
 
-import AdminCards from './screens/AdminCards.js';
-import EditCard from './screens/EditCard.js';
-import AddCard from './screens/AddCard.js';
-
-class App extends Component {
+export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      isOpen: false,
-      ArtStreetAbout: {},
-      BlendAbout: {},
-      BlendExpressAbout: {},
-      ChillAbout: {},
-      GalleyAbout: {},
-      JuryBoxAbout: {},
-      StusAbout: {}
+      isOpen: false
     };
 
     this.toggleSideMenu = this.toggleSideMenu.bind(this);
-    this.getArtStreetInfo = this.getArtStreetInfo.bind(this);
-    this.getBlendInfo = this.getBlendInfo.bind(this);
-    this.getBlendExpressInfo = this.getBlendExpressInfo.bind(this);
-    this.getChillInfo = this.getChillInfo.bind(this);
-    this.getGalleyInfo = this.getGalleyInfo.bind(this);
-    this.getJuryBoxInfo = this.getJuryBoxInfo.bind(this);
-    this.getStusInfo = this.getStusInfo.bind(this);
   }
 
   toggleSideMenu() {
-    this.setState({
-      isOpen: true
-    });
+    this.setState({isOpen: true});
+  }
+
+  logout() {
+    console.log(this.props);
+    AsyncStorage.setItem('token', '').done();
+    //this.props.nav.resetTo({id: 'Login'});
   }
 
   navigateToHome() {
-    this.refs.navigator.resetTo({id:'Home', user: this.props.user, token: this.props.token });
-    this.setState({
-      isOpen: false
-    });
-  }
-
-  navigateToChill() {
-    this.refs.navigator.resetTo({id:'The Chill', user: this.props.user, token: this.props.token, about: this.state.ChillAbout });
-    this.setState({
-      isOpen: false
-    });
-  }
-
-  navigateToStusLanding() {
-    this.refs.navigator.resetTo({id:'Stuart\'s Landing', user: this.props.user, token: this.props.token, about: this.state.StusAbout });
-    this.setState({
-      isOpen: false
-    });
-  }
-
-  navigateToArtStreetCafe() {
-    this.refs.navigator.resetTo({id:'Art Street Cafe', user: this.props.user, token: this.props.token, about: this.state.ArtStreetAbout });
-    this.setState({
-      isOpen: false
-    });
-  }
-
-  navigateToJuryBox() {
-    this.refs.navigator.resetTo({id:'Jury Box', user: this.props.user, token: this.props.token, about: this.state.JuryBoxAbout });
-    this.setState({
-      isOpen: false
-    });
-  }
-
-  navigateToBlend() {
-    this.refs.navigator.resetTo({id:'The Blend', user: this.props.user, token: this.props.token, about: this.state.BlendAbout });
-    this.setState({
-      isOpen: false
-    });
-  }
-
-  navigateToBlendExpress() {
-    this.refs.navigator.resetTo({id:'The Blend Express', user: this.props.user, token: this.props.token, about: this.state.BlendExpressAbout });
-    this.setState({
-      isOpen: false
-    });
-  }
-
-  navigateToGalley() {
-    this.refs.navigator.resetTo({id:'The Galley', user: this.props.user, token: this.props.token, about: this.state.GalleyAbout });
-    this.setState({
-      isOpen: false
-    });
+    this.refs.navigator.resetTo({id: 'Home', user: this.props.user, token: this.props.token});
+    this.setState({isOpen: false});
   }
 
   navigateToMovingAndStorage() {
-    this.refs.navigator.resetTo({id:'Moving And Storage', user: this.props.user, token: this.props.token, about: this.state.MovingAndStorageAbout });
-    this.setState({
-      isOpen: false
-    });
+    this.refs.navigator.resetTo({id: 'Moving And Storage', user: this.props.user, token: this.props.token});
+    this.setState({isOpen: false});
   }
 
   navigateToSettings() {
-    this.refs.navigator.push({id:'Settings', nav: this.props.nav, user: this.props.user });
-    this.setState({
-      isOpen: false
-    });
+    this.refs.navigator.resetTo({id: 'Settings', nav: this.props.nav, user: this.props.user});
+    this.setState({isOpen: false});
   }
 
   navigateToRewards() {
-    this.refs.navigator.push({id:'Rewards', user: this.props.user, token: this.props.token });
-    this.setState({
-      isOpen: false
-    });
+    this.refs.navigator.resetTo({id: 'Rewards', user: this.props.user, token: this.props.token});
+    this.setState({isOpen: false});
   }
 
   navigateToRoleMenu() {
-    this.refs.navigator.push({id:'Role Menu', user: this.props.user, token: this.props.token });
-    this.setState({
-      isOpen: false
-    });
+    this.refs.navigator.resetTo({id: 'Role Menu', user: this.props.user, token: this.props.token});
+    this.setState({isOpen: false});
   }
 
-  componentWillMount() {
-    this.getArtStreetInfo();
-    this.getBlendInfo();
-    this.getBlendExpressInfo();
-    this.getChillInfo();
-    this.getGalleyInfo();
-    this.getJuryBoxInfo();
-    this.getStusInfo();
-  }
-
-  async getArtStreetInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/artstreet';
-    //var url = 'http://localhost:5000/artstreet';
+  async getChill() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          divisionId: 2,
+        })
       });
 
       let responseJson = await response.json();
-      this.setState({ ArtStreetAbout: responseJson.about });
+
+      if(responseJson.response.success == true) {
+        this.refs.navigator.resetTo({id:'The Chill', user: this.props.user, token: this.props.token, division: responseJson.response });
+        this.setState({isOpen: false});
+      }
 
       return responseJson;
     } catch (err) {
@@ -193,21 +150,30 @@ class App extends Component {
     }
   }
 
-  async getBlendInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/blend';
-    //var url = 'http://localhost:5000/blend';
+  async getHeritage() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          divisionId: 82,
+        })
       });
 
       let responseJson = await response.json();
-      this.setState({ BlendAbout: responseJson.about });
+
+      console.log(responseJson.response);
+
+      if(responseJson.response.success == true) {
+        this.refs.navigator.resetTo({id:'Heritage Coffeehouse', user: this.props.user, token: this.props.token, division: responseJson.response });
+        this.setState({isOpen: false});
+      }
 
       return responseJson;
     } catch (err) {
@@ -215,21 +181,28 @@ class App extends Component {
     }
   }
 
-  async getBlendExpressInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/blendexpress';
-    //var url = 'http://localhost:5000/blendexpress';
+  async getStus() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          divisionId: 62,
+        })
       });
 
       let responseJson = await response.json();
-      this.setState({ BlendExpressAbout: responseJson.about });
+
+      if(responseJson.response.success == true) {
+        this.refs.navigator.resetTo({id:'Stuart\'s Landing', user: this.props.user, token: this.props.token, division: responseJson.response });
+        this.setState({isOpen: false});
+      }
 
       return responseJson;
     } catch (err) {
@@ -237,21 +210,115 @@ class App extends Component {
     }
   }
 
-  async getChillInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/chill';
-    //var url = 'http://localhost:5000/chill';
+  async getGalley() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          divisionId: 32,
+        })
       });
 
       let responseJson = await response.json();
-      this.setState({ ChillAbout: responseJson.about });
+
+      if(responseJson.response.success == true) {
+        this.refs.navigator.resetTo({id:'The Galley', user: this.props.user, token: this.props.token, division: responseJson.response });
+        this.setState({isOpen: false});
+      }
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getBlendExpress() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          divisionId: 22,
+        })
+      });
+
+      let responseJson = await response.json();
+
+      if(responseJson.response.success == true) {
+        this.refs.navigator.resetTo({id:'The Blend Express', user: this.props.user, token: this.props.token, division: responseJson.response });
+        this.setState({isOpen: false});
+      }
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getBlend() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          divisionId: 12,
+        })
+      });
+
+      let responseJson = await response.json();
+
+      if(responseJson.response.success == true) {
+        this.refs.navigator.resetTo({id:'The Blend', user: this.props.user, token: this.props.token, division: responseJson.response });
+        this.setState({isOpen: false});
+      }
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getArtStreet() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          divisionId: '52',
+        })
+      });
+
+      let responseJson = await response.json();
+
+      if(responseJson.response.success == true) {
+        this.refs.navigator.resetTo({id:'Art Street Cafe', user: this.props.user, token: this.props.token, division: responseJson.response });
+        this.setState({isOpen: false});
+      }
 
 
       return responseJson;
@@ -260,66 +327,28 @@ class App extends Component {
     }
   }
 
-  async getGalleyInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/galley';
-    //var url = 'http://localhost:5000/galley';
+  async getJuryBox() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          divisionId: 42,
+        })
       });
 
       let responseJson = await response.json();
-      this.setState({ GalleyAbout: responseJson.about });
 
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async getJuryBoxInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/jurybox';
-    //var url = 'http://localhost:5000/jurybox';
-
-    try {
-      let response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-
-      let responseJson = await response.json();
-      this.setState({ JuryBoxAbout: responseJson.about });
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async getStusInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/stuslanding';
-    //var url = 'http://localhost:5000/stuslanding';
-
-    try {
-      let response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-
-      let responseJson = await response.json();
-      this.setState({ StusAbout: responseJson.about });
+      if(responseJson.response.success == true) {
+        this.refs.navigator.resetTo({id:'Jury Box', user: this.props.user, token: this.props.token, division: responseJson.response });
+        this.setState({isOpen: false});
+      }
 
       return responseJson;
     } catch (err) {
@@ -329,420 +358,689 @@ class App extends Component {
 
   navigatorRenderScene(route, navigator) {
     _navigator = navigator;
-    const { toggleSideMenu } = false;
-    switch(route.id) {
+    const {toggleSideMenu} = false;
+    switch (route.id) {
       case 'Home':
-        return(<Home navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+        return (<Home navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
       case 'The Chill':
-        return(<Chill navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } about={route.about} {...route.passProps} />);
+        return (<Chill navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
       case 'Stuart\'s Landing':
-        return(<StusLanding navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } about={route.about} {...route.passProps} />);
+        return (<StusLanding navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
       case 'Art Street Cafe':
-        return(<ArtStreetCafe navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } about={route.about} {...route.passProps} />);
+        return (<ArtStreetCafe navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
       case 'Jury Box':
-        return(<JuryBox navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } about={route.about} {...route.passProps} />);
+        return (<JuryBox navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
       case 'The Blend':
-        return(<Blend navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } about={route.about} {...route.passProps} />);
+        return (<Blend navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
       case 'The Blend Express':
-        return(<BlendExpress navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } about={route.about} {...route.passProps} />);
+        return (<BlendExpress navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
       case 'The Galley':
-        return(<Galley navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } about={route.about} {...route.passProps} />);
+        return (<Galley navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
+      case 'Heritage Coffeehouse':
+        return (<HeritageCoffeehouse navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
       case 'Moving And Storage':
-        return(<MovingAndStorage navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } about={route.about} {...route.passProps} />);
+        return (<MovingAndStorage navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
       case 'Menu':
-        return(<Menu navigator={ navigator } toggleSideMenu={ toggleSideMenu } menu={ route.menu } division={route.division} {...route.passProps} />);
+        return (<Menu navigator={navigator} toggleSideMenu={toggleSideMenu} menu={route.menu} division={route.division} {...route.passProps}/>);
       case 'Product':
-        return(<Product navigator={ navigator } toggleSideMenu={ toggleSideMenu } product={ route.product } {...route.passProps} />);
+        return (<Product navigator={navigator} toggleSideMenu={toggleSideMenu} product={route.product} {...route.passProps}/>);
       case 'Promotion':
-        return(<Promotion navigator={ navigator } toggleSideMenu={ toggleSideMenu } promotion={ route.promotion } {...route.passProps} />);
+        return (<Promotion navigator={navigator} toggleSideMenu={toggleSideMenu} promotion={route.promotion} division={route.division} {...route.passProps}/>);
       case 'Settings':
-        return(<Settings navigator={ navigator } nav={ route.nav } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
+        return (<Settings navigator={navigator} nav={route.nav} toggleSideMenu={toggleSideMenu} user={route.user} {...route.passProps}/>);
       case 'Change Password':
-        return(<ChangePassword navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
+        return (<ChangePassword navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} {...route.passProps}/>);
       case 'Account Settings':
-        return(<AccountSettings navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
+        return (<AccountSettings navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} {...route.passProps}/>);
       case 'Privacy Policy':
-        return(<PrivacyPolicy navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } {...route.passProps} />);
+        return (<PrivacyPolicy navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} {...route.passProps}/>);
+      case 'Feedback':
+        return (<Feedback navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} {...route.passProps}/>);
       case 'PunchQR':
-        return(<PunchQR navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } card={ route.card } {...route.passProps} />);
+        return (<PunchQR navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} card={route.card} {...route.passProps}/>);
       case 'Rewards':
-        return(<Rewards navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+        return (<Rewards navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
       case 'Card':
-        return(<Card navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } card={ route.card } token={ route.token } {...route.passProps} />);
+        return (<Card navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} card={route.card} token={route.token} division={route.division} {...route.passProps}/>);
       case 'Cards':
-        return(<Cards navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } cards={ route.cards } division={ route.division} {...route.passProps} />);
+        return (<Cards navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} cards={route.cards} division={route.division} {...route.passProps}/>);
       case 'Approve':
-        return(<Approve navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+        return (<Approve navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
       case 'Promotions':
-        return(<Promotions navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } division={ route.division } {...route.passProps} />);
+        return (<Promotions navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
       case 'Submit':
-        return(<Submit navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+        return (<Submit navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
       case 'EditSubmit':
-        return(<EditSubmit navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } promotion={ route.promotion } {...route.passProps} />);
+        return (<EditSubmit navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} promotion={route.promotion} {...route.passProps}/>);
       case 'Role Menu':
-        return(<RoleMenu navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+        return (<RoleMenu navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
       case 'Users':
-        return(<Users navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+        return (<Users navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
       case 'Change Role':
-        return(<ChangeRole navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } newUser={ route.newUser } {...route.passProps} />);
+        return (<ChangeRole navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} newUser={route.newUser} {...route.passProps}/>);
       case 'Approve Push':
-        return(<ApprovePush navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+        return (<ApprovePush navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
       case 'Submit Push':
-        return(<SubmitPush navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+        return (<SubmitPush navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
       case 'EditSubmit Push':
-        return(<EditSubmitPush navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } push={ route.push } {...route.passProps} />);
-      case 'Admin Cards':
-        return(<AdminCards navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+        return (<EditSubmitPush navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} notification={route.notification} {...route.passProps}/>);
       case 'Add Card':
-        return(<AddCard navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } {...route.passProps} />);
+        return (<AddCard navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
       case 'Edit Card':
-        return(<EditCard navigator={ navigator } toggleSideMenu={ toggleSideMenu } user={ route.user } token={ route.token } card={ route.card } {...route.passProps} />);
+        return (<EditCard navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} card={route.card} {...route.passProps}/>);
+      case 'Admin Cards':
+        return (<AdminCards navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
+      case 'Divisions Menu':
+        return (<DivisionsMenu navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
+      case 'Division Menu':
+        return (<DivisionMenu navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
+      case 'Group Menu':
+        return (<GroupMenu navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} division={route.division} {...route.passProps}/>);
+      case 'Add Group':
+        return (<AddGroup navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} token={route.token} {...route.passProps}/>);
+      case 'Product Menu':
+        return (<ProductMenu navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} group={route.group} token={route.token} {...route.passProps}/>);
+      case 'Add Product':
+        return (<AddProduct navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} group={route.group} token={route.token} {...route.passProps}/>);
+      case 'Edit Group':
+        return (<EditGroup navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} group={route.group} token={route.token} {...route.passProps}/>);
+      case 'Ingredients Menu':
+        return (<IngredientsMenu navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} product={route.product} token={route.token} {...route.passProps}/>);
+      case 'Add Ingredient':
+        return (<AddIngredient navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} product={route.product} token={route.token} {...route.passProps}/>);
+      case 'Add Price':
+        return (<AddPrice navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} product={route.product} token={route.token} {...route.passProps}/>);
+      case 'Add Addon':
+        return (<AddAddon navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} product={route.product} token={route.token} {...route.passProps}/>);
+      case 'Edit Product':
+        return (<EditProduct navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} product={route.product} token={route.token} {...route.passProps}/>);
+      case 'Edit Ingredient':
+        return (<EditIngredient navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} ingredient={route.ingredient} token={route.token} {...route.passProps}/>);
+      case 'Edit Price':
+        return (<EditPrice navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} price={route.price} token={route.token} {...route.passProps}/>);
+      case 'Edit Addon':
+        return (<EditAddon navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} division={route.division} addon={route.addon} token={route.token} {...route.passProps}/>);
 
     }
   }
 
   render() {
     const fe = require('./images/fe.png');
-    const chill = require('./images/chill.jpg');
-    const blend = require('./images/blend.jpg');
-    const blendexpress = require('./images/blendexpress.jpg');
-    const galley = require('./images/galley.jpg');
-    const artstreetcafe = require('./images/artstreetcafe.jpg');
-    const jurybox = require('./images/jurybox.jpg');
-    const stuslanding = require('./images/stuslanding.jpg');
-    const movingandstorage = require('./images/movingandstorage.jpg');
+    const chill = require('./images/TheChill.png');
+    const blend = require('./images/TheBlend.png');
+    const blendexpress = require('./images/TheBlendExpress.png');
+    const galley = require('./images/TheGalley.png');
+    const artstreetcafe = require('./images/ArtStreetCafe.png');
+    const jurybox = require('./images/TheJuryBox.png');
+    const stuslanding = require('./images/StuartsLanding.png');
+    const heritage = require('./images/HeritageLogo.png');
+    const movingandstorage = require('./images/MovingAndStorage.png');
     const settings = require('./images/settings.jpg');
     const rewards = require('./images/trophy_red.png');
 
     var user = '';
-    if(this.props.user.name && this.props.user.name.trim() != "") {
+    if (this.props.user.name && this.props.user.name.trim() != "") {
       user = this.props.user.name;
     } else {
       user = this.props.user.username;
     }
 
-    const UserMenuComponent = (
-      <View style={{flex: 1, backgroundColor: '#CC0F40'}}>
-        <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: 20}}>
+    const GuestMenuComponent = (
+      <ScrollView style={styles.container}>
 
-          <List containerStyle={{marginTop: 0}}>
-          <ListItem
-            key='0'
-            title={ 'Welcome, ' + user}
-            hideChevron
-          />
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}>Welcome, {user}!</Text>
+          <TouchableOpacity onPress={this.navigateToHome.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="home" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Home</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToHome.bind(this)}
-            avatar={fe}
-            key='1'
-            title={'Home'}
-          />
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}>Divisions</Text>
+          <TouchableOpacity onPress={this.getChill.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={chill} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The CHILL</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getBlend.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={blend} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Blend</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getBlendExpress.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={blendexpress} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Blend Express</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getGalley.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={galley} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Galley</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getArtStreet.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={artstreetcafe} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>ArtStreet Cafe</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getJuryBox.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={jurybox} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Jury Box</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getStus.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={stuslanding} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Stuarts Landing</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getHeritage.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={heritage} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Heritage Coffeehouse</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigateToMovingAndStorage.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={movingandstorage} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Moving and Storage</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToRewards.bind(this)}
-            avatar={rewards}
-            key='2'
-            title={'My Rewards'}
-          />
-          </List>
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}>Settings</Text>
+          <TouchableOpacity onPress={this.navigateToSettings.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="cog" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Settings</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <List containerStyle={{marginTop: 0}}>
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToChill.bind(this)}
-            avatar={chill}
-            key='0'
-            title={'The CHILL'}
-          />
+        <View style={{marginTop: 20, marginBottom: 20}}>
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.setItem('token', '').done();
+            this.props.nav.resetTo({id: 'Login'});
+            }
+          }>
+            <View style={styles.button}>
+              <Text style={{color: '#FFFFFF', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14}}>Logout</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToBlend.bind(this)}
-            avatar={blend}
-            key='1'
-            title={'The Blend'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToBlendExpress.bind(this)}
-            avatar={blendexpress}
-            key='2'
-            title={'The Blend Express'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToGalley.bind(this)}
-            avatar={galley}
-            key='3'
-            title={'The Galley'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToArtStreetCafe.bind(this)}
-            avatar={artstreetcafe}
-            key='4'
-            title={'Art Street Cafe'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToJuryBox.bind(this)}
-            avatar={jurybox}
-            key='5'
-            title={'The Jury Box'}
-          />
-
-          <ListItem
-            roundAvatar
-            avatar={stuslanding}
-            onPress={this.navigateToStusLanding.bind(this)}
-            key='6'
-            title={'Stuart\'s Landing'}
-          />
-
-          <ListItem
-            roundAvatar
-            avatar={movingandstorage}
-            onPress={this.navigateToMovingAndStorage.bind(this)}
-            key='7'
-            title={'Moving and Storage'}
-          />
-          </List>
-
-          <List containerStyle={{marginTop: 0}}>
-            <ListItem
-              roundAvatar
-              avatar={settings}
-              onPress={this.navigateToSettings.bind(this)}
-              key='0'
-              title={'Settings'}
-            />
-          </List>
-
-        </ScrollView>
-      </View>
+      </ScrollView>
     );
 
-    const GuestMenuComponent = (
-      <View style={{flex: 1, backgroundColor: '#CC0F40'}}>
-        <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: 20}}>
+    const UserMenuComponent = (
+      <ScrollView style={styles.container}>
 
-          <List containerStyle={{marginTop: 0}}>
-          <ListItem
-            key='0'
-            title={ 'Welcome, ' + user}
-            hideChevron
-          />
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}>Welcome, {user}!</Text>
+          <TouchableOpacity onPress={this.navigateToHome.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="home" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Home</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigateToRewards.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="trophy" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>My Rewards</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToHome.bind(this)}
-            avatar={fe}
-            key='1'
-            title={'Home'}
-          />
-          </List>
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}>Divisions</Text>
+          <TouchableOpacity onPress={this.getChill.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={chill} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The CHILL</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getBlend.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={blend} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Blend</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getBlendExpress.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={blendexpress} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Blend Express</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getGalley.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={galley} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Galley</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getArtStreet.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={artstreetcafe} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>ArtStreet Cafe</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getJuryBox.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={jurybox} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Jury Box</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getStus.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={stuslanding} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Stuarts Landing</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getHeritage.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={heritage} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Heritage Coffeehouse</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigateToMovingAndStorage.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={movingandstorage} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Moving and Storage</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <List containerStyle={{marginTop: 0}}>
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToChill.bind(this)}
-            avatar={chill}
-            key='0'
-            title={'The CHILL'}
-          />
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}>Settings</Text>
+          <TouchableOpacity onPress={this.navigateToSettings.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="cog" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Settings</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToBlend.bind(this)}
-            avatar={blend}
-            key='1'
-            title={'The Blend'}
-          />
+        <View style={{marginTop: 20, marginBottom: 20}}>
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.setItem('token', '').done();
+            this.props.nav.resetTo({id: 'Login'});
+            }
+          }>
+            <View style={styles.button}>
+              <Text style={{color: '#FFFFFF', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14}}>Logout</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToBlendExpress.bind(this)}
-            avatar={blendexpress}
-            key='2'
-            title={'The Blend Express'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToGalley.bind(this)}
-            avatar={galley}
-            key='3'
-            title={'The Galley'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToArtStreetCafe.bind(this)}
-            avatar={artstreetcafe}
-            key='4'
-            title={'Art Street Cafe'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToJuryBox.bind(this)}
-            avatar={jurybox}
-            key='5'
-            title={'The Jury Box'}
-          />
-
-          <ListItem
-            roundAvatar
-            avatar={stuslanding}
-            onPress={this.navigateToStusLanding.bind(this)}
-            key='6'
-            title={'Stuart\'s Landing'}
-          />
-
-          <ListItem
-            roundAvatar
-            avatar={movingandstorage}
-            onPress={this.navigateToMovingAndStorage.bind(this)}
-            key='7'
-            title={'Moving and Storage'}
-          />
-          </List>
-
-          <List containerStyle={{marginTop: 0}}>
-            <ListItem
-              roundAvatar
-              avatar={settings}
-              onPress={this.navigateToSettings.bind(this)}
-              key='0'
-              title={'Settings'}
-            />
-          </List>
-
-        </ScrollView>
-      </View>
+      </ScrollView>
     );
 
     const RoleMenuComponent = (
-      <View style={{flex: 1, backgroundColor: '#CC0F40'}}>
-        <ScrollView style={{backgroundColor: '#FFFFFF', marginTop: 20}}>
+      <ScrollView style={styles.container}>
 
-          <List containerStyle={{marginTop: 0}}>
-          <ListItem
-            key='0'
-            title={ 'Welcome, ' + user}
-            hideChevron
-          />
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}>Welcome, {user}!</Text>
+          <TouchableOpacity onPress={this.navigateToHome.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="home" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Home</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigateToRewards.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="trophy" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>My Rewards</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToHome.bind(this)}
-            avatar={fe}
-            key='1'
-            title={'Home'}
-          />
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}>Divisions</Text>
+          <TouchableOpacity onPress={this.getChill.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={chill} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The CHILL</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getBlend.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={blend} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Blend</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getBlendExpress.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={blendexpress} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Blend Express</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getGalley.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={galley} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Galley</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getArtStreet.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={artstreetcafe} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>ArtStreet Cafe</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getJuryBox.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={jurybox} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>The Jury Box</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getStus.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={stuslanding} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Stuarts Landing</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.getHeritage.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={heritage} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Heritage Coffeehouse</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigateToMovingAndStorage.bind(this)}>
+            <View style={styles.divisionSection}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Image source={movingandstorage} style={{height: 36, width: 36}} />
+                  <Text style={{marginTop: 8, marginLeft: 4, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Moving and Storage</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 10}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToRewards.bind(this)}
-            avatar={rewards}
-            key='2'
-            title={'My Rewards'}
-          />
-          </List>
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}>Settings</Text>
+          <TouchableOpacity onPress={this.navigateToRoleMenu.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="wrench" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>FE Settings</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigateToSettings.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="cog" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Settings</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <List containerStyle={{marginTop: 0}}>
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToChill.bind(this)}
-            avatar={chill}
-            key='0'
-            title={'The CHILL'}
-          />
+        <View style={{marginTop: 20, marginBottom: 20}}>
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.setItem('token', '').done();
+            this.props.nav.resetTo({id: 'Login'});
+            }
+          }>
+            <View style={styles.button}>
+              <Text style={{color: '#FFFFFF', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14}}>Logout</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToBlend.bind(this)}
-            avatar={blend}
-            key='1'
-            title={'The Blend'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToBlendExpress.bind(this)}
-            avatar={blendexpress}
-            key='2'
-            title={'The Blend Express'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToGalley.bind(this)}
-            avatar={galley}
-            key='3'
-            title={'The Galley'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToArtStreetCafe.bind(this)}
-            avatar={artstreetcafe}
-            key='4'
-            title={'Art Street Cafe'}
-          />
-
-          <ListItem
-            roundAvatar
-            onPress={this.navigateToJuryBox.bind(this)}
-            avatar={jurybox}
-            key='5'
-            title={'The Jury Box'}
-          />
-
-          <ListItem
-            roundAvatar
-            avatar={stuslanding}
-            onPress={this.navigateToStusLanding.bind(this)}
-            key='6'
-            title={'Stuart\'s Landing'}
-          />
-
-          <ListItem
-            roundAvatar
-            avatar={movingandstorage}
-            onPress={this.navigateToMovingAndStorage.bind(this)}
-            key='7'
-            title={'Moving and Storage'}
-          />
-          </List>
-
-          <List containerStyle={{marginTop: 0}}>
-            <ListItem
-              roundAvatar
-              avatar={settings}
-              onPress={this.navigateToRoleMenu.bind(this)}
-              key='0'
-              title={'FE Settings'}
-            />
-
-            <ListItem
-              roundAvatar
-              avatar={settings}
-              onPress={this.navigateToSettings.bind(this)}
-              key='1'
-              title={'Settings'}
-            />
-          </List>
-
-        </ScrollView>
-      </View>
+      </ScrollView>
     );
 
     const { toggleSideMenu } = this.props;
@@ -827,7 +1125,7 @@ class App extends Component {
             />
         </SideMenu>
       );
-    } else if (this.props.user.role == 'user'){
+    } else if (this.props.user.role == 'User'){
       return(
         <SideMenu
           ref="sidemenu"
@@ -988,10 +1286,79 @@ class App extends Component {
         </SideMenu>
       );
     }
+
   }
 }
 
 let styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f2f2f2'
+  },
+  section: {
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
+  },
+  divisionSection: {
+    flex: 1,
+    paddingLeft: 4,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 10,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
+  },
+  item: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  button: {
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#CC0F40',
+    shadowColor: '#a3a3a3',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1,
+    alignItems: 'center'
+  },
   navBar: {
     height: 65,
     backgroundColor: '#CC0F40',
@@ -1022,8 +1389,7 @@ let styles = StyleSheet.create({
         height: 48,
         marginRight: 10,
         marginTop: 8
-      } })
+      }
+    })
   }
 });
-
-export default App;

@@ -20,8 +20,8 @@ class MovingAndStorageHome extends Component {
 
         <View style={styles.info}>
           <View style={styles.about}>
-            <Text style={{fontFamily:'LabradorA-Bold', fontSize: 20, color: '#939393'}}>About</Text>
-            <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, color: '#939393'}}>FE Moving and Storage provides the students of the University of Dayton with a quality and convenient storage solution.</Text>
+            <Text style={{fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#515151'}}>About</Text>
+            <Text style={{fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 14, color: '#515151'}}>FE Moving and Storage provides the students of the University of Dayton with a quality and convenient storage solution.</Text>
           </View>
         </View>
       </View>
@@ -32,7 +32,7 @@ class MovingAndStorageHome extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: '#f2f2f2'
   },
   buttonContainer:{
     borderRadius: 30,
@@ -42,7 +42,7 @@ let styles = StyleSheet.create({
     justifyContent: 'center'
   },
   button: {
-    fontFamily:'LabradorA-Regular',
+    fontFamily: 'avenir', fontWeight: 'bold',
     fontSize: 14,
     textAlign: 'center',
     color: '#FFFFFF'

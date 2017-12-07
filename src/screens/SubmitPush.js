@@ -3,27 +3,59 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, AlertIOS, Dimensio
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment-timezone';
 import SimplePicker from 'react-native-simple-picker';
-import { Card, List, ListItem } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Fumi } from 'react-native-textinput-effects';
+import Display from 'react-native-display';
 
 class SubmitPush extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
+      name: '',
       division: 'Click to choose division',
       submitter: '',
       body: '',
-      date: moment().format("YYYY-MM-DD HH:mm"),
-      now: true,
-      time: ''
+      startTime: moment().format("YYYY-MM-DD HH:mm"),
+      ready: true,
+      divisionId: ''
     };
     this.submit = this.submit.bind(this);
+    this.getId = this.getId.bind(this);
   }
 
-  async submit() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/submitpush';
-    //var url = 'http://localhost:5000/auth/submitpush';
+  async getId() {
+    //var url = 'http://localhost:3000/division/getid';
+    var url = 'https://flyerentapi.herokuapp.com/division/getid';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: this.state.division,
+        })
+      });
+
+      let responseJson = await response.json();
+
+      if(responseJson.response.success == true) {
+        this.submit(responseJson.response.division.id);
+        this.props.navigator.resetTo({id: 'Home', user: this.props.user, token: this.props.token});
+        return null;
+      }
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async submit(divisionId) {
+    var url = 'https://flyerentapi.herokuapp.com/notification/create';
+    //var url = 'http://localhost:3000/notification/create';
 
     if(this.state.division == 'Click to choose division') {
       AlertIOS.alert(
@@ -37,19 +69,24 @@ class SubmitPush extends Component {
       return null;
     }
 
+    if(this.state.name == '' || this.state.body == '') {
+      AlertIOS.alert(
+        'Error',
+        'Please fill out all fields',
+        [{
+          text: 'Dismiss',
+          onPress: null,
+        }]
+      );
+      return null;
+    }
+
     var user = '';
-    var time = '';
 
     if(this.props.user.name && this.props.user.name.trim() != "") {
       user = this.props.user.name;
     } else {
       user = this.props.user.username;
-    }
-
-    if(this.state.now == true) {
-      time = 'now';
-    } else {
-      time = moment(this.state.date).add('4', 'hours').format("YYYY-MM-DD HH:mm");
     }
 
     try {
@@ -61,11 +98,12 @@ class SubmitPush extends Component {
         },
         body: JSON.stringify({
           token: this.props.token,
-          title: this.state.title,
-          division: this.state.division,
+          name: this.state.name,
+          divisionId: divisionId,
           body: this.state.body,
           submitter: user,
-          time: time
+          ready: this.state.ready,
+          startTime: moment(this.state.startTime).subtract(4, 'hours').format("YYYY-MM-DD HH:mm")
         })
       });
 
@@ -79,6 +117,7 @@ class SubmitPush extends Component {
     } catch (err) {
       console.error(err);
     }
+
   }
 
   render() {
@@ -96,108 +135,113 @@ class SubmitPush extends Component {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView style={ styles.container }>
 
-        <View style={styles.information}>
-          <Text style={{marginTop: 15, marginLeft: 15}}>INFORMATION</Text>
-          <Card containerStyle={{marginTop: 0, paddingTop: 0}}>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='person' size={20} />
-              <View style={styles.inputContainer}>
-                <TextInput
-                  placeholder="Title"
-                  autoCorrect={false}
-                  value={ this.state.title }
-                  onChangeText={(text) => this.setState({title: text})}
-                  style={ styles.input }
-                  keyboardType='default' />
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}>Information</Text>
+          <View style={{marginTop: 4, marginLeft: 16, marginRight: 16, shadowColor: '#a3a3a3', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.8, shadowRadius: 2, borderColor: 'rgba(163, 163, 163, 0.5)', borderWidth: 1}}>
+            <Fumi
+              label={'Name'}
+              labelStyle={{ color: '#a3a3a3', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}
+              inputStyle={{ color: '#2e2e2e', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}
+              style={{}}
+              iconClass={Icon}
+              iconName={'bookmark'}
+              iconColor={'#CC0F40'}
+              iconSize={14}
+              autoCapitalize={'none'}
+              autoCorrect={false}
+              keyboardType={'default'}
+              value={this.state.name}
+              onChangeText={(text) => this.setState({name: text})}
+              ref={'name'}
+              onSubmitEditing={(event) => {
+
+              }}
+            />
+          </View>
+          <View style={styles.section}>
+            <View style={styles.item}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Icon name="bookmark" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                <Text onPress={() => { this.refs.picker.show();}} style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16, color: '#414141'}}>{this.state.division}</Text>
+                <SimplePicker ref={'picker'} options={divisions} onSubmit={(option) => { this.setState({ division: option }); }} />
+              </View>
+              <View>
               </View>
             </View>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='email' size={20} />
-              <View style={styles.inputContainer}>
-                <TextInput
-                  placeholder="Body"
-                  autoCorrect={false}
-                  multiline = {true}
-                  numberOfLines = {4}
-                  value={ this.state.body }
-                  onChangeText={(text) => this.setState({body: text})}
-                  style={{height: 60}}
-                  keyboardType='default' />
-                </View>
-            </View>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='grade' size={20} style={{justifyContent: 'center'}}/>
-              <View style={styles.text}>
-                <Text
-                  onPress={() => {
-                    this.refs.picker.show();
-                  }}
-                >
-                    {this.state.division}
-                </Text>
-                <SimplePicker
-                   ref={'picker'}
-                   options={divisions}
-                   onSubmit={(option) => {
-                     this.setState({
-                       division: option,
-                     });
-                   }}
-                 />
-              </View>
-            </View>
-          </Card>
+          </View>
+          <View style={styles.section}>
+            <TextInput
+              style={{height: 300, fontFamily: 'avenir', fontWeight: 'bold', fontSize: 16}}
+              onChangeText={(text) => this.setState({body: text})}
+              value={this.state.body}
+              multiline={true}
+            />
+          </View>
         </View>
 
-        <View style={styles.time}>
-          <Text style={{marginTop: 15, marginLeft: 15}}>TIME</Text>
-          <Card containerStyle={{marginTop: 0, paddingTop: 0}}>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='person' size={20} />
-              <View style={styles.dateContainer}>
-                <Text>Now</Text>
-                <Switch
-                  onValueChange={(value) => this.setState({now: value})}
-                  style={{marginBottom: 10}}
-                  value={this.state.now} />
-
-                <Text> | Start Date </Text>
-
+        <View>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}>Time</Text>
+          <View style={styles.section}>
+            <View style={styles.item}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Icon name="calendar" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                <Text style={{marginTop: 4, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>Now?</Text>
+              </View>
+              <View>
+                <Switch onValueChange={(value) => this.setState({ready: value})} value={this.state.ready} onTintColor={'#CC0F40'} />
+              </View>
+            </View>
+          </View>
+          <Display enable={!this.state.ready}>
+          <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}>Start Time</Text>
+          <View style={styles.section}>
+            <View style={styles.item}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <Icon name="calendar" size={16} color="#CC0F40" style={{marginTop: 6}} />
                 <DatePicker
-                  style={{width: 140}}
-                  date={this.state.date}
+                  style={{width: 200}}
+                  date={this.state.startTime}
                   mode="datetime"
                   placeholder="select date"
-                  format="YYYY-MM-DD hh:mm"
-                  minDate={moment().format("YYYY-MM-DD")}
-                  maxDate={moment().add(1, 'year').format("YYYY-MM-DD")}
+                  format="YYYY-MM-DD HH:mm"
+                  minDate={moment().format("YYYY-MM-DD HH:mm")}
+                  maxDate={moment().add(1, 'year').format("YYYY-MM-DD HH:mm")}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
+                  showIcon={false}
                   customStyles={{
                     dateInput: {
-                      height: 30
-                    },
-                    dateIcon: {
-                      height: 0,
-                      width: 0
+                      height: 30,
+                      borderWidth: 0
                     },
                     dateTouchBody: {
-                      height: 30
+                      height: 30,
+                      marginLeft: -40
+                    },
+                    dateText: {
+                      fontFamily: 'avenir', fontWeight: 'bold',
+                      fontSize: 16,
+                      color: '#414141',
+                      marginTop: 4
                     }
                   }}
-                  onDateChange={(date) => {this.setState({date: date})}}
+                  onDateChange={(date) => {this.setState({startTime: date})}}
                   />
               </View>
+              <View>
+              </View>
             </View>
-          </Card>
-        </View>
+          </View>
+          </Display>
 
-        <View style={styles.buttons}>
-          <TouchableOpacity onPress={ this.submit }>
-            <View style={styles.buttonContainer}>
-                <Text style={ styles.button }>Submit</Text>
-            </View>
-          </TouchableOpacity>
+          <View style={{marginTop: 10, marginBottom: 120}}>
+            <TouchableOpacity onPress={this.getId}>
+              <View style={styles.button}>
+                <Text style={{color: '#FFFFFF', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16}}>Submit</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
         </View>
 
       </ScrollView>
@@ -209,61 +253,46 @@ class SubmitPush extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#f2f2f2',
     marginTop: 65
   },
-  element: {
+  section: {
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
+  },
+  item: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginTop: 15
-  },
-  text: {
-    marginLeft: 5,
-    paddingBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D3D3D3',
-    flex: 2
-  },
-  inputContainer: {
-    marginLeft: 5,
-    paddingBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D3D3D3',
-    flex: 2
-  },
-  input: {
-    height: 15
-  },
-  dateContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginLeft: 5,
-    paddingBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D3D3D3',
-    flex: 2
-  },
-  buttons: {
-    marginLeft: 75,
-    marginRight: 75,
-    marginTop: 30,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  buttonContainer:{
-    borderRadius: 30,
-    height: 60,
-    width: 60,
-    backgroundColor: '#CC0F40',
-    justifyContent: 'center'
+    justifyContent: 'space-between'
   },
   button: {
-    fontFamily:'LabradorA-Regular',
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#FFFFFF',
-    backgroundColor: 'rgba(220,220,220,0)'
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#CC0F40',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1,
+    alignItems: 'center'
   }
 });
 

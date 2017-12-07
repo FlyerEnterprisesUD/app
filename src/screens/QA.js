@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, StyleSheet, Image } from 'react-native';
-import { Card } from 'react-native-elements';
+import { ScrollView, Text, StyleSheet, View } from 'react-native';
 
 class QA extends Component {
   constructor() {
@@ -9,15 +8,17 @@ class QA extends Component {
 
   render() {
     return(
-      <ScrollView style={styles.container} style={{marginBottom: 20}}>
-        {
-          this.props.questions.map((l, i) => (
-            <Card key={i}>
-              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 26, textAlign: 'center'}}>{l.question}</Text>
-              <Text style={{fontFamily:'LabradorA-Regular', fontSize: 18, textAlign: 'center'}}>{l.answer}</Text>
-            </Card>
-          ))
-        }
+      <ScrollView style={styles.container}>
+      <View style={{marginTop: 6, marginBottom: 16}}>
+      {
+        this.props.questions.map((l, i) => (
+          <View style={styles.section} key={i}>
+            <Text style={styles.bold}>{l.question}</Text>
+            <Text style={styles.reg}>{l.answer}</Text>
+          </View>
+        ))
+      }
+      </View>
       </ScrollView>
     );
   }
@@ -26,7 +27,35 @@ class QA extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa'
+    backgroundColor: '#f2f2f2'
+  },
+  section: {
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 10,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
+  },
+  bold: {
+    fontFamily: 'avenir', fontWeight: 'bold',
+    fontSize: 16,
+    color: '#414141'
+  },
+  reg: {
+    fontFamily: 'avenir', fontWeight: 'bold',
+    fontSize: 14,
+    color: '#414141',
+    marginTop: 5
   }
 });
 

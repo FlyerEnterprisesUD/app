@@ -6,61 +6,26 @@ import Menu from './Menu';
 import Promotions from './Promotions';
 import Cards from './Cards';
 
-var stateCards = [];
-
 class Blend extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      menu: {},
-      about: {},
-      cards: [],
-      promotions: [],
-      newCards: []
+      division: {},
     };
 
-    this.getInfo = this.getInfo.bind(this);
-    this.getPromotions = this.getPromotions.bind(this);
     this.getCards = this.getCards.bind(this);
-    this.getDivisionCards = this.getDivisionCards.bind(this);
   }
 
   componentWillMount() {
-    this.getInfo();
-    this.getCards();
-
-    if(this.props.user.username != 'Guest') {
-      this.getPromotions();
-      this.getDivisionCards();
-    }
-  }
-
-  async getInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/blend';
-    //var url = 'http://localhost:5000/blend';
-
-    try {
-      let response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-
-      let responseJson = await response.json();
-      this.setState({ menu: responseJson.menu });
-      this.setState({ about: responseJson.about });
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
+    console.log(this.props.division);
+    if(this.props.user.username != "Guest") {
+      this.getCards();
     }
   }
 
   async getCards() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/getcards';
-    //var url = 'http://localhost:5000/auth/getcards';
+    var url = 'https://flyerentapi.herokuapp.com/card/get';
+    //var url = 'http://localhost:3000/card/get';
 
     try {
       let response = await fetch(url, {
@@ -70,106 +35,21 @@ class Blend extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          token: this.props.token,
-          division: "The Blend",
-          userId: this.props.user.id
+          userId: this.props.user.id,
+          divisionId: this.props.division.division.id
         })
       });
 
       let responseJson = await response.json();
 
-      this.setState({ cards: responseJson.response.cards });
-      stateCards = responseJson.response.cards;
-      console.log(stateCards);
+      this.setState({ division: responseJson.response.division });
+      console.log(this.state.division)
 
       return responseJson;
     } catch (err) {
       console.error(err);
     }
   }
-
-  async getDivisionCards() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/getdivisioncards';
-    //var url = 'http://localhost:5000/auth/getdivisioncards';
-
-    try {
-      let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          token: this.props.token,
-          division: "The Blend",
-          userId: this.props.user.id
-        })
-      });
-
-      let responseJson = await response.json();
-
-      var cards = [];
-      var newCards = [];
-
-      cards = responseJson.response.cards;
-      console.log(cards);
-      console.log(stateCards);
-      var unique;
-      for(var i = 0; i < cards.length; i++) {
-        console.log("j")
-        if(stateCards.length > 0) {
-          for(var j = 0; j < stateCards.length; j++) {
-            if(cards[i].id == stateCards[j].card.id) {
-              unique = false;
-              break;
-            } else {
-              unique = true;
-            }
-          }
-        } else {
-          unique = true;
-        }
-        if(unique) {
-          newCards.push(cards[i]);
-        }
-        unique = true;
-      }
-
-
-      this.setState({ newCards: newCards});
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async getPromotions() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/getpromotions';
-    //var url = 'http://localhost:5000/getpromotions';
-
-    try {
-      let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          division: "The Blend"
-        })
-      });
-
-      let responseJson = await response.json();
-
-      this.setState({ promotions: responseJson.response.promotions });
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
 
   render() {
     if(this.props.user.username == 'Guest') {
@@ -181,9 +61,9 @@ class Blend extends Component {
          initialPage={0}
          renderTabBar={() => <ScrollableTabBar />}
        >
-         <Division tabLabel='Home' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } location={this.state.about.location} hours={this.props.about.hours}  division='The Blend' {...this.props.passProps} />
-         <Menu tabLabel='Menu' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } menu={ this.state.menu } division='The Blend' {...this.props.passProps} />
-         <Promotions tabLabel='Promotions' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } promotions={this.state.promotions} division='The Blend' {...this.props.passProps} />
+         <Division tabLabel='Home' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } division={ this.props.division } {...this.props.passProps} />
+         <Menu tabLabel='Menu' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } division={ this.props.division } {...this.props.passProps} />
+         <Promotions tabLabel='Promotions' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } division={ this.props.division } {...this.props.passProps} />
        </ScrollableTabView>
       );
     }
@@ -196,10 +76,10 @@ class Blend extends Component {
        initialPage={0}
        renderTabBar={() => <ScrollableTabBar />}
      >
-       <Division tabLabel='Home' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } location={this.state.about.location} hours={this.props.about.hours}  division='The Blend' {...this.props.passProps} />
-       <Menu tabLabel='Menu' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } menu={ this.state.menu } division='The Blend' {...this.props.passProps} />
-       <Promotions tabLabel='Promotions' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } promotions={this.state.promotions} division='The Blend' {...this.props.passProps} />
-       <Cards tabLabel='Rewards' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } cards={ this.state.cards } newCards={ this.state.newCards } division='The Blend' {...this.props.passProps} />
+       <Division tabLabel='Home' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } division={ this.props.division } {...this.props.passProps} />
+       <Menu tabLabel='Menu' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } division={ this.props.division } {...this.props.passProps} />
+       <Promotions tabLabel='Promotions' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } division={ this.props.division } {...this.props.passProps} />
+       <Cards tabLabel='Rewards' navigator={ this.props.navigator } toggleSideMenu={ this.props.toggleSideMenu } user={ this.props.user } token={ this.props.token } division={ this.state.division } {...this.props.passProps} />
      </ScrollableTabView>
     );
   }

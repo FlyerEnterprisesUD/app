@@ -4,82 +4,33 @@ import { StyleSheet, ScrollView, View, Image, TouchableOpacity, Text, Navigator 
 class DivisionBubbles extends Component {
   constructor() {
     super();
-    this.state = {
-      ArtStreetAbout: {},
-      BlendAbout: {},
-      BlendExpressAbout: {},
-      ChillAbout: {},
-      GalleyAbout: {},
-      JuryBoxAbout: {},
-      StusAbout: {}
-    };
-
-    this.getArtStreetInfo = this.getArtStreetInfo.bind(this);
-    this.getBlendInfo = this.getBlendInfo.bind(this);
-    this.getBlendExpressInfo = this.getBlendExpressInfo.bind(this);
-    this.getChillInfo = this.getChillInfo.bind(this);
-    this.getGalleyInfo = this.getGalleyInfo.bind(this);
-    this.getJuryBoxInfo = this.getJuryBoxInfo.bind(this);
-    this.getStusInfo = this.getStusInfo.bind(this);
-  }
-
-  navigateToChill() {
-    this.props.navigator.resetTo({id:'The Chill', user: this.props.user, token: this.props.token, about: this.state.ChillAbout });
-  }
-
-  navigateToStusLanding() {
-    this.props.navigator.resetTo({id:'Stuart\'s Landing', user: this.props.user, token: this.props.token, about: this.state.StusAbout });
-  }
-
-  navigateToArtStreetCafe() {
-    this.props.navigator.resetTo({id:'Art Street Cafe', user: this.props.user, token: this.props.token, about: this.state.ArtStreetAbout });
-  }
-
-  navigateToBlend() {
-    this.props.navigator.resetTo({id:'The Blend', user: this.props.user, token: this.props.token, about: this.state.BlendAbout });
-  }
-
-  navigateToBlendExpress() {
-    this.props.navigator.resetTo({id:'The Blend Express', user: this.props.user, token: this.props.token, about: this.state.BlendExpressAbout });
-  }
-
-  navigateToGalley() {
-    this.props.navigator.resetTo({id:'The Galley', user: this.props.user, token: this.props.token, about: this.state.GalleyAbout });
-  }
-
-  navigateToJuryBox() {
-    this.props.navigator.resetTo({id:'Jury Box', user: this.props.user, token: this.props.token, about: this.state.JuryBoxAbout });
   }
 
   navigateToMovingAndStorage() {
-    this.props.navigator.resetTo({id:'Moving And Storage', user: this.props.user, token: this.props.token, about: this.state.MovingAndStorageAbout });
+    this.props.navigator.resetTo({id:'Moving And Storage', user: this.props.user, token: this.props.token });
   }
 
-  componentWillMount() {
-    this.getArtStreetInfo();
-    this.getBlendInfo();
-    this.getBlendExpressInfo();
-    this.getChillInfo();
-    this.getGalleyInfo();
-    this.getJuryBoxInfo();
-    this.getStusInfo();
-  }
-
-  async getArtStreetInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/artstreet';
-    //var url = 'http://localhost:5000/artstreet';
+  async getChill() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          divisionId: 2,
+        })
       });
 
       let responseJson = await response.json();
-      this.setState({ ArtStreetAbout: responseJson.about });
+
+      if(responseJson.response.success == true) {
+        this.props.navigator.resetTo({id:'The Chill', user: this.props.user, token: this.props.token, division: responseJson.response });
+      }
 
       return responseJson;
     } catch (err) {
@@ -87,21 +38,27 @@ class DivisionBubbles extends Component {
     }
   }
 
-  async getBlendInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/blend';
-    //var url = 'http://localhost:5000/blend';
+  async getHeritage() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          divisionId: 82,
+        })
       });
 
       let responseJson = await response.json();
-      this.setState({ BlendAbout: responseJson.about });
+
+      if(responseJson.response.success == true) {
+        this.props.navigator.resetTo({id:'Heritage Coffeehouse', user: this.props.user, token: this.props.token, division: responseJson.response });
+      }
 
       return responseJson;
     } catch (err) {
@@ -109,21 +66,27 @@ class DivisionBubbles extends Component {
     }
   }
 
-  async getBlendExpressInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/blendexpress';
-    //var url = 'http://localhost:5000/blendexpress';
+  async getStus() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          divisionId: 62,
+        })
       });
 
       let responseJson = await response.json();
-      this.setState({ BlendExpressAbout: responseJson.about });
+
+      if(responseJson.response.success == true) {
+        this.props.navigator.resetTo({id:'Stuart\'s Landing', user: this.props.user, token: this.props.token, division: responseJson.response });
+      }
 
       return responseJson;
     } catch (err) {
@@ -131,21 +94,111 @@ class DivisionBubbles extends Component {
     }
   }
 
-  async getChillInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/chill';
-    //var url = 'http://localhost:5000/chill';
+  async getGalley() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          divisionId: 32,
+        })
       });
 
       let responseJson = await response.json();
-      this.setState({ ChillAbout: responseJson.about });
+
+      if(responseJson.response.success == true) {
+        this.props.navigator.resetTo({id:'The Galley', user: this.props.user, token: this.props.token, division: responseJson.response });
+      }
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getBlendExpress() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          divisionId: 22,
+        })
+      });
+
+      let responseJson = await response.json();
+
+      if(responseJson.response.success == true) {
+        this.props.navigator.resetTo({id:'The Blend Express', user: this.props.user, token: this.props.token, division: responseJson.response });
+      }
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getBlend() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          divisionId: 12,
+        })
+      });
+
+      let responseJson = await response.json();
+
+      if(responseJson.response.success == true) {
+        this.props.navigator.resetTo({id:'The Blend', user: this.props.user, token: this.props.token, division: responseJson.response });
+      }
+
+      return responseJson;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async getArtStreet() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
+
+    try {
+      let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          divisionId: 52,
+        })
+      });
+
+      let responseJson = await response.json();
+
+      if(responseJson.response.success == true) {
+        this.props.navigator.resetTo({id:'Art Street Cafe', user: this.props.user, token: this.props.token, division: responseJson.response });
+      }
 
 
       return responseJson;
@@ -154,66 +207,27 @@ class DivisionBubbles extends Component {
     }
   }
 
-  async getGalleyInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/galley';
-    //var url = 'http://localhost:5000/galley';
+  async getJuryBox() {
+    var url = 'https://flyerentapi.herokuapp.com/division/v2/get';
+    //var url = 'http://localhost:3000/division/v2/get';
 
     try {
       let response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          divisionId: 42,
+        })
       });
 
       let responseJson = await response.json();
-      this.setState({ GalleyAbout: responseJson.about });
 
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async getJuryBoxInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/jurybox';
-    //var url = 'http://localhost:5000/jurybox';
-
-    try {
-      let response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-
-      let responseJson = await response.json();
-      this.setState({ JuryBoxAbout: responseJson.about });
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async getStusInfo() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/stuslanding';
-    //var url = 'http://localhost:5000/stuslanding';
-
-    try {
-      let response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-
-      let responseJson = await response.json();
-      this.setState({ StusAbout: responseJson.about });
+      if(responseJson.response.success == true) {
+        this.props.navigator.resetTo({id:'Jury Box', user: this.props.user, token: this.props.token, division: responseJson.response });
+      }
 
       return responseJson;
     } catch (err) {
@@ -229,6 +243,7 @@ class DivisionBubbles extends Component {
     const artstreetcafe = require('../images/artstreetcafe.jpg');
     const jurybox = require('../images/jurybox.jpg');
     const stuslanding = require('../images/stuslanding.jpg');
+    const heritage = require('../images/HeritageLogo.png');
     const movingandstorage = require('../images/movingandstorage.jpg');
 
     return(
@@ -237,45 +252,51 @@ class DivisionBubbles extends Component {
           horizontal
           showsHorizontalScrollIndicator={false}>
 
-          <TouchableOpacity onPress={this.navigateToChill.bind(this)}>
+          <TouchableOpacity onPress={this.getChill.bind(this)}>
           <Image
             source={chill}
             style={styles.image} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.navigateToArtStreetCafe.bind(this)}>
+          <TouchableOpacity onPress={this.getArtStreet.bind(this)}>
           <Image
             source={artstreetcafe}
             style={styles.image} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.navigateToBlend.bind(this)}>
+          <TouchableOpacity onPress={this.getBlend.bind(this)}>
           <Image
             source={blend}
             style={styles.image} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.navigateToBlendExpress.bind(this)}>
+          <TouchableOpacity onPress={this.getBlendExpress.bind(this)}>
           <Image
             source={blendexpress}
             style={styles.image} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.navigateToJuryBox.bind(this)}>
+          <TouchableOpacity onPress={this.getJuryBox.bind(this)}>
           <Image
             source={jurybox}
             style={styles.image} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.navigateToGalley.bind(this)}>
+          <TouchableOpacity onPress={this.getGalley.bind(this)}>
           <Image
             source={galley}
             style={styles.image} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.navigateToStusLanding.bind(this)}>
+          <TouchableOpacity onPress={this.getStus.bind(this)}>
             <Image
               source={stuslanding}
+              style={styles.image} />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.getHeritage.bind(this)}>
+            <Image
+              source={heritage}
               style={styles.image} />
           </TouchableOpacity>
 

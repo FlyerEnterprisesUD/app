@@ -1,50 +1,66 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { Card } from 'react-native-elements';
+import React, {Component} from 'react';
+import {
+  Text,
+  ScrollView,
+  StyleSheet,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
+  AlertIOS
+} from 'react-native';
+import Spinner from 'react-native-spinkit';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {Fumi} from 'react-native-textinput-effects';
 
-class Email extends Component {
-  constructor(props) {
-    super(props);
+export default class Email extends Component {
+  constructor() {
+    super();
     this.state = {
-      email: '',
-      error: ''
+      spinner: false,
+      email: ''
     };
-    this.resetpassword = this.resetpassword.bind(this);
+    this.getCredentials = this.getCredentials.bind(this);
+    this.resetPassword = this.resetPassword.bind(this);
   }
 
-  async resetpassword() {
-    this.setState({ error: '' });
+  componentWillMount() {
+    this.setState({spinner: false});
+  }
 
+  getCredentials(email) {
+    this.setState({
+      email: email,
+      spinner: true
+    }, function() {
+      this.resetPassword();
+    });
+  }
+
+  async resetPassword() {
     // Gets info from the state
     let email = this.state.email.trim();
 
-    // Checks if any are empty
-    if(email == '') {
-      this.setState({ error: 'Please enter an email' });
-      this.refs.email.focus();
-      return null;
-    }
-
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/resetpassword';
-    //var url = 'http://localhost:5000/user/resetpassword';
+    var url = 'https://flyerentapi.herokuapp.com/user/resetpassword';
+    //var url = 'http://localhost:3000/user/resetpassword';
 
     try {
       let response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          email: email,
-        })
+        body: JSON.stringify({email: email})
       });
 
       let responseJson = await response.json();
 
-      if(responseJson.response.success == false) {
-        this.setState({ error: responseJson.response.message });
-        return responseJson;
+      if (responseJson.response.success == false) {
+        this.setState({spinner: false});
+        AlertIOS.alert('Error', responseJson.response.message);
+        return null;
       } else {
         this.props.navigator.replace({id: 'Login'});
       }
@@ -55,66 +71,115 @@ class Email extends Component {
   }
 
   render() {
-    return(
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={ styles.container }>
-        <View>
-        <Text style={{fontFamily:'LabradorA-Bold', fontSize: 50, color: '#FFFFFF', textAlign: 'center', marginBottom: 10}}>Flyer Enterprises</Text>
-          <Card>
-            <View style={styles.inputContainer}>
-              <TextInput
-                ref="email"
-                placeholder="Email"
-                style={{height: 20}}
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={ this.state.email }
-                onChangeText={(text) => this.setState({email: text})}
-                keyboardType='email-address'
-                onSubmitEditing={(event) => {
-                  this.resetpassword();
-                }} />
-            </View>
-            <Text style={ styles.error }>{ this.state.error }</Text>
-          </Card>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={ this.login }>
-              <Text style={styles.button}>Reset Password</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+    var content = this.state.spinner
+      ? <SpinnerContent/>
+      : <MainContent email={this.state.email} reset={this.getCredentials}/>;
+    return (
+      <View style={{
+        height: Dimensions.get('window').height
+      }}>
+        {content}
       </View>
+    );
+  }
+}
+
+class SpinnerContent extends Component {
+  render() {
+    return (
+      <View style={styles.spinnerContainer}>
+        <Spinner isVisible={true} size={100} type="Wave" color="#FFFFFF"/>
+      </View>
+    );
+  }
+}
+
+class MainContent extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      email: ''
+    };
+
+    this.sendCredentials = this.sendCredentials.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({email: this.props.email});
+  }
+
+  sendCredentials() {
+    // Checks if any are empty
+    if (this.state.email == '') {
+      AlertIOS.alert('Error', 'Enter All Fields');
+      return null;
+    }
+
+    this.props.reset(this.state.email);
+  }
+
+  render() {
+    return (
+
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView style={styles.mainContainer} scrollEnabled={false} centerContent={true}>
+          <View style={{
+            padding: 16
+          }}>
+            <Text style={{
+              fontFamily: 'avenir',
+              fontWeight: 'bold',
+              fontSize: 40,
+              color: '#FFFFFF',
+              textAlign: 'center',
+              marginBottom: 10
+            }}>Flyer Enterprises</Text>
+            <Fumi label={'Email'} labelStyle={{
+              color: '#a3a3a3',
+              fontFamily: 'avenir',
+              fontWeight: 'bold',
+              fontSize: 16
+            }} inputStyle={{
+              color: '#2e2e2e',
+              fontFamily: 'avenir',
+              fontWeight: 'bold',
+              fontSize: 14
+            }} iconClass={FontAwesomeIcon} iconName={'envelope'} iconColor={'#CC0F40'} iconSize={15} autoCapitalize={'none'} autoCorrect={false} keyboardType={'default'} value={this.state.email} onChangeText={(text) => this.setState({email: text})} ref={'email'} onSubmitEditing={(event) => {
+              this.sendCredentials();
+            }}/>
+            <View style={styles.buttons}>
+              <TouchableOpacity>
+                <Text style={styles.button} onPress={this.sendCredentials}>Reset Password</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
     );
   }
 }
 
-let styles = StyleSheet.create({
-  container: {
+const styles = StyleSheet.create({
+  spinnerContainer: {
     flex: 1,
     backgroundColor: '#3478bc',
-    justifyContent: 'center'
-  },
-  inputContainer: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#D3D3D3'
-  },
-  buttonContainer: {
-    marginTop: 30,
+    justifyContent: 'center',
     alignItems: 'center'
   },
-  button: {
-    color: '#FFFFFF',
-    padding: 15,
-    backgroundColor: 'rgba(103, 171, 239, 0.5)',
-    width: Dimensions.get('window').width - 30,
-    textAlign: 'center'
+  mainContainer: {
+    flex: 1,
+    backgroundColor: '#3478bc'
   },
-  error: {
-    marginTop: 5,
-    color: '#cc0000'
+  button: {
+    backgroundColor: '#CC0F40',
+    color: '#FFFFFF',
+    padding: 16,
+    width: Dimensions.get('window').width - 32,
+    textAlign: 'center',
+    fontFamily: 'avenir',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginTop: 4
   }
 });
-
-module.exports = Email;

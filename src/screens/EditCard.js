@@ -1,26 +1,43 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Picker, Switch, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import SimplePicker from 'react-native-simple-picker';
-import { Card, List, ListItem } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Fumi } from 'react-native-textinput-effects';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class EditCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.card.name,
-      division: this.props.card.division,
-      total: this.props.card.total
+      name: '',
+      total: '0',
     };
 
-    this.submit = this.submit.bind(this);
+    this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
-    this.deleteUserCards = this.deleteUserCards.bind(this);
   }
 
-  async submit() {
-    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/updatecard';
-    var url = 'http://localhost:5000/auth/updatecard';
+  componentWillMount() {
+    this.setState({
+      name: this.props.card.name,
+      total: this.props.card.total,
+    });
+  }
+
+  async update() {
+    var url = 'https://flyerentapi.herokuapp.com/card/updatecard';
+    //var url = 'http://localhost:3000/card/updatecard';
+
+    if(this.state.name == '' || this.state.total == '') {
+      AlertIOS.alert(
+        'Error',
+        'Please fill out all fields',
+        [{
+          text: 'Dismiss',
+          onPress: null,
+        }]
+      );
+      return null;
+    }
 
     try {
       let response = await fetch(url, {
@@ -30,10 +47,8 @@ class EditCard extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          token: this.props.token,
           id: this.props.card.id,
           name: this.state.name,
-          division: this.state.division,
           total: this.state.total
         })
       });
@@ -41,8 +56,9 @@ class EditCard extends Component {
       let responseJson = await response.json();
 
       if(responseJson.response.success == true) {
-        this.props.navigator.resetTo({id: 'Home', user: this.props.user, token: this.props.token});
+        this.props.navigator.pop();
       }
+
 
       return responseJson;
     } catch (err) {
@@ -51,39 +67,8 @@ class EditCard extends Component {
   }
 
   async delete() {
-    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/deletecard';
-    var url = 'http://localhost:5000/auth/deletecard';
-
-    try {
-      let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          token: this.props.token,
-          id: this.props.card.id
-        })
-      });
-
-      let responseJson = await response.json();
-
-      this.deleteUserCards();
-
-      if(responseJson.response.success == true) {
-        this.props.navigator.resetTo({id: 'Home', user: this.props.user, token: this.props.token});
-      }
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async deleteUserCards() {
-    //var url = 'https://flyerenterprisesmobileapp.herokuapp.com/auth/deleteusercards';
-    var url = 'http://localhost:5000/auth/deleteusercards';
+    var url = 'https://flyerentapi.herokuapp.com/card/deletecard';
+    //var url = 'http://localhost:3000/card/deletecard';
 
     try {
       let response = await fetch(url, {
@@ -101,7 +86,7 @@ class EditCard extends Component {
       let responseJson = await response.json();
 
       if(responseJson.response.success == true) {
-        this.props.navigator.resetTo({id: 'Home', user: this.props.user, token: this.props.token});
+        this.props.navigator.replace({id: 'Division Menu', user: this.props.user, token: this.props.token});
       }
 
       return responseJson;
@@ -111,83 +96,72 @@ class EditCard extends Component {
   }
 
   render() {
-    const divisions = [
-      'The Blend',
-      'The Galley',
-      'The Blend Express',
-      'ArtStreet Cafe',
-      'The Jury Box',
-      'Stuarts Landing',
-      'Moving And Storage',
-      'The CHILL'
-    ];
-
     return(
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView style={ styles.container }>
 
-        <View style={styles.information}>
-          <Text style={{marginTop: 15, marginLeft: 15}}>INFORMATION</Text>
-          <Card containerStyle={{marginTop: 0, paddingTop: 0}}>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='person' size={20} />
-              <View style={styles.inputContainer}>
-                <TextInput
-                  placeholder="Name"
-                  autoCorrect={false}
-                  value={ this.state.name }
-                  onChangeText={(text) => this.setState({name: text})}
-                  style={ styles.input }
-                  keyboardType='default' />
-              </View>
-            </View>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='grade' size={20} style={{justifyContent: 'center'}}/>
-              <View style={styles.text}>
-                <Text
-                  onPress={() => {
-                    this.refs.picker.show();
-                  }}
-                >
-                    {this.state.division}
-                </Text>
-                <SimplePicker
-                   ref={'picker'}
-                   options={divisions}
-                   onSubmit={(option) => {
-                     this.setState({
-                       division: option,
-                     });
-                   }}
-                 />
-              </View>
-            </View>
-            <View style={styles.element}>
-              <Icon color='#d3d3d3' name='person' size={20} />
-              <View style={styles.inputContainer}>
-                <TextInput
-                  placeholder="Total"
-                  autoCorrect={false}
-                  value={ this.state.total }
-                  onChangeText={(text) => this.setState({total: text})}
-                  style={ styles.input }
-                  keyboardType='default' />
-              </View>
-            </View>
-          </Card>
-        </View>
+        <View>
+          <Text style={{marginTop: 10, marginLeft: 16, color: '#515151', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}>Card</Text>
+          <View style={{marginTop: 4, marginLeft: 16, marginRight: 16, shadowColor: '#a3a3a3', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.8, shadowRadius: 2, borderColor: 'rgba(163, 163, 163, 0.5)', borderWidth: 1}}>
+            <Fumi
+              label={'Name'}
+              labelStyle={{ color: '#a3a3a3', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}
+              inputStyle={{ color: '#2e2e2e', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}
+              style={{}}
+              iconClass={Icon}
+              iconName={'bookmark'}
+              iconColor={'#CC0F40'}
+              iconSize={14}
+              autoCapitalize={'none'}
+              autoCorrect={false}
+              keyboardType={'default'}
+              value={this.state.name}
+              onChangeText={(text) => this.setState({name: text})}
+              ref={'name'}
+              onSubmitEditing={(event) => {
 
-        <View style={styles.buttons}>
-          <TouchableOpacity onPress={ this.submit }>
-            <View style={styles.buttonContainer}>
-                <Text style={ styles.button }>Submit</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.buttonContainer}>
-                <Text style={ styles.button }>Delete</Text>
-            </View>
-          </TouchableOpacity>
+              }}
+            />
+          </View>
+
+          <View style={{marginTop: 4, marginLeft: 16, marginRight: 16, shadowColor: '#a3a3a3', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.8, shadowRadius: 2, borderColor: 'rgba(163, 163, 163, 0.5)', borderWidth: 1}}>
+            <Fumi
+              label={'Total'}
+              labelStyle={{ color: '#a3a3a3', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16 }}
+              inputStyle={{ color: '#2e2e2e', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14 }}
+              style={{}}
+              iconClass={Icon}
+              iconName={'bookmark'}
+              iconColor={'#CC0F40'}
+              iconSize={14}
+              autoCapitalize={'none'}
+              autoCorrect={false}
+              keyboardType={'default'}
+              value={this.state.total}
+              onChangeText={(text) => this.setState({total: text})}
+              ref={'total'}
+              onSubmitEditing={(event) => {
+
+              }}
+            />
+          </View>
+
+          <View style={{marginTop: 10}}>
+            <TouchableOpacity onPress={this.update}>
+              <View style={styles.button}>
+                <Text style={{color: '#FFFFFF', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16}}>Update Card</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{marginTop: 10, marginBottom: 120}}>
+            <TouchableOpacity onPress={this.delete}>
+              <View style={styles.button}>
+                <Text style={{color: '#FFFFFF', fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 16}}>Delete Card</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
         </View>
 
       </ScrollView>
@@ -199,61 +173,46 @@ class EditCard extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#f2f2f2',
     marginTop: 65
   },
-  element: {
+  section: {
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
+  },
+  item: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginTop: 15
-  },
-  text: {
-    marginLeft: 5,
-    paddingBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D3D3D3',
-    flex: 2
-  },
-  inputContainer: {
-    marginLeft: 5,
-    paddingBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D3D3D3',
-    flex: 2
-  },
-  input: {
-    height: 15
-  },
-  dateContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginLeft: 5,
-    paddingBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D3D3D3',
-    flex: 2
-  },
-  buttons: {
-    marginLeft: 75,
-    marginRight: 75,
-    marginTop: 30,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  buttonContainer:{
-    borderRadius: 30,
-    height: 60,
-    width: 60,
-    backgroundColor: '#CC0F40',
-    justifyContent: 'center'
+    justifyContent: 'space-between'
   },
   button: {
-    fontFamily:'LabradorA-Regular',
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#FFFFFF',
-    backgroundColor: 'rgba(220,220,220,0)'
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#CC0F40',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1,
+    alignItems: 'center'
   }
 });
 

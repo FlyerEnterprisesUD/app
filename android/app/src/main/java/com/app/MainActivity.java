@@ -1,6 +1,7 @@
 package com.app;
 
 import com.facebook.react.ReactActivity;
+import com.react.rnspinkit.RNSpinkitPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;

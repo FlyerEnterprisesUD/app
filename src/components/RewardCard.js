@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, ScrollView, Image } from 'react-native';
+import Card from '../components/Card';
 
 class RewardCard extends Component {
 
@@ -27,15 +28,14 @@ class RewardCard extends Component {
       CardImg = ChillCard;
     }
 
-console.log(this.props);
+
     return(
-      <View style={styles.card}>
-        <Image style={styles.image} source={CardImg} />
-        <View style={styles.textContainer}>
-          <Text style={styles.textBold}>{this.props.card.name}</Text>
-          <Text style={styles.text}>{this.props.division}</Text>
-          <Text style={styles.textBold}>{this.props.card.total - this.props.points} punches until next reward</Text>
-        </View>
+      <View>
+      {
+        this.props.division.cards.map((l, i) => (
+          <Card key={i} division={this.props.division} card={l} navigator={this.props.navigator} user={this.props.user} token={this.props.token}/>
+        ))
+      }
       </View>
     );
   }
@@ -64,8 +64,8 @@ let styles = StyleSheet.create({
   },
   textBold: {
     color: '#FFFFFF',
-    fontFamily:'LabradorA-Bold',
-    fontSize: 26
+    fontFamily: 'avenir', fontWeight: 'bold',
+    fontSize: 20
   },
   image: {
     height: 120,
@@ -73,8 +73,8 @@ let styles = StyleSheet.create({
   },
   text: {
     color: '#FFFFFF',
-    fontFamily:'LabradorA-Regular',
-    fontSize: 20,
+    fontFamily: 'avenir', fontWeight: 'bold',
+    fontSize: 16,
     marginTop: -6,
     marginBottom: 10
   }

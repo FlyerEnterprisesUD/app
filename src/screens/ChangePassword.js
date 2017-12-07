@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, TextInput } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import { View, Text, StyleSheet, Navigator, TouchableOpacity, ScrollView, AlertIOS } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Fumi } from 'react-native-textinput-effects';
 
-class ChangePassword extends Component {
+export default class ChangePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,55 +16,54 @@ class ChangePassword extends Component {
   }
 
   async changePassword() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/changepassword';
-    //var url = 'http://localhost:5000/user/changepassword';
+    var url = 'https://flyerentapi.herokuapp.com/user/changepassword';
+    //var url = 'http://localhost:3000/user/changepassword';
 
     // Gets info from the state
-    let username = this.state.username.trim();
-    let password = this.state.password.trim();
+    let oldPass = this.state.oldPass.trim();
+    let newPass = this.state.newPass.trim();
+    let newPassAgain = this.state.newPassAgain.trim();
 
     // Checks if any are empty
-    if(username == '' || password == '') {
-      this.setState({ error: 'All fields are required' });
-      if(username == ''){
-        this.refs.username.focus();
-        this.setState({ visible: false });
-        return null;
-      } else {
-        this.refs.password.focus();
-        this.setState({ visible: false });
-        return null;
-      }
+    if(oldPass == '' || newPass == '' || newPassAgain == '') {
+      AlertIOS.alert(
+       'Error',
+       'Please enter all fields'
+      );
     }
 
-
-
-    if(this.state.password != this.state.passwordAgain) {
-      this.setState({ error: 'Passwords must match', password: '', passwordAgain: '' });
-      this.refs.password.focus();
-      this.setState({ visible: false });
+    if(this.state.newPass != this.state.newPassAgain) {
+      AlertIOS.alert(
+       'Error',
+       'New Passwords Must Match'
+      );
+      this.setState({ newPass: '', newPassAgain: '' });
       return null;
     }
 
-    if(this.state.password.length < 8) {
-      this.setState({ error: 'Password must be longer than 8 characters', password: '', passwordAgain: '' });
-      this.refs.password.focus();
-      this.setState({ visible: false });
+    if(this.state.newPass.length < 8) {
+      AlertIOS.alert(
+       'Error',
+       'Password must be longer than 8 characters'
+      );
+      this.setState({ newPass: '', newPassAgain: '' });
       return null;
     }
 
     var counter = 0;
-    if (/[a-z]/.test(this.state.password)) {
+    if (/[a-z]/.test(this.state.newPass)) {
         counter++;
     }
-    if (/[A-Z]/.test(this.state.password)) {
+    if (/[A-Z]/.test(this.state.newPass)) {
         counter++;
     }
 
     if(counter < 2) {
-      this.setState({ error: 'Password must have at least one lowercase and uppercase letter', password: '', passwordAgain: '' });
-      this.refs.password.focus();
-      this.setState({ visible: false });
+      this.setState({ newPass: '', newPassAgain: '' });
+      AlertIOS.alert(
+       'Error',
+       'Password must have at least one lowercase and uppercase letter'
+      );
       return null;
     }
 
@@ -84,11 +84,14 @@ class ChangePassword extends Component {
       let responseJson = await response.json();
 
       if(responseJson.response.success == false) {
-        this.setState({ error: responseJson.response.message });
+        AlertIOS.alert(
+         'Error',
+         responseJson.response.message
+        );
         return responseJson;
       } else {
         this.setState({ user: responseJson.response.user });
-        this.props.navigator.replace({id: 'Home'});
+        this.props.navigator.resetTo({id: 'Home'});
       }
 
     } catch (err) {
@@ -98,48 +101,77 @@ class ChangePassword extends Component {
 
   render() {
     return(
-      <View style={ styles.container }>
-
-        <View style={{marginTop: 20}}>
-        <TextInput
-          placeholder="Old Password"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={ this.state.oldPass }
-          onChangeText={(text) => this.setState({oldPass: text})}
-          style={ styles.input }
-          keyboardType='default'
-          secureTextEntry  />
-
-        <TextInput
-          placeholder="New Password"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={ this.state.newPass }
-          onChangeText={(text) => this.setState({newPass: text})}
-          style={ styles.input }
-          keyboardType='default'
-          secureTextEntry  />
-
-        <TextInput
-          placeholder="New Password Again"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={ this.state.newPassAgain }
-          onChangeText={(text) => this.setState({newPassAgain: text})}
-          style={ styles.input }
-          keyboardType='default'
-          secureTextEntry  />
-
-        <Text style={ styles.error }>{ this.state.error }</Text>
-
-        <TouchableOpacity onPress={ this.changePassword }>
-          <Text style={ styles.button }>Change Password</Text>
-        </TouchableOpacity>
+      <ScrollView style={styles.container}>
+        <View>
+          <View style={{marginTop: 10, marginLeft: 16, marginRight: 16, shadowColor: '#a3a3a3', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.8, shadowRadius: 2, borderColor: 'rgba(163, 163, 163, 0.5)', borderWidth: 1}}>
+            <Fumi
+              label={'Old Password'}
+              labelStyle={{ color: '#a3a3a3', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16 }}
+              inputStyle={{ color: '#2e2e2e', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 14 }}
+              style={{}}
+              iconClass={Icon}
+              iconName={'lock'}
+              iconColor={'#CC0F40'}
+              iconSize={15}
+              autoCapitalize={'none'}
+              autoCorrect={false}
+              keyboardType={'default'}
+              value={this.state.oldPass}
+              onChangeText={(text) => this.setState({oldPass: text})}
+              ref={'oldPass'}
+              onSubmitEditing={(event) => {
+                this.refs.newPass.focus();
+              }}
+            />
+          </View>
+          <View style={{marginTop: 4, marginLeft: 16, marginRight: 16, shadowColor: '#a3a3a3', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.8, shadowRadius: 2, borderColor: 'rgba(163, 163, 163, 0.5)', borderWidth: 1}}>
+            <Fumi
+              label={'New Password'}
+              labelStyle={{ color: '#a3a3a3', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16 }}
+              inputStyle={{ color: '#2e2e2e', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 14 }}
+              style={{}}
+              iconClass={Icon}
+              iconName={'unlock-alt'}
+              iconColor={'#CC0F40'}
+              iconSize={15}
+              autoCapitalize={'none'}
+              autoCorrect={false}
+              keyboardType={'default'}
+              value={this.state.newPass}
+              onChangeText={(text) => this.setState({newPass: text})}
+              ref={'newPass'}
+              onSubmitEditing={(event) => {
+                this.refs.newPassAgain.focus();
+              }}
+            />
+          </View>
+          <View style={{marginTop: 4, marginLeft: 16, marginRight: 16, shadowColor: '#a3a3a3', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.8, shadowRadius: 2, borderColor: 'rgba(163, 163, 163, 0.5)', borderWidth: 1}}>
+            <Fumi
+              label={'New Password Again'}
+              labelStyle={{ color: '#a3a3a3', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16 }}
+              inputStyle={{ color: '#2e2e2e', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 14 }}
+              style={{}}
+              iconClass={Icon}
+              iconName={'unlock-alt'}
+              iconColor={'#CC0F40'}
+              iconSize={15}
+              autoCapitalize={'none'}
+              autoCorrect={false}
+              keyboardType={'default'}
+              value={this.state.newPassAgain}
+              onChangeText={(text) => this.setState({newPassAgain: text})}
+              ref={'newPassAgain'}
+            />
+          </View>
+          <View style={{marginTop: 10, marginBottom: 20}}>
+            <TouchableOpacity onPress={this.changePassword}>
+              <View style={styles.button}>
+                <Text style={{color: '#FFFFFF', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16}}>Change Password</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
-
-
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -147,35 +179,23 @@ class ChangePassword extends Component {
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f2f2f2',
     marginTop: 65
   },
   button: {
-    width: Dimensions.get('window').width - 60,
-    marginLeft: 30,
-    marginRight: 30,
-    padding: 10,
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
     backgroundColor: '#CC0F40',
-    color: '#FFFFFF',
-    textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center'
-  },
-  input: {
-    height: 35,
-    marginBottom: 15,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 5,
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
     borderWidth: 1,
-    borderColor: '#DCDCDC',
-    borderRadius: 4,
     alignItems: 'center'
-  },
-  error: {
-    marginLeft: 30,
-    color: '#cc0000'
   }
 });
-
-module.exports = ChangePassword;

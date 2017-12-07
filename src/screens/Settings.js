@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, AsyncStorage, ScrollView, Switch } from 'react-native';
-import { List, ListItem, Card } from 'react-native-elements';
+import { View, Text, StyleSheet, Navigator, TouchableOpacity, Dimensions, AsyncStorage, ScrollView, Switch, AlertIOS } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import PushSetting from '../components/PushSetting';
+import Display from 'react-native-display';
 
-class Settings extends Component {
-  constructor(props) {
-    super(props);
+export default class Settings extends Component {
+  constructor() {
+    super();
+
     this.logout = this.logout.bind(this);
     this.navigateToChangePassword = this.navigateToChangePassword.bind(this);
     this.navigateToAccountSettings = this.navigateToAccountSettings.bind(this);
     this.navigateToPrivacyPolicy = this.navigateToPrivacyPolicy.bind(this);
     this.getPushSettings = this.getPushSettings.bind(this);
-    this.updatePushSettings = this.updatePushSettings.bind(this);
+    this.navigateToFeedback = this.navigateToFeedback.bind(this);
+    this.touch = this.touch.bind(this);
+    this.setTouch = this.setTouch.bind(this);
 
     this.state = {
-      chill: false,
-      galley: false,
-      artstreet: false,
-      stus: false,
-      blend: false,
-      blendexpress: false,
-      jurybox: false
+      divisions: [],
+      loading: true,
+      touch: false
     };
   }
 
@@ -30,45 +31,46 @@ class Settings extends Component {
 
   componentWillMount() {
     if(this.props.user.username != 'Guest'){
+      this.setState({loading: true});
+      this.touch();
       this.getPushSettings();
     }
   }
 
-  async getPushSettings() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/getpushsettings';
-    //var url = 'http://localhost:5000/user/getpushsettings';
-
-    try {
-      let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.props.user.username
-        })
-      });
-
-      let responseJson = await response.json();
-
-      this.setState({ chill: responseJson.response.settings.chill });
-      this.setState({ galley: responseJson.response.settings.galley });
-      this.setState({ artstreet: responseJson.response.settings.artstreet });
-      this.setState({ stus: responseJson.response.settings.stus });
-      this.setState({ blend: responseJson.response.settings.blend });
-      this.setState({ blendexpress: responseJson.response.settings.blendexpress });
-      this.setState({ jurybox: responseJson.response.settings.jurybox });
-
-      return responseJson;
-    } catch (err) {
-      console.error(err);
+  componentWillUnmount(){
+    if(this.state.touch == false) {
+      AsyncStorage.setItem('touchid', 'false').done();
+    } else {
+      AsyncStorage.setItem('touchid', 'true').done();
     }
   }
 
-  async updatePushSettings() {
-    var url = 'https://flyerenterprisesmobileapp.herokuapp.com/user/updatepushsettings';
-    //var url = 'http://localhost:5000/user/updatepushsettings';
+  async touch() {
+    try {
+      const touchid = await AsyncStorage.getItem('touchid', touchid);
+      if (touchid !== null){
+        if(touchid == 'true') {
+          this.setState({touch: true});
+        } else {
+          this.setState({touch: false});
+        }
+
+      } else {
+        console.log("Touch ID");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  setTouch(state) {
+    AsyncStorage.setItem('touchid', state).done()
+  }
+
+
+  async getPushSettings() {
+    var url = 'https://flyerentapi.herokuapp.com/user/getpushsettings';
+    //var url = 'http://localhost:3000/user/getpushsettings';
 
     try {
       let response = await fetch(url, {
@@ -78,22 +80,13 @@ class Settings extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          userId: this.props.user.id,
-          chill: this.state.chill,
-          galley: this.state.galley,
-          artstreet: this.state.artstreet,
-          stus: this.state.stus,
-          blend: this.state.blend,
-          blendexpress: this.state.blendexpress,
-          jurybox: this.state.jurybox
+          userId: this.props.user.id
         })
       });
 
       let responseJson = await response.json();
 
-      if(responseJson.response.success == true) {
-        this.props.navigator.replace({id: 'Home', user: this.props.user, token: this.props.token});
-      }
+      this.setState({ divisions: responseJson.response.settings, loading: false });
 
       return responseJson;
     } catch (err) {
@@ -113,151 +106,209 @@ class Settings extends Component {
     this.props.navigator.push({id: 'Privacy Policy', user: this.props.user});
   }
 
+  navigateToFeedback() {
+    this.props.navigator.push({id: 'Feedback', user: this.props.user});
+  }
+
+  //TODO update push setting on change rather than on componentWillUnmount
   render() {
-    if(this.props.user.username != "Guest"){
+    if(this.props.user.username == 'Guest') {
       return(
-        <ScrollView style={ styles.container }>
+        <ScrollView style={styles.container}>
 
           <View>
-            <Text style={{marginTop: 10, marginLeft: 2}}>PROFILE</Text>
-            <List containerStyle={{marginTop:1}}>
-              <ListItem
-                onPress={this.navigateToAccountSettings}
-                key='0'
-                title={'Account Settings'}
-              />
-              <ListItem
-                onPress={this.navigateToChangePassword}
-                key='1'
-                title={'Change Password'}
-              />
-            </List>
-          </View>
-
-
-
-
-          <View style={styles.information}>
-            <Text style={{marginTop: 15, marginLeft: 2}}>PUSH NOTIFICATION</Text>
-            <Card containerStyle={{marginTop: 0, paddingTop: 0, marginLeft: 0, marginRight: 0}}>
-              <View style={styles.element}>
-                <Text style={{fontSize: 16, marginTop: 6}}>The CHILL</Text>
-                <Switch
-                  onValueChange={(value) => this.setState({chill: value})}
-                  style={{marginBottom: 5}}
-                  value={this.state.chill} />
+            <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16 }}>Legal</Text>
+            <TouchableOpacity onPress={this.navigateToPrivacyPolicy}>
+              <View style={styles.section}>
+                <View style={styles.item}>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Icon name="gavel" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                    <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>Privacy Policy</Text>
+                  </View>
+                  <View>
+                    <Icon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  </View>
+                </View>
               </View>
-              <View style={styles.element}>
-                <Text style={{fontSize: 16, marginTop: 6}}>The Galley</Text>
-                <Switch
-                  onValueChange={(value) => this.setState({galley: value})}
-                  style={{marginBottom: 5}}
-                  value={this.state.galley} />
-              </View>
-              <View style={styles.element}>
-                <Text style={{fontSize: 16, marginTop: 6}}>ArtStreet Cafe</Text>
-                <Switch
-                  onValueChange={(value) => this.setState({artstreet: value})}
-                  style={{marginBottom: 5}}
-                  value={this.state.artstreet} />
-              </View>
-              <View style={styles.element}>
-                <Text style={{fontSize: 16, marginTop: 6}}>Stuarts Landing</Text>
-                <Switch
-                  onValueChange={(value) => this.setState({stus: value})}
-                  style={{marginBottom: 5}}
-                  value={this.state.stus} />
-              </View>
-              <View style={styles.element}>
-                <Text style={{fontSize: 16, marginTop: 6}}>The Blend</Text>
-                <Switch
-                  onValueChange={(value) => this.setState({blend: value})}
-                  style={{marginBottom: 5}}
-                  value={this.state.blend} />
-              </View>
-              <View style={styles.element}>
-                <Text style={{fontSize: 16, marginTop: 6}}>The Blend Express</Text>
-                <Switch
-                  onValueChange={(value) => this.setState({blendexpress: value})}
-                  style={{marginBottom: 5}}
-                  value={this.state.blendexpress} />
-              </View>
-              <View style={styles.element}>
-                <Text style={{fontSize: 16, marginTop: 6}}>The Jury Box</Text>
-                <Switch
-                  onValueChange={(value) => this.setState({jurybox: value})}
-                  style={{marginBottom: 5}}
-                  value={this.state.jurybox} />
-              </View>
-            </Card>
-          </View>
-
-          <View>
-            <Text style={{marginTop: 10, marginLeft: 2}}>LEGAL</Text>
-            <List containerStyle={{marginTop:1}}>
-              <ListItem
-                onPress={this.navigateToPrivacyPolicy}
-                key='0'
-                title={'Privacy Policy'}
-              />
-            </List>
-          </View>
-
-          <View>
-            <TouchableOpacity onPress={ this.updatePushSettings }>
-              <Text style={ styles.button }>Update Settings</Text>
             </TouchableOpacity>
+          </View>
 
-            <TouchableOpacity onPress={ this.logout }>
-              <Text style={ styles.button }>Logout</Text>
+          <View>
+            <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16 }}>Support</Text>
+            <TouchableOpacity onPress={this.navigateToFeedback}>
+              <View style={styles.section}>
+                <View style={styles.item}>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Icon name="comments" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                    <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>Feedback</Text>
+                  </View>
+                  <View>
+                    <Icon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{marginTop: 10}}>
+            <TouchableOpacity onPress={this.logout}>
+              <View style={styles.button}>
+                <Text style={{color: '#FFFFFF', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16}}>Logout</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      );
+    } else {
+      return(
+        <ScrollView style={styles.container}>
+
+          <View>
+            <Text style={{marginTop: 10, marginLeft: 16, color: '#515151', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16 }}>Information</Text>
+            <TouchableOpacity onPress={this.navigateToAccountSettings}>
+              <View style={styles.section}>
+                <View style={styles.item}>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Icon name="user" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                    <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>Account Settings</Text>
+                  </View>
+                  <View>
+                    <Icon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.navigateToChangePassword}>
+              <View style={styles.section}>
+                <View style={styles.item}>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Icon name="unlock-alt" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                    <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>Change Password</Text>
+                  </View>
+                  <View>
+                    <Icon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <Icon name="lock" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>Use TouchID?</Text>
+                </View>
+                <View>
+                  <Switch onValueChange={(value) => this.setState({touch: value})} value={this.state.touch} onTintColor={'#CC0F40'} />
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <View>
+            <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16 }}>Push Notifications</Text>
+
+            <Display enable={!this.state.loading}>
+            <View>
+            {
+              this.state.divisions.map((l, i) => (
+                <PushSetting key={i} division={l} user={this.props.user} />
+              ))
+            }
+            </View>
+            </Display>
+
+          </View>
+
+          <View>
+            <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16 }}>Legal</Text>
+            <TouchableOpacity onPress={this.navigateToPrivacyPolicy}>
+              <View style={styles.section}>
+                <View style={styles.item}>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Icon name="gavel" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                    <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>Privacy Policy</Text>
+                  </View>
+                  <View>
+                    <Icon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View>
+            <Text style={{marginTop: 20, marginLeft: 16, color: '#515151', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16 }}>Support</Text>
+            <TouchableOpacity onPress={this.navigateToFeedback}>
+              <View style={styles.section}>
+                <View style={styles.item}>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Icon name="comments" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                    <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>Feedback</Text>
+                  </View>
+                  <View>
+                    <Icon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{marginTop: 10, marginBottom: 20}}>
+            <TouchableOpacity onPress={this.logout}>
+              <View style={styles.button}>
+                <Text style={{color: '#FFFFFF', fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16}}>Logout</Text>
+              </View>
             </TouchableOpacity>
           </View>
 
         </ScrollView>
       );
-    } else {
-      return(
-        <View style={ styles.container }>
-
-          <TouchableOpacity onPress={ this.logout }>
-            <Text style={ styles.button }>Logout</Text>
-          </TouchableOpacity>
-
-        </View>
-      );
     }
-
   }
 }
 
 let styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#f2f2f2',
     marginTop: 65
   },
-  button: {
-    width: Dimensions.get('window').width - 30,
-    marginLeft: 15,
-    marginRight: 15,
-    padding: 10,
-    backgroundColor: '#CC0F40',
-    color: '#FFFFFF',
-    textAlign: 'center',
-    borderRadius: 4,
-    alignItems: 'center',
-    marginTop: 10
+  section: {
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 4,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1
   },
-  element: {
+  item: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: '#d3d3d3',
-    marginTop: 5
+    justifyContent: 'space-between'
   },
-  row: {
-
+  button: {
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 10,
+    backgroundColor: '#CC0F40',
+    shadowColor: '#a3a3a3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: 'rgba(163, 163, 163, 0.5)',
+    borderWidth: 1,
+    alignItems: 'center'
   }
 });
-
-module.exports = Settings;
