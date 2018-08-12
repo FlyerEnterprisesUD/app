@@ -27,7 +27,7 @@ class Home extends Component {
           <View key={0}>
             <Image style={styles.image} source={HeritageHome}>
               <View>
-                <Text style={styles.text}>NEW! Heritage Coffeehouse</Text>
+                <Text style={styles.text}>Heritage Coffeehouse</Text>
               </View>
             </Image>
           </View>

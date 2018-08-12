@@ -27,6 +27,7 @@ class Card extends Component {
     var GalleyCard = require('../images/galleycard.jpg');
     var StusCard = require('../images/stuscard.jpg');
     var ChillCard = require('../images/chillcard.jpg');
+    var HeritageCard = require('../images/blankcard.jpg');
 
     var CardImg;
 
@@ -42,6 +43,8 @@ class Card extends Component {
       CardImg = StusCard;
     } else if(this.props.division.name == 'The CHILL') {
       CardImg = ChillCard;
+    } else if(this.props.division.name == 'Heritage Coffeehouse') {
+      CardImg = HeritageCard;
     }
 
     var c = false;

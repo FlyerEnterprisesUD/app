@@ -40,6 +40,9 @@ import Promotion from './screens/Promotion';
 import Settings from './screens/Settings';
 import Rewards from './screens/Rewards';
 import Card from './screens/Card';
+import Bundles from './screens/Bundles';
+import Bundle from './screens/Bundle';
+import PunchCountDownQR from './screens/PunchCountDownQR';
 
 import RoleMenu from './screens/RoleMenu';
 import ChangeRole from './screens/ChangeRole';
@@ -51,6 +54,7 @@ import SubmitPush from './screens/SubmitPush';
 import EditSubmitPush from './screens/EditSubmitPush';
 import PunchQR from './screens/PunchQR';
 import Approve from './screens/Approve';
+import AddUserToBundle from './screens/AddUserToBundle';
 
 import ChangePassword from './screens/ChangePassword';
 import AccountSettings from './screens/AccountSettings';
@@ -113,6 +117,11 @@ export default class App extends Component {
 
   navigateToRewards() {
     this.refs.navigator.resetTo({id: 'Rewards', user: this.props.user, token: this.props.token});
+    this.setState({isOpen: false});
+  }
+
+  navigateToBundles() {
+    this.refs.navigator.resetTo({id: 'Bundles', user: this.props.user, token: this.props.token});
     this.setState({isOpen: false});
   }
 
@@ -400,6 +409,14 @@ export default class App extends Component {
         return (<PunchQR navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} card={route.card} {...route.passProps}/>);
       case 'Rewards':
         return (<Rewards navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
+      case 'Bundles':
+        return (<Bundles navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
+      case 'Bundle':
+        return (<Bundle navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} countdown={route.countdown} bundle={route.bundle} {...route.passProps}/>);
+      case 'PunchCountDownQR':
+        return (<PunchCountDownQR navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} bundle={route.bundle} {...route.passProps}/>);
+      case 'AddUserToBundle':
+        return (<AddUserToBundle navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} token={route.token} {...route.passProps}/>);
       case 'Card':
         return (<Card navigator={navigator} toggleSideMenu={toggleSideMenu} user={route.user} card={route.card} token={route.token} division={route.division} {...route.passProps}/>);
       case 'Cards':
@@ -689,6 +706,19 @@ export default class App extends Component {
               </View>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigateToBundles.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="trophy" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Punch Card Bundles</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <View>
@@ -868,6 +898,19 @@ export default class App extends Component {
                 <View style={{flex: 1, flexDirection: 'row'}}>
                   <FontIcon name="trophy" size={16} color="#CC0F40" style={{marginTop: 6}} />
                   <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>My Rewards</Text>
+                </View>
+                <View>
+                  <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigateToBundles.bind(this)}>
+            <View style={styles.section}>
+              <View style={styles.item}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <FontIcon name="trophy" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir' , fontWeight: 'bold', fontSize: 14, color: '#414141'}}>Punch Card Bundles</Text>
                 </View>
                 <View>
                   <FontIcon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
