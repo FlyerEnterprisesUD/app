@@ -50,6 +50,8 @@ var PunchCountDownQR = React.createClass({
 
   async punch(result) {
 
+    console.log(this.props.bundle.id)
+
     try {
       let response = await fetch(result, {
         method: 'POST',

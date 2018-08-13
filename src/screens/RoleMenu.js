@@ -209,6 +209,19 @@ class RoleMenu extends Component {
                 </View>
               </View>
             </TouchableOpacity>
+            <TouchableOpacity onPress={this.navigateToAddUserToBundle.bind(this)}>
+              <View style={styles.section}>
+                <View style={styles.item}>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Icon name="user" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                    <Text style={{marginTop: 6, marginLeft: 16, fontFamily: 'avenir', fontWeight: 'bold',  fontSize: 16, color: '#414141'}}>Add Bundle To User</Text>
+                  </View>
+                  <View>
+                    <Icon name="chevron-right" size={16} color="#CC0F40" style={{marginTop: 6}} />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
           </View>
 
         </ScrollView>

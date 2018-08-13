@@ -46,7 +46,7 @@ class Bundle extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          id: this.props.countdown.id
+          id: this.state.countdown.id
         })
       });
 
